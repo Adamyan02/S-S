@@ -63,6 +63,12 @@ section {
   border-radius: 40px;
   max-width: 750px;
   text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 
 /* Блок с именами — черный */
@@ -71,7 +77,7 @@ section {
   font-size: 72px; 
   line-height: 1.2;
   text-align: center;
-  color: #1a1a1a; /* черный */
+  color: #1a1a1a;
   text-shadow: 0 0 5px #00000033;
   margin: 0;
   animation: fadeIn 1s ease forwards;
@@ -86,22 +92,34 @@ section {
 
 @media (max-width: 480px) {
   .names-responsive { font-size: 48px; }
+  .card { padding: 40px; max-width: 90%; }
 }
 
-/* Кнопки */
+/* Заголовки блоков */
+.card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #3a5faa; /* бледно-синий */
+  text-shadow: 0 0 5px #aaccff33;
+}
+
+/* Кнопки — туманно-синие с эффектом при наведении */
 button {
   margin-top: 30px;
   padding: 18px 50px;
   border-radius: 60px;
   border: none;
-  background: #8b5e3c;
+  background: #7faaff; 
   color: white;
   cursor: pointer;
   font-size: 18px;
-  transition: 0.3s;
+  transition: 0.3s, background 0.5s;
 }
 
 button:hover {
+  background: #a0c2ff;
   transform: translateY(-4px) scale(1.05);
 }
 
@@ -133,8 +151,8 @@ button:hover {
 .final h1 {
   font-size: 72px;
   font-family: 'Playfair Display', serif;
-  color: #ff4d4d;
-  text-shadow: 0 0 15px #ff4d4d, 0 0 30px #ff9999;
+  color: #7faaff; /* туманно-синий */
+  text-shadow: 0 0 15px #7faaff, 0 0 30px #aaccff;
   animation: glow 2s infinite alternate;
 }
 
@@ -143,8 +161,8 @@ button:hover {
 }
 
 @keyframes glow {
-  from { text-shadow: 0 0 10px #ff4d4d; }
-  to { text-shadow: 0 0 30px #ff4d4d; }
+  from { text-shadow: 0 0 10px #7faaff; }
+  to { text-shadow: 0 0 30px #aaccff; }
 }
 
 footer {
