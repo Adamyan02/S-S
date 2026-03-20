@@ -179,21 +179,26 @@ input {
 
 /* Анимация */
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting){
-      e.target.style.opacity = 1;
-      e.target.style.transform = "translateY(0)";
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.style.opacity = 1;
+      entry.target.style.transform = 'translateY(0)';
     }
   });
 });
-document.querySelectorAll("section").forEach(s => observer.observe(s));
+document.querySelectorAll('section').forEach(s => observer.observe(s));
 
 /* Таймер */
-const t = new Date('2026-08-18');
+const t = new Date('2026-08-18T00:00:00');
 setInterval(()=>{
   let d = t - new Date();
+  const days = Math.floor(d/86400000);
+  const hours = Math.floor(d/3600000 % 24);
+  const minutes = Math.floor(d/60000 % 60);
+  const seconds = Math.floor(d/1000 % 60);
+
   document.getElementById('timer').innerHTML =
-    Math.floor(d/86400000) + " дней";
+    `${days}д ${hours}ч ${minutes}м ${seconds}с`;
 },1000);
 
 /* Карта */
