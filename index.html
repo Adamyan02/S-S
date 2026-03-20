@@ -39,14 +39,14 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  padding: 60px 20px;
+  min-height: auto; /* уменьшено для компактности */
+  padding: 40px 20px; /* уменьшенные отступы сверху и снизу */
   background: transparent;
   opacity: 0;
-  transform: translateY(60px);
+  transform: translateY(40px);
   transition: 0.8s;
   position: relative;
-  z-index: 10; /* чтобы кнопки кликабельны */
+  z-index: 10;
 }
 
 /* Карточка */
@@ -66,13 +66,12 @@ section {
 /* Имена */
 .names-responsive {
   font-family: 'Playfair Display', serif;
-  font-size: 72px; 
-  line-height: 1.2;
+  font-size: 72px;
+  line-height: 1.0; /* уменьшен для компактности */
   text-align: center;
   color: #1a1a1a;
   text-shadow: 0 0 5px #00000033;
-  margin: 0;
-  animation: fadeIn 1s ease forwards;
+  margin: 0 0 20px 0; /* чуть меньше снизу */
 }
 .names-responsive span { display: block; }
 @keyframes fadeIn { from { opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
@@ -180,7 +179,7 @@ footer { text-align:center; padding:40px; color:white; }
       <span>&</span><br>
       <span>Сусанна</span>
     </h1>
-    <p style="margin-top:20px; font-size:20px;">18.08.2026</p>
+    <p style="margin-top:10px; font-size:20px;">18.08.2026</p>
     <p style="font-size:18px;">Мы создаём нашу семью и будем счастливы разделить этот момент с вами ❤️</p>
     <button id="confirmBtn">Подтвердить присутствие</button>
   </div>
@@ -269,8 +268,8 @@ function openRoute(){
 }
 
 /* Telegram Bot */
-const token = "8709950732:AAEN7Tu0J4SM0S9QqRj7_QpPV_oivytg1lI";
-const chatId = "323969398";
+const token = "ВАШ_ТОКЕН_БОТА"; // вставьте токен от BotFather
+const chatId = "ВАШ_USER_ID";    // вставьте ваш Telegram ID
 const modal = document.getElementById("modalForm");
 const btn = document.getElementById("confirmBtn");
 const sendBtn = document.getElementById("sendConfirm");
