@@ -65,22 +65,33 @@ section {
   text-align: center;
 }
 
-/* Анимация имен для ПК */
-.names.desktop span {
-  opacity: 0;
-  display: inline-block;
-  transform: translateY(20px);
-  animation: letter 0.6s forwards;
+/* Новый блок с именами */
+.names-responsive {
+  font-family: 'Playfair Display', serif;
+  font-size: 72px; /* крупный текст */
+  line-height: 1.2;
+  color: #ff4d4d;
+  text-align: center;
+  text-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff9999;
+  margin: 0;
+  animation: fadeIn 1s ease forwards;
 }
-.names.desktop span:nth-child(n){animation-delay: calc(0.1s * var(--i));}
 
-@keyframes letter {
-  to { opacity:1; transform:translateY(0); }
+.names-responsive span {
+  display: block;
 }
 
-/* Скрытие мобильного и ПК версий по умолчанию */
-.names.mobile { display: none; }
-.names.desktop { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Мобильная адаптация */
+@media (max-width: 480px) {
+  .names-responsive {
+    font-size: 48px;
+  }
+}
 
 /* Кнопки */
 button {
@@ -121,12 +132,6 @@ footer {
   padding: 40px;
   color: white;
 }
-
-/* 📱 Мобильная адаптация */
-@media (max-width: 480px) {
-  .names.mobile { display: block; text-align: center; }
-  .names.desktop { display: none; }
-}
 </style>
 </head>
 
@@ -141,36 +146,17 @@ footer {
 
 <div class="video-overlay"></div>
 
-<!-- Блок 1 -->
+<!-- Новый блок с именами -->
 <section>
   <div class="card">
-
-    <!-- ПК версия с анимацией -->
-    <h1 class="names desktop">
-      <span style="--i:1">С</span>
-      <span style="--i:2">о</span>
-      <span style="--i:3">с</span>
-      <span style="--i:4"> </span>
-      <span style="--i:5">&</span>
-      <span style="--i:6"> </span>
-      <span style="--i:7">С</span>
-      <span style="--i:8">у</span>
-      <span style="--i:9">с</span>
-      <span style="--i:10">а</span>
-      <span style="--i:11">н</span>
-      <span style="--i:12">н</span>
-      <span style="--i:13">а</span>
+    <h1 class="names-responsive">
+      <span>Сос</span><br>
+      <span>&</span><br>
+      <span>Сусанна</span>
     </h1>
 
-    <!-- Мобильная версия -->
-    <h1 class="names mobile">
-      Сос<br>
-      &<br>
-      Сусанна
-    </h1>
-
-    <p>18.08.2026</p>
-    <p>Мы создаём нашу семью и будем счастливы разделить этот момент с вами ❤️</p>
+    <p style="margin-top:20px; font-size:20px;">18.08.2026</p>
+    <p style="font-size:18px;">Мы создаём нашу семью и будем счастливы разделить этот момент с вами ❤️</p>
 
     <button onclick="alert('Спасибо! 💙')">Подтвердить присутствие</button>
   </div>
