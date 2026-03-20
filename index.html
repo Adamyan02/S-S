@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sos и Susanna ❤️</title>
+<title>Сос и Сусанна ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -25,6 +25,7 @@ body {
   height: 100%;
   z-index: -10;
   overflow: hidden;
+  pointer-events: none; /* видео не блокирует клики */
 }
 .video-bg video { width: 100%; height: 100%; object-fit: cover; }
 .video-overlay {
@@ -32,6 +33,7 @@ body {
   inset: 0;
   background: rgba(245,235,220,0.45);
   z-index: -5;
+  pointer-events: none; /* overlay не блокирует клики */
 }
 
 /* Секции */
@@ -39,8 +41,8 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: auto; /* уменьшено для компактности */
-  padding: 40px 20px; /* уменьшенные отступы сверху и снизу */
+  min-height: auto;
+  padding: 40px 20px;
   background: transparent;
   opacity: 0;
   transform: translateY(40px);
@@ -67,14 +69,14 @@ section {
 .names-responsive {
   font-family: 'Playfair Display', serif;
   font-size: 72px;
-  line-height: 1.0; /* уменьшен для компактности */
+  line-height: 1.0;
   text-align: center;
   color: #1a1a1a;
   text-shadow: 0 0 5px #00000033;
-  margin: 0 0 20px 0; /* чуть меньше снизу */
+  margin: 0 0 20px 0;
 }
 .names-responsive span { display: block; }
-@keyframes fadeIn { from { opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
+
 @media (max-width: 480px) {
   .names-responsive { font-size: 48px; }
   .card { padding: 40px; max-width: 90%; }
@@ -135,7 +137,7 @@ footer { text-align:center; padding:40px; color:white; }
 .modal {
   display: none;
   position: fixed;
-  z-index: 100;
+  z-index: 9999; /* супер высокий, чтобы всегда сверху */
   left: 0;
   top: 0;
   width: 100%;
@@ -151,6 +153,8 @@ footer { text-align:center; padding:40px; color:white; }
   width: 90%;
   max-width: 400px;
   text-align: center;
+  position: relative;
+  z-index: 10000; /* точно выше overlay и видео */
 }
 .modal-content input {
   width: 80%;
@@ -158,7 +162,12 @@ footer { text-align:center; padding:40px; color:white; }
   margin: 10px 0;
   font-size: 16px;
 }
-.modal-content button { margin-top:15px; type:button; }
+.modal-content button {
+  margin-top:15px;
+  type:button;
+  position: relative;
+  z-index: 10001; /* кнопка точно кликабельна */
+}
 </style>
 </head>
 <body>
