@@ -59,6 +59,7 @@ section {
   font-family: 'Playfair Display', serif;
   font-size: 60px;
   line-height: 1.1;
+  color: #1a1a1a; /* бледно-синий/черный */
 }
 .names span {
   display: block;
@@ -80,11 +81,13 @@ button {
   background: #7faaff;
   color: white;
   font-size: 16px;
+  cursor: pointer;
 }
 
 /* Таймер */
 #timer {
   font-size: 28px;
+  margin-top: 20px;
 }
 
 /* Модалка */
@@ -120,6 +123,7 @@ input {
 </div>
 <div class="video-overlay"></div>
 
+<!-- Блок с именами -->
 <section>
   <div class="card">
     <h1 class="names">
@@ -128,18 +132,22 @@ input {
       <span>Сусанна</span>
     </h1>
     <p>18.08.2026</p>
+    <p>Мы создаём нашу семью и будем счастливы разделить этот момент с вами ❤️</p>
     <button id="confirmBtn">Подтвердить присутствие</button>
   </div>
 </section>
 
+<!-- Локация -->
 <section>
   <div class="card">
     <h2>Локация</h2>
     <p>Банкетный зал «На семи ветрах»</p>
+    <p>Саратов, Московское шоссе, 154 к1</p>
     <button onclick="openRoute()">Проложить маршрут</button>
   </div>
 </section>
 
+<!-- Таймер -->
 <section>
   <div class="card">
     <h2>До свадьбы осталось</h2>
@@ -147,18 +155,23 @@ input {
   </div>
 </section>
 
+<!-- Дресс-код -->
 <section>
   <div class="card">
     <h2>Дресс-код</h2>
-    <p>Без белого 🤍</p>
+    <p>Будем признательны, если дамы воздержатся от платьев в оттенках белого 🤍</p>
   </div>
 </section>
 
+<!-- Финал -->
 <section>
-  <div class="card">
-    <h2>До встречи ❤️</h2>
+  <div class="card final">
+    <p>До встречи</p>
+    <h1 style="color:#7faaff;">S & S</h1>
   </div>
 </section>
+
+<footer>© 2026 Сос & Сусанна</footer>
 
 <!-- Модалка -->
 <div class="modal" id="modal">
@@ -171,8 +184,7 @@ input {
 </div>
 
 <script>
-
-/* Анимация */
+/* Анимация появления */
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if(e.isIntersecting){
@@ -183,13 +195,19 @@ const observer = new IntersectionObserver(entries => {
 });
 document.querySelectorAll("section").forEach(s => observer.observe(s));
 
-/* Таймер */
-const t = new Date('2026-08-18');
-setInterval(()=>{
-  let d = t - new Date();
-  document.getElementById('timer').innerHTML =
-    Math.floor(d/86400000) + " дней";
-},1000);
+/* Таймер полноценный */
+const targetDate = new Date('2026-08-18T00:00:00');
+function updateTimer(){
+  const now = new Date();
+  let diff = targetDate - now;
+  const days = Math.floor(diff/86400000);
+  const hours = Math.floor(diff/3600000 %24);
+  const minutes = Math.floor(diff/60000 %60);
+  const seconds = Math.floor(diff/1000 %60);
+  document.getElementById('timer').innerHTML = `${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
+}
+setInterval(updateTimer, 1000);
+updateTimer();
 
 /* Карта */
 function openRoute(){
@@ -200,12 +218,10 @@ function openRoute(){
 const modal = document.getElementById("modal");
 document.getElementById("confirmBtn").onclick = ()=> modal.style.display="block";
 
-/* 🔥 ОТПРАВКА (исправлено) */
+/* Отправка через API (Telegram) */
 document.getElementById("sendBtn").onclick = function(){
-
   const firstName = document.getElementById("firstName").value.trim();
   const lastName = document.getElementById("lastName").value.trim();
-
   if(!firstName || !lastName){
     alert("Заполните поля");
     return;
@@ -219,15 +235,16 @@ document.getElementById("sendBtn").onclick = function(){
   .then(()=>{
     alert("Отправлено ❤️");
     modal.style.display="none";
+    document.getElementById("firstName").value="";
+    document.getElementById("lastName").value="";
   })
   .catch(()=>{
-    alert("Ошибка");
+    alert("Ошибка отправки. Попробуйте позже.");
   });
 };
 
-/* Закрытие */
+/* Закрытие модалки */
 window.onclick = e => { if(e.target==modal) modal.style.display="none"; };
-
 </script>
 
 </body>
