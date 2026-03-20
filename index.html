@@ -286,18 +286,18 @@ const modal = document.getElementById("modalForm");
 const btn = document.getElementById("confirmBtn");
 const sendBtn = document.getElementById("sendConfirm");
 
-// Открытие модалки на клике или таче
+// Открытие модалки на ПК и мобильных (click + touchstart)
 function openModal() { modal.style.display="block"; }
 btn.addEventListener("click", openModal);
 btn.addEventListener("touchstart", openModal);
 
-// Отправка формы через Telegram API
+// Отправка формы через Telegram API (поддержка мобильных touch)
 function sendConfirmation() {
   const firstName = document.getElementById("firstName").value.trim();
   const lastName = document.getElementById("lastName").value.trim();
   if(!firstName || !lastName){ alert("Пожалуйста, заполните оба поля."); return; }
   const message = `Новый гость подтвердил присутствие!\nИмя: ${firstName} ${lastName}`;
-  
+
   fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method:"POST",
     headers:{"Content-Type":"application/json"},
@@ -312,12 +312,11 @@ function sendConfirmation() {
   .catch(()=>alert("Ошибка отправки. Попробуйте позже."));
 }
 
-// Обработчики клика и touch для кнопки отправки
 sendBtn.addEventListener("click", sendConfirmation);
 sendBtn.addEventListener("touchstart", sendConfirmation);
 
 // Закрытие модалки при клике вне
-window.onclick = (event)=>{ if(event.target==modal) modal.style.display="none"; };
+window.addEventListener("click", (event)=>{ if(event.target===modal) modal.style.display="none"; });
 </script>
 </body>
 </html>
