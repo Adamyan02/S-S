@@ -48,7 +48,7 @@ section {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 30px 20px; /* уменьшено для меньшего разрыва */
+  padding: 60px 20px;
   background: transparent;
   opacity: 0;
   transform: translateY(60px);
@@ -76,11 +76,6 @@ section {
 
 @keyframes letter {
   to { opacity:1; transform:translateY(0); }
-}
-
-/* Запрет переноса текста */
-.nowrap {
-  white-space: nowrap;
 }
 
 /* Кнопки */
@@ -122,6 +117,20 @@ footer {
   padding: 40px;
   color: white;
 }
+
+/* 📱 Мобильная адаптация */
+@media (max-width: 480px) {
+  .names {
+    display: block !important;
+    text-align: center;
+  }
+  .names span {
+    display: block !important;
+    transform: none !important;
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}
 </style>
 </head>
 
@@ -139,7 +148,7 @@ footer {
 <!-- Блок 1 -->
 <section>
   <div class="card">
-    <h1 class="names nowrap">
+    <h1 class="names">
       <span style="--i:1">С</span>
       <span style="--i:2">о</span>
       <span style="--i:3">с</span>
@@ -223,7 +232,7 @@ setInterval(()=>{
     `${days}д ${hours}ч ${minutes}м ${seconds}с`;
 },1000);
 
-/* карта */
+/* Карта */
 function openMap(){
   window.open('https://yandex.ru/maps/org/na_semi_vetrakh/125397446522/');
 }
