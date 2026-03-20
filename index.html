@@ -65,32 +65,27 @@ section {
   text-align: center;
 }
 
-/* Новый блок с именами */
+/* Блок с именами — бледно-синий */
 .names-responsive {
   font-family: 'Playfair Display', serif;
-  font-size: 72px; /* крупный текст */
+  font-size: 72px; 
   line-height: 1.2;
-  color: #ff4d4d;
   text-align: center;
-  text-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff9999;
+  color: #7faaff; /* бледно-синий */
+  text-shadow: 0 0 10px #7faaff, 0 0 20px #aaccff;
   margin: 0;
   animation: fadeIn 1s ease forwards;
 }
 
-.names-responsive span {
-  display: block;
-}
+.names-responsive span { display: block; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Мобильная адаптация */
 @media (max-width: 480px) {
-  .names-responsive {
-    font-size: 48px;
-  }
+  .names-responsive { font-size: 48px; }
 }
 
 /* Кнопки */
@@ -146,7 +141,7 @@ footer {
 
 <div class="video-overlay"></div>
 
-<!-- Новый блок с именами -->
+<!-- Блок с именами -->
 <section>
   <div class="card">
     <h1 class="names-responsive">
@@ -162,20 +157,17 @@ footer {
   </div>
 </section>
 
-<!-- Локация -->
+<!-- Локация с кнопкой маршрута -->
 <section>
   <div class="card">
     <h2>Локация</h2>
     <p>Банкетный зал «На семи ветрах»</p>
     <p>Саратов, Московское шоссе, 154 к1</p>
-
-    <!-- Встроенная интерактивная карта с маркером -->
-    <div style="margin-top:20px;">
-      <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3ACPRav60J&amp;scroll=true" 
-              width="100%" height="400" frameborder="0" allowfullscreen></iframe>
-    </div>
+    
+    <button onclick="openRoute()">Проложить маршрут</button>
   </div>
 </section>
+
 <!-- Таймер -->
 <section>
   <div class="card">
@@ -227,9 +219,9 @@ setInterval(()=>{
     `${days}д ${hours}ч ${minutes}м ${seconds}с`;
 },1000);
 
-/* Карта */
-function openMap(){
-  window.open('https://yandex.ru/maps/org/na_semi_vetrakh/125397446522/');
+/* Проложить маршрут */
+function openRoute(){
+  window.open("https://yandex.ru/maps/-/CPRav60J", "_blank");
 }
 </script>
 
