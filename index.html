@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Сос и Сусанна ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 html { scroll-behavior: smooth; }
@@ -52,6 +52,7 @@ section {
   border-radius: 30px;
   max-width: 700px;
   text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
 /* Имена */
@@ -59,7 +60,7 @@ section {
   font-family: 'Playfair Display', serif;
   font-size: 60px;
   line-height: 1.1;
-  color: #1a1a1a; /* бледно-синий/черный */
+  color: #1a1a1a;
 }
 .names span {
   display: block;
@@ -70,6 +71,7 @@ h2 {
   font-family: 'Playfair Display', serif;
   font-size: 32px;
   color: #5b7bd5;
+  margin-bottom: 20px;
 }
 
 /* Кнопки */
@@ -88,6 +90,26 @@ button {
 #timer {
   font-size: 28px;
   margin-top: 20px;
+  font-family: 'Playfair Display', serif;
+}
+
+/* Финальный блок */
+.final h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 96px;
+  color: #7faaff;
+  text-shadow: 0 0 15px #7faaff, 0 0 30px #aaccff;
+  margin: 0;
+  animation: glow 2s infinite alternate;
+}
+.final p {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+@keyframes glow { 
+  from { text-shadow:0 0 10px #7faaff;} 
+  to { text-shadow:0 0 30px #aaccff;} 
 }
 
 /* Модалка */
@@ -111,6 +133,15 @@ input {
   margin: 10px 0;
   padding: 10px;
 }
+
+/* Футер */
+footer {
+  text-align: center;
+  padding: 40px;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: #1a1a1a;
+}
 </style>
 </head>
 
@@ -118,7 +149,7 @@ input {
 
 <div class="video-bg">
   <video autoplay muted loop playsinline>
-    <source src="IMG_3309.mp4">
+    <source src="IMG_3309.mp4" type="video/mp4">
   </video>
 </div>
 <div class="video-overlay"></div>
@@ -167,7 +198,7 @@ input {
 <section>
   <div class="card final">
     <p>До встречи</p>
-    <h1 style="color:#7faaff;">S & S</h1>
+    <h1>S & S</h1>
   </div>
 </section>
 
@@ -195,7 +226,7 @@ const observer = new IntersectionObserver(entries => {
 });
 document.querySelectorAll("section").forEach(s => observer.observe(s));
 
-/* Таймер полноценный */
+/* Таймер */
 const targetDate = new Date('2026-08-18T00:00:00');
 function updateTimer(){
   const now = new Date();
@@ -218,7 +249,7 @@ function openRoute(){
 const modal = document.getElementById("modal");
 document.getElementById("confirmBtn").onclick = ()=> modal.style.display="block";
 
-/* Отправка через API (Telegram) */
+/* Отправка через API */
 document.getElementById("sendBtn").onclick = function(){
   const firstName = document.getElementById("firstName").value.trim();
   const lastName = document.getElementById("lastName").value.trim();
@@ -226,7 +257,6 @@ document.getElementById("sendBtn").onclick = function(){
     alert("Заполните поля");
     return;
   }
-
   fetch("/api/send", {
     method:"POST",
     headers:{"Content-Type":"application/json"},
