@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сос и Сусанна ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  color: #1a1a1a;
+  overflow-x: hidden;
+}
+
+/* 🎬 ВИДЕО ФОН */
+.video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  overflow: hidden;
+}
+
+.video-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* затемнение */
+.video-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(245,235,220,0.45);
+  z-index: -5;
+}
+
+/* Секции */
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 60px 20px;
+  background: transparent; /* ВАЖНО */
+  opacity: 0;
+  transform: translateY(60px);
+  transition: 0.8s;
+}
+
+.card {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  padding: 50px;
+  border-radius: 40px;
+  max-width: 650px;
+  text-align: center;
+}
+
+/* Анимация имен */
+.names span {
+  opacity: 0;
+  display: inline-block;
+  transform: translateY(20px);
+  animation: letter 0.6s forwards;
+}
+.names span:nth-child(n){animation-delay: calc(0.1s * var(--i));}
+
+@keyframes letter {
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* Кнопки */
+button {
+  margin-top: 30px;
+  padding: 16px 40px;
+  border-radius: 60px;
+  border: none;
+  background: #8b5e3c;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+
+/* Финальный блок */
+.final h1 {
+  font-size: 64px;
+  font-family: 'Playfair Display', serif;
+  color: #ff4d4d;
+  text-shadow: 0 0 15px #ff4d4d, 0 0 30px #ff9999;
+  animation: glow 2s infinite alternate;
+}
+
+.final p {
+  font-size: 32px;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #ff4d4d; }
+  to { text-shadow: 0 0 30px #ff4d4d; }
+}
+
+footer {
+  text-align: center;
+  padding: 40px;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎬 Видео -->
+<div class="video-bg">
+  <video autoplay muted loop playsinline>
+    <source src="IMG_3309.mp4" type="video/mp4">
+  </video>
+</div>
+
+<div class="video-overlay"></div>
+
+<!-- Блок 1 -->
+<section>
+  <div class="card">
+    <h1 class="names">
+      <span style="--i:1">С</span>
+      <span style="--i:2">о</span>
+      <span style="--i:3">с</span>
+      <span style="--i:4"> </span>
+      <span style="--i:5">&</span>
+      <span style="--i:6"> </span>
+      <span style="--i:7">С</span>
+      <span style="--i:8">у</span>
+      <span style="--i:9">с</span>
+      <span style="--i:10">а</span>
+      <span style="--i:11">н</span>
+      <span style="--i:12">н</span>
+      <span style="--i:13">а</span>
+    </h1>
+
+    <p>18.08.2026</p>
+    <p>Мы создаём нашу семью и будем счастливы разделить этот момент с вами ❤️</p>
+
+    <button onclick="alert('Спасибо! 💙')">Подтвердить присутствие</button>
+  </div>
+</section>
+
+<!-- Локация -->
+<section>
+  <div class="card">
+    <h2>Локация</h2>
+    <p>Банкетный зал «На семи ветрах»</p>
+    <p>Саратов, Московское шоссе, 154 к1</p>
+    <button onclick="openMap()">Открыть карту</button>
+  </div>
+</section>
+
+<!-- Таймер -->
+<section>
+  <div class="card">
+    <h2>До свадьбы осталось</h2>
+    <div id="timer" style="font-size:28px;"></div>
+  </div>
+</section>
+
+<!-- Дресс-код -->
+<section>
+  <div class="card">
+    <h2>Дресс-код</h2>
+    <p>Просим воздержаться от белого цвета 🤍</p>
+  </div>
+</section>
+
+<!-- Финал -->
+<section>
+  <div class="card final">
+    <p>До встречи</p>
+    <h1>S & S</h1>
+  </div>
+</section>
+
+<footer>© 2026 Сос & Сусанна</footer>
+
+<script>
+
+/* Анимация появления */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.style.opacity = 1;
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+});
+document.querySelectorAll('section').forEach(s => observer.observe(s));
+
+/* Таймер */
+const t = new Date('2026-08-18T00:00:00');
+setInterval(()=>{
+  let d = t - new Date();
+  const days = Math.floor(d/86400000);
+  const hours = Math.floor(d/3600000 % 24);
+  const minutes = Math.floor(d/60000 % 60);
+  const seconds = Math.floor(d/1000 % 60);
+
+  document.getElementById('timer').innerHTML =
+    `${days}д ${hours}ч ${minutes}м ${seconds}с`;
+},1000);
+
+/* карта */
+function openMap(){
+  window.open('https://yandex.ru/maps/org/na_semi_vetrakh/125397446522/');
+}
+
+</script>
+
+</body>
+</html>
