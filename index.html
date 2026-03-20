@@ -48,18 +48,17 @@ section {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 40px 20px; /* уменьшено для мобильных */
-  background: transparent;
+  padding: 60px 20px;
+  background: transparent; /* ВАЖНО */
   opacity: 0;
   transform: translateY(60px);
   transition: 0.8s;
 }
 
-/* карточка */
 .card {
   background: rgba(255,255,255,0.85);
   backdrop-filter: blur(12px);
-  padding: 40px; /* уменьшено для мобильных */
+  padding: 50px;
   border-radius: 40px;
   max-width: 650px;
   text-align: center;
@@ -76,11 +75,6 @@ section {
 
 @keyframes letter {
   to { opacity:1; transform:translateY(0); }
-}
-
-/* Запрет переноса текста */
-.nowrap {
-  white-space: nowrap;
 }
 
 /* Кнопки */
@@ -106,7 +100,6 @@ button:hover {
   color: #ff4d4d;
   text-shadow: 0 0 15px #ff4d4d, 0 0 30px #ff9999;
   animation: glow 2s infinite alternate;
-  white-space: nowrap; /* имя не переносится */
 }
 
 .final p {
@@ -120,24 +113,8 @@ button:hover {
 
 footer {
   text-align: center;
-  padding: 40px 20px; /* уменьшено для мобильных */
+  padding: 40px;
   color: white;
-}
-
-/* Мобильная адаптация */
-@media (max-width: 480px) {
-  section {
-    padding: 30px 15px;
-  }
-  .card {
-    padding: 25px 20px;
-  }
-  .final h1 {
-    font-size: 48px;
-  }
-  .final p {
-    font-size: 24px;
-  }
 }
 </style>
 </head>
@@ -156,7 +133,7 @@ footer {
 <!-- Блок 1 -->
 <section>
   <div class="card">
-    <h1 class="names nowrap">
+    <h1 class="names">
       <span style="--i:1">С</span>
       <span style="--i:2">о</span>
       <span style="--i:3">с</span>
