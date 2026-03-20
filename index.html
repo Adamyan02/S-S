@@ -16,17 +16,17 @@ body {
   overflow-x: hidden;
 }
 
-/* Видео фон */
+/* Видео */
 .video-bg {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
+  z-index: -10;
+}
+.video-bg video {
   width: 100%;
   height: 100%;
-  z-index: -10;
-  overflow: hidden;
+  object-fit: cover;
 }
-.video-bg video { width: 100%; height: 100%; object-fit: cover; }
 .video-overlay {
   position: fixed;
   inset: 0;
@@ -39,163 +39,107 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: auto; /* уменьшено для компактности */
-  padding: 40px 20px; /* уменьшенные отступы сверху и снизу */
-  background: transparent;
+  padding: 40px 20px;
   opacity: 0;
   transform: translateY(40px);
   transition: 0.8s;
-  position: relative;
-  z-index: 10;
 }
 
-/* Карточка */
+/* Карточки */
 .card {
-  background: rgba(255,255,255,0.85);
-  backdrop-filter: blur(12px);
-  padding: 60px;
-  border-radius: 40px;
-  max-width: 750px;
+  background: rgba(255,255,255,0.9);
+  padding: 50px;
+  border-radius: 30px;
+  max-width: 700px;
   text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-  position: relative;
-  z-index: 10;
 }
-.card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
 
 /* Имена */
-.names-responsive {
+.names {
   font-family: 'Playfair Display', serif;
-  font-size: 72px;
-  line-height: 1.0; /* уменьшен для компактности */
-  text-align: center;
-  color: #1a1a1a;
-  text-shadow: 0 0 5px #00000033;
-  margin: 0 0 20px 0; /* чуть меньше снизу */
+  font-size: 60px;
+  line-height: 1.1;
 }
-.names-responsive span { display: block; }
-@keyframes fadeIn { from { opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
-@media (max-width: 480px) {
-  .names-responsive { font-size: 48px; }
-  .card { padding: 40px; max-width: 90%; }
+.names span {
+  display: block;
 }
 
-/* Заголовки блоков */
-.card h2 {
+/* Заголовки */
+h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 36px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: #3a5faa;
-  text-shadow: 0 0 5px #aaccff33;
+  font-size: 32px;
+  color: #5b7bd5;
 }
 
 /* Кнопки */
 button {
-  margin-top: 30px;
-  padding: 18px 50px;
-  border-radius: 60px;
+  margin-top: 20px;
+  padding: 15px 40px;
+  border-radius: 50px;
   border: none;
   background: #7faaff;
   color: white;
-  cursor: pointer;
-  font-size: 18px;
-  transition: 0.3s, background 0.5s;
-  position: relative;
-  z-index: 10;
+  font-size: 16px;
 }
-button:hover { background: #a0c2ff; transform: translateY(-4px) scale(1.05); }
 
 /* Таймер */
 #timer {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  font-family: 'Playfair Display', serif;
-  font-size: 36px;
-  margin-top: 20px;
+  font-size: 28px;
 }
-.timer-segment { display:flex; flex-direction:column; align-items:center; font-weight:600; }
-.timer-segment span.label { font-size:18px; font-weight:400; margin-top:5px; color:#555; }
 
-/* Финал */
-.final h1 {
-  font-size: 72px;
-  font-family: 'Playfair Display', serif;
-  color: #7faaff;
-  text-shadow: 0 0 15px #7faaff, 0 0 30px #aaccff;
-  animation: glow 2s infinite alternate;
-}
-.final p { font-size:36px; }
-@keyframes glow { from { text-shadow:0 0 10px #7faaff;} to{ text-shadow:0 0 30px #aaccff;} }
-
-footer { text-align:center; padding:40px; color:white; }
-
-/* Модальное окно */
+/* Модалка */
 .modal {
   display: none;
   position: fixed;
-  z-index: 100;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.5);
+  inset: 0;
+  background: rgba(0,0,0,0.5);
 }
 .modal-content {
-  background-color: white;
-  margin: 15% auto;
-  padding: 30px;
+  background: white;
+  margin: 20% auto;
+  padding: 20px;
   border-radius: 20px;
-  width: 90%;
-  max-width: 400px;
+  width: 80%;
+  max-width: 300px;
   text-align: center;
 }
-.modal-content input {
-  width: 80%;
-  padding: 10px;
+input {
+  width: 90%;
   margin: 10px 0;
-  font-size: 16px;
+  padding: 10px;
 }
-.modal-content button { margin-top:15px; type:button; }
 </style>
 </head>
+
 <body>
 
-<!-- Видео фон -->
 <div class="video-bg">
   <video autoplay muted loop playsinline>
-    <source src="IMG_3309.mp4" type="video/mp4">
+    <source src="IMG_3309.mp4">
   </video>
 </div>
 <div class="video-overlay"></div>
 
-<!-- Блок с именами -->
 <section>
   <div class="card">
-    <h1 class="names-responsive">
-      <span>Сос</span><br>
-      <span>&</span><br>
+    <h1 class="names">
+      <span>Сос</span>
+      <span>&</span>
       <span>Сусанна</span>
     </h1>
-    <p style="margin-top:10px; font-size:20px;">18.08.2026</p>
-    <p style="font-size:18px;">Мы создаём нашу семью и будем счастливы разделить этот момент с вами ❤️</p>
+    <p>18.08.2026</p>
     <button id="confirmBtn">Подтвердить присутствие</button>
   </div>
 </section>
 
-<!-- Локация -->
 <section>
   <div class="card">
     <h2>Локация</h2>
     <p>Банкетный зал «На семи ветрах»</p>
-    <p>Саратов, Московское шоссе, 154 к1</p>
     <button onclick="openRoute()">Проложить маршрут</button>
   </div>
 </section>
 
-<!-- Таймер -->
 <section>
   <div class="card">
     <h2>До свадьбы осталось</h2>
@@ -203,99 +147,88 @@ footer { text-align:center; padding:40px; color:white; }
   </div>
 </section>
 
-<!-- Дресс-код -->
 <section>
   <div class="card">
     <h2>Дресс-код</h2>
-    <p>Просим воздержаться от белого цвета 🤍</p>
+    <p>Без белого 🤍</p>
   </div>
 </section>
 
-<!-- Финал -->
 <section>
-  <div class="card final">
-    <p>До встречи</p>
-    <h1>S & S</h1>
+  <div class="card">
+    <h2>До встречи ❤️</h2>
   </div>
 </section>
 
-<footer>© 2026 Сос & Сусанна</footer>
-
-<!-- Модальное окно -->
-<div class="modal" id="modalForm">
+<!-- Модалка -->
+<div class="modal" id="modal">
   <div class="modal-content">
-    <h2>Подтвердите присутствие</h2>
-    <input type="text" id="firstName" placeholder="Имя" required>
-    <input type="text" id="lastName" placeholder="Фамилия" required>
-    <button type="button" id="sendConfirm">Отправить</button>
+    <h3>Введите данные</h3>
+    <input id="firstName" placeholder="Имя">
+    <input id="lastName" placeholder="Фамилия">
+    <button id="sendBtn">Отправить</button>
   </div>
 </div>
 
 <script>
-/* Анимация появления */
+
+/* Анимация */
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.style.opacity = 1;
-      entry.target.style.transform = 'translateY(0)';
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.style.opacity = 1;
+      e.target.style.transform = "translateY(0)";
     }
   });
 });
-document.querySelectorAll('section').forEach(s => observer.observe(s));
+document.querySelectorAll("section").forEach(s => observer.observe(s));
 
 /* Таймер */
-const targetDate = new Date('2026-08-18T00:00:00');
-function updateTimer() {
-  const now = new Date();
-  let diff = targetDate - now;
-  const days = Math.floor(diff/86400000);
-  const hours = Math.floor(diff/3600000 %24);
-  const minutes = Math.floor(diff/60000 %60);
-  const seconds = Math.floor(diff/1000 %60);
-  document.getElementById('timer').innerHTML = `
-    <div class="timer-segment"><div>${days}</div><span class="label">дней</span></div>
-    <div class="timer-segment"><div>${hours}</div><span class="label">часов</span></div>
-    <div class="timer-segment"><div>${minutes}</div><span class="label">минут</span></div>
-    <div class="timer-segment"><div>${seconds}</div><span class="label">секунд</span></div>
-  `;
-}
-setInterval(updateTimer,1000);
-updateTimer();
+const t = new Date('2026-08-18');
+setInterval(()=>{
+  let d = t - new Date();
+  document.getElementById('timer').innerHTML =
+    Math.floor(d/86400000) + " дней";
+},1000);
 
-/* Проложить маршрут */
+/* Карта */
 function openRoute(){
-  window.open("https://yandex.ru/maps/-/CPRav60J","_blank");
+  window.open("https://yandex.ru/maps/-/CPRav60J");
 }
 
-/* Telegram Bot */
-const token = "ВАШ_ТОКЕН_БОТА"; // вставьте токен от BotFather
-const chatId = "ВАШ_USER_ID";    // вставьте ваш Telegram ID
-const modal = document.getElementById("modalForm");
-const btn = document.getElementById("confirmBtn");
-const sendBtn = document.getElementById("sendConfirm");
+/* Модалка */
+const modal = document.getElementById("modal");
+document.getElementById("confirmBtn").onclick = ()=> modal.style.display="block";
 
-btn.addEventListener("click", ()=> modal.style.display="block");
-sendBtn.addEventListener("click", ()=>{
+/* 🔥 ОТПРАВКА (исправлено) */
+document.getElementById("sendBtn").onclick = function(){
+
   const firstName = document.getElementById("firstName").value.trim();
   const lastName = document.getElementById("lastName").value.trim();
-  if(!firstName || !lastName){ alert("Пожалуйста, заполните оба поля."); return; }
-  const message = `Новый гость подтвердил присутствие!\nИмя: ${firstName} ${lastName}`;
-  fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+
+  if(!firstName || !lastName){
+    alert("Заполните поля");
+    return;
+  }
+
+  fetch("/api/send", {
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({chat_id:chatId,text:message})
+    body: JSON.stringify({ firstName, lastName })
   })
   .then(()=>{
-    alert("Спасибо! Ваше подтверждение отправлено.");
+    alert("Отправлено ❤️");
     modal.style.display="none";
-    document.getElementById("firstName").value="";
-    document.getElementById("lastName").value="";
   })
-  .catch(()=>alert("Ошибка отправки. Попробуйте позже."));
-});
+  .catch(()=>{
+    alert("Ошибка");
+  });
+};
 
-// Закрытие модалки при клике вне
-window.onclick = (event)=>{ if(event.target==modal) modal.style.display="none"; };
+/* Закрытие */
+window.onclick = e => { if(e.target==modal) modal.style.display="none"; };
+
 </script>
+
 </body>
 </html>
