@@ -84,27 +84,9 @@ button {
 
 /* Таймер */
 #timer {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  font-family: 'Playfair Display', serif;
-  font-size: 36px;
-  margin-top: 20px;
-
-/* Финал */
-.final h1 {
-  font-size: 72px;
-  font-family: 'Playfair Display', serif;
-  color: #7faaff;
-  text-shadow: 0 0 15px #7faaff, 0 0 30px #aaccff;
-  animation: glow 2s infinite alternate;
+  font-size: 28px;
 }
-.final p { font-size:36px; }
-@keyframes glow { from { text-shadow:0 0 10px #7faaff;} to{ text-shadow:0 0 30px #aaccff;} }
 
-footer { text-align:center; padding:40px; color:white; }
-
-  
 /* Модалка */
 .modal {
   display: none;
@@ -146,8 +128,6 @@ input {
       <span>Сусанна</span>
     </h1>
     <p>18.08.2026</p>
-    <p style="font-size:18px;">Мы создаём нашу семью и будем счастливы разделить этот момент с вами ❤️</p>
-
     <button id="confirmBtn">Подтвердить присутствие</button>
   </div>
 </section>
@@ -156,7 +136,6 @@ input {
   <div class="card">
     <h2>Локация</h2>
     <p>Банкетный зал «На семи ветрах»</p>
-    <p>Саратов, Московское шоссе, 154 к1</p>
     <button onclick="openRoute()">Проложить маршрут</button>
   </div>
 </section>
@@ -164,22 +143,20 @@ input {
 <section>
   <div class="card">
     <h2>До свадьбы осталось</h2>
-    <div id="timer" style="font-size:28px;"></div>
+    <div id="timer"></div>
   </div>
 </section>
 
 <section>
   <div class="card">
     <h2>Дресс-код</h2>
-    <p>Будем признательны, если дамы воздержатся от платьев в оттенках белого 🤍</p>
+    <p>Без белого 🤍</p>
   </div>
 </section>
 
 <section>
-  <section>
-  <div class="card final">
-    <p>До встречи</p>
-    <h1>S & S</h1>
+  <div class="card">
+    <h2>До встречи ❤️</h2>
   </div>
 </section>
 
@@ -197,26 +174,21 @@ input {
 
 /* Анимация */
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.style.opacity = 1;
-      entry.target.style.transform = 'translateY(0)';
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.style.opacity = 1;
+      e.target.style.transform = "translateY(0)";
     }
   });
 });
-document.querySelectorAll('section').forEach(s => observer.observe(s));
+document.querySelectorAll("section").forEach(s => observer.observe(s));
 
 /* Таймер */
-const t = new Date('2026-08-18T00:00:00');
+const t = new Date('2026-08-18');
 setInterval(()=>{
   let d = t - new Date();
-  const days = Math.floor(d/86400000);
-  const hours = Math.floor(d/3600000 % 24);
-  const minutes = Math.floor(d/60000 % 60);
-  const seconds = Math.floor(d/1000 % 60);
-
   document.getElementById('timer').innerHTML =
-    `${days}д ${hours}ч ${minutes}м ${seconds}с`;
+    Math.floor(d/86400000) + " дней";
 },1000);
 
 /* Карта */
