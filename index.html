@@ -17,7 +17,7 @@ body {
   overflow-x: hidden;
 }
 
-/* 🎬 ВИДЕО ФОН */
+/* Видео фон */
 .video-bg {
   position: fixed;
   top: 0;
@@ -27,14 +27,11 @@ body {
   z-index: -10;
   overflow: hidden;
 }
-
 .video-bg video {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
-/* затемнение */
 .video-overlay {
   position: fixed;
   inset: 0;
@@ -65,13 +62,12 @@ section {
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
 }
-
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 
-/* Блок с именами — черный */
+/* Имена */
 .names-responsive {
   font-family: 'Playfair Display', serif;
   font-size: 72px; 
@@ -82,14 +78,11 @@ section {
   margin: 0;
   animation: fadeIn 1s ease forwards;
 }
-
 .names-responsive span { display: block; }
-
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
 @media (max-width: 480px) {
   .names-responsive { font-size: 48px; }
   .card { padding: 40px; max-width: 90%; }
@@ -105,7 +98,7 @@ section {
   text-shadow: 0 0 5px #aaccff33;
 }
 
-/* Кнопки — туманно-синие */
+/* Кнопки */
 button {
   margin-top: 30px;
   padding: 18px 50px;
@@ -117,7 +110,6 @@ button {
   font-size: 18px;
   transition: 0.3s, background 0.5s;
 }
-
 button:hover {
   background: #a0c2ff;
   transform: translateY(-4px) scale(1.05);
@@ -132,14 +124,12 @@ button:hover {
   font-size: 36px;
   margin-top: 20px;
 }
-
 .timer-segment {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-weight: 600;
 }
-
 .timer-segment span.label {
   font-size: 18px;
   font-weight: 400;
@@ -147,7 +137,7 @@ button:hover {
   color: #555;
 }
 
-/* Финальный блок */
+/* Финал */
 .final h1 {
   font-size: 72px;
   font-family: 'Playfair Display', serif;
@@ -155,21 +145,13 @@ button:hover {
   text-shadow: 0 0 15px #7faaff, 0 0 30px #aaccff;
   animation: glow 2s infinite alternate;
 }
-
-.final p {
-  font-size: 36px;
-}
-
+.final p { font-size: 36px; }
 @keyframes glow {
   from { text-shadow: 0 0 10px #7faaff; }
   to { text-shadow: 0 0 30px #aaccff; }
 }
 
-footer {
-  text-align: center;
-  padding: 40px;
-  color: white;
-}
+footer { text-align: center; padding: 40px; color: white; }
 
 /* Модальное окно */
 .modal {
@@ -183,7 +165,6 @@ footer {
   overflow: auto;
   background-color: rgba(0,0,0,0.5);
 }
-
 .modal-content {
   background-color: white;
   margin: 15% auto;
@@ -193,29 +174,26 @@ footer {
   max-width: 400px;
   text-align: center;
 }
-
 .modal-content input {
   width: 80%;
   padding: 10px;
   margin: 10px 0;
   font-size: 16px;
 }
-
 .modal-content button {
   margin-top: 15px;
+  type: button;
 }
 </style>
 </head>
-
 <body>
 
-<!-- 🎬 Видео -->
+<!-- Видео фон -->
 <div class="video-bg">
   <video autoplay muted loop playsinline>
     <source src="IMG_3309.mp4" type="video/mp4">
   </video>
 </div>
-
 <div class="video-overlay"></div>
 
 <!-- Блок с именами -->
@@ -226,10 +204,8 @@ footer {
       <span>&</span><br>
       <span>Сусанна</span>
     </h1>
-
     <p style="margin-top:20px; font-size:20px;">18.08.2026</p>
     <p style="font-size:18px;">Мы создаём нашу семью и будем счастливы разделить этот момент с вами ❤️</p>
-
     <button id="confirmBtn">Подтвердить присутствие</button>
   </div>
 </section>
@@ -240,7 +216,6 @@ footer {
     <h2>Локация</h2>
     <p>Банкетный зал «На семи ветрах»</p>
     <p>Саратов, Московское шоссе, 154 к1</p>
-    
     <button onclick="openRoute()">Проложить маршрут</button>
   </div>
 </section>
@@ -277,7 +252,7 @@ footer {
     <h2>Подтвердите присутствие</h2>
     <input type="text" id="firstName" placeholder="Имя" required>
     <input type="text" id="lastName" placeholder="Фамилия" required>
-    <button id="sendConfirm">Отправить</button>
+    <button type="button" id="sendConfirm">Отправить</button>
   </div>
 </div>
 
@@ -302,69 +277,50 @@ function updateTimer() {
   const hours = Math.floor(diff / 3600000 % 24);
   const minutes = Math.floor(diff / 60000 % 60);
   const seconds = Math.floor(diff / 1000 % 60);
-
-  const timerHTML = `
+  document.getElementById('timer').innerHTML = `
     <div class="timer-segment"><div>${days}</div><span class="label">дней</span></div>
     <div class="timer-segment"><div>${hours}</div><span class="label">часов</span></div>
     <div class="timer-segment"><div>${minutes}</div><span class="label">минут</span></div>
     <div class="timer-segment"><div>${seconds}</div><span class="label">секунд</span></div>
   `;
-  document.getElementById('timer').innerHTML = timerHTML;
 }
-setInterval(updateTimer, 1000);
+setInterval(updateTimer,1000);
 updateTimer();
 
 /* Проложить маршрут */
 function openRoute(){
-  window.open("https://yandex.ru/maps/-/CPRav60J", "_blank");
+  window.open("https://yandex.ru/maps/-/CPRav60J","_blank");
 }
 
-/* Telegram Bot данные */
+/* Telegram Bot */
 const token = "8709950732:AAEN7Tu0J4SM0S9QqRj7_QpPV_oivytg1lI";
 const chatId = "323969398";
-
-/* Модальное окно */
 const modal = document.getElementById("modalForm");
 const btn = document.getElementById("confirmBtn");
 const sendBtn = document.getElementById("sendConfirm");
 
-btn.onclick = () => {
-  modal.style.display = "block";
-};
-
-sendBtn.onclick = () => {
+btn.addEventListener("click", () => modal.style.display="block");
+sendBtn.addEventListener("click", () => {
   const firstName = document.getElementById("firstName").value.trim();
   const lastName = document.getElementById("lastName").value.trim();
-  if(!firstName || !lastName){
-    alert("Пожалуйста, заполните оба поля.");
-    return;
-  }
-
+  if(!firstName || !lastName){ alert("Пожалуйста, заполните оба поля."); return; }
   const message = `Новый гость подтвердил присутствие!\nИмя: ${firstName} ${lastName}`;
-
   fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: message
-    })
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({chat_id:chatId,text:message})
   })
-  .then(() => {
-    alert("Спасибо! Ваше подтверждение отправлено.");
-    modal.style.display = "none";
-    document.getElementById("firstName").value = "";
-    document.getElementById("lastName").value = "";
+  .then(()=>{ 
+    alert("Спасибо! Ваше подтверждение отправлено."); 
+    modal.style.display="none"; 
+    document.getElementById("firstName").value="";
+    document.getElementById("lastName").value="";
   })
-  .catch(() => alert("Ошибка отправки. Попробуйте позже."));
-};
+  .catch(()=>alert("Ошибка отправки. Попробуйте позже."));
+});
 
-/* Закрытие модального при клике вне */
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-};
+// Закрытие модалки при клике вне
+window.onclick = (event)=>{ if(event.target==modal) modal.style.display="none"; };
 </script>
 
 </body>
