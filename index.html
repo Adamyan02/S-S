@@ -46,7 +46,7 @@ section {
   transition: 0.8s;
 }
 
-/* Карточки */
+/* Карточки с рамкой PNG */
 .card {
   background: rgba(255,255,255,0.9);
   padding: 50px;
@@ -54,17 +54,16 @@ section {
   max-width: 700px;
   text-align: center;
 
-  /* внутренняя линия (коричневая) — динамическая */
-  border: 2px solid #8b6b4a;
-  border-width: 2px; /* начальная ширина */
-
-  /* внешняя линия (синяя) */
-  outline: 6px solid #9bbcff;
-  outline-offset: 6px;
+  /* рамка как локальный PNG */
+  background-image: url('Floral-Blue-Frame-Transparent.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 
-  transition: border-width 0.4s ease, transform 0.4s ease;
+  /* Плавная анимация при скролле */
+  transition: transform 0.4s ease;
 }
 
 /* Имена */
@@ -245,27 +244,23 @@ function updateTimer(){
 setInterval(updateTimer, 1000);
 updateTimer();
 
-// Карточки с динамической рамкой
+// Динамическая анимация карточек
 const cards = document.querySelectorAll('.card');
-function updateBorders() {
+function updateCardsEffect() {
   const viewportCenter = window.innerHeight / 2;
   cards.forEach(card => {
     const rect = card.getBoundingClientRect();
     const elementCenter = rect.top + rect.height / 2;
     if(Math.abs(viewportCenter - elementCenter) < window.innerHeight * 0.15){
-      // В центре экрана — утолщаем
-      card.style.borderWidth = '6px';
       card.style.transform = 'scale(1.02)';
     } else {
-      // Вне центра — возвращаем тонкую рамку
-      card.style.borderWidth = '2px';
       card.style.transform = 'scale(1)';
     }
   });
 }
-window.addEventListener('scroll', updateBorders);
-window.addEventListener('resize', updateBorders);
-document.addEventListener('DOMContentLoaded', updateBorders);
+window.addEventListener('scroll', updateCardsEffect);
+window.addEventListener('resize', updateCardsEffect);
+document.addEventListener('DOMContentLoaded', updateCardsEffect);
 
 // Маршрут
 function openRoute(){
