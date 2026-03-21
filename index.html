@@ -59,15 +59,34 @@ section {
   outline-offset: 10px;
 
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-/* Углы */
+.card.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Цветы */
 .corner {
   position: absolute;
   width: 90px;
   height: auto;
   pointer-events: none;
   z-index: 3;
+
+  opacity: 0;
+  transform: scale(0.7);
+  transition: all 0.8s ease;
+}
+
+.card.visible .corner {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: 0.3s;
 }
 
 .corner-tl { top: -30px; left: -30px; }
@@ -75,7 +94,7 @@ section {
 .corner-bl { bottom: -30px; left: -30px; }
 .corner-br { bottom: -30px; right: -30px; }
 
-/* Имена */
+/* Текст */
 .names {
   font-family: 'Playfair Display', serif;
   font-size: 60px;
@@ -84,7 +103,6 @@ section {
 }
 .names span { display: block; }
 
-/* Заголовки */
 h2 {
   font-family: 'Playfair Display', serif;
   font-size: 32px;
@@ -92,7 +110,6 @@ h2 {
   margin-bottom: 20px;
 }
 
-/* Кнопки */
 button {
   margin-top: 20px;
   padding: 15px 40px;
@@ -104,7 +121,6 @@ button {
   cursor: pointer;
 }
 
-/* Таймер */
 #timer {
   font-size: 28px;
   margin-top: 20px;
@@ -131,10 +147,9 @@ button {
 @media (max-width: 600px) {
 
   section {
-    padding: 45px 10px; /* увеличили расстояние */
+    padding: 45px 10px;
   }
 
-  /* дополнительное расстояние между блоками */
   section + section {
     margin-top: 10px;
   }
@@ -271,15 +286,33 @@ footer {
 </div>
 
 <script>
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting){
-      e.target.style.opacity = 1;
-      e.target.style.transform = "translateY(0)";
+const sections = document.querySelectorAll("section");
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+
+      setTimeout(() => {
+        entry.target.style.opacity = 1;
+        entry.target.style.transform = "translateY(0)";
+
+        const card = entry.target.querySelector(".card");
+        if(card) card.classList.add("visible");
+
+      }, index * 150);
+
+    } else {
+
+      const card = entry.target.querySelector(".card");
+      if(card) card.classList.remove("visible");
+
+      entry.target.style.opacity = 0;
+      entry.target.style.transform = "translateY(40px)";
     }
   });
-});
-document.querySelectorAll("section").forEach(s => observer.observe(s));
+}, { threshold: 0.3 });
+
+sections.forEach(section => observer.observe(section));
 
 const targetDate = new Date('2026-08-18T00:00:00');
 function updateTimer(){
