@@ -46,7 +46,7 @@ section {
   transition: 0.8s;
 }
 
-/* ===== КАРТОЧКИ ===== */
+/* Карточки */
 .card {
   background: rgba(255,255,255,0.9);
   padding: 50px;
@@ -54,8 +54,9 @@ section {
   max-width: 700px;
   text-align: center;
 
-  /* внутренняя линия (коричневая) тонкая по умолчанию */
+  /* внутренняя линия (коричневая) — динамическая */
   border: 2px solid #8b6b4a;
+  border-width: 2px; /* начальная ширина */
 
   /* внешняя линия (синяя) */
   outline: 6px solid #9bbcff;
@@ -63,19 +64,7 @@ section {
 
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 
-  /* для плавного увеличения рамки */
-  transition: border-width 1s ease;
-}
-
-/* ПЕРВЫЙ БЛОК — чуть акцентнее */
-section:first-of-type .card {
-  outline: 8px solid #9bbcff;
-  border: 2px solid #8b6b4a;
-}
-
-/* Класс для анимации рамки при скролле */
-.card.animate-border {
-  border-width: 6px; /* конечная толщина, как синяя рамка */
+  transition: border-width 0.4s ease, transform 0.4s ease;
 }
 
 /* Имена */
@@ -167,7 +156,6 @@ footer {
 }
 </style>
 </head>
-
 <body>
 
 <div class="video-bg">
@@ -232,18 +220,12 @@ footer {
 </div>
 
 <script>
-// Появление блоков и анимация рамки
+// Плавное появление секций
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if(e.isIntersecting){
       e.target.style.opacity = 1;
       e.target.style.transform = "translateY(0)";
-      
-      // Анимация коричневой рамки при скролле
-      const card = e.target.querySelector('.card');
-      if(card && !card.classList.contains('animate-border')){
-        card.classList.add('animate-border');
-      }
     }
   });
 });
@@ -263,6 +245,28 @@ function updateTimer(){
 setInterval(updateTimer, 1000);
 updateTimer();
 
+// Карточки с динамической рамкой
+const cards = document.querySelectorAll('.card');
+function updateBorders() {
+  const viewportCenter = window.innerHeight / 2;
+  cards.forEach(card => {
+    const rect = card.getBoundingClientRect();
+    const elementCenter = rect.top + rect.height / 2;
+    if(Math.abs(viewportCenter - elementCenter) < window.innerHeight * 0.15){
+      // В центре экрана — утолщаем
+      card.style.borderWidth = '6px';
+      card.style.transform = 'scale(1.02)';
+    } else {
+      // Вне центра — возвращаем тонкую рамку
+      card.style.borderWidth = '2px';
+      card.style.transform = 'scale(1)';
+    }
+  });
+}
+window.addEventListener('scroll', updateBorders);
+window.addEventListener('resize', updateBorders);
+document.addEventListener('DOMContentLoaded', updateBorders);
+
 // Маршрут
 function openRoute(){
   window.open("https://yandex.ru/maps/-/CPRav60J");
@@ -271,28 +275,14 @@ function openRoute(){
 // Модалка
 const modal = document.getElementById("modal");
 document.getElementById("confirmBtn").onclick = ()=> modal.style.display="block";
-
 document.getElementById("sendBtn").onclick = function(){
   const firstName = document.getElementById("firstName").value.trim();
   const lastName = document.getElementById("lastName").value.trim();
-  if(!firstName || !lastName){
-    alert("Заполните поля");
-    return;
-  }
-  fetch("/api/send", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ firstName, lastName })
-  })
-  .then(()=>{
-    alert("Отправлено ❤️");
-    modal.style.display="none";
-  })
-  .catch(()=>{
-    alert("Ошибка отправки.");
-  });
+  if(!firstName || !lastName){ alert("Заполните поля"); return; }
+  fetch("/api/send", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ firstName, lastName }) })
+  .then(()=>{ alert("Отправлено ❤️"); modal.style.display="none"; })
+  .catch(()=>{ alert("Ошибка отправки."); });
 };
-
 window.onclick = e => { if(e.target==modal) modal.style.display="none"; };
 </script>
 
