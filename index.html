@@ -50,7 +50,7 @@ section {
 .card {
   position: relative;
   background: rgba(255,255,255,0.9);
-  padding: 70px 60px; /* увеличили чтобы цветы не лезли в текст */
+  padding: 70px 60px;
   border-radius: 30px;
   max-width: 700px;
   text-align: center;
@@ -70,7 +70,6 @@ section {
   z-index: 3;
 }
 
-/* Точные позиции */
 .corner-tl { top: -30px; left: -30px; }
 .corner-tr { top: -30px; right: -30px; }
 .corner-bl { bottom: -30px; left: -30px; }
@@ -128,6 +127,35 @@ button {
   to { text-shadow:0 0 30px #aaccff;} 
 }
 
+/* ===== МОБИЛКА ===== */
+@media (max-width: 600px) {
+
+  section {
+    padding: 25px 10px;
+  }
+
+  .card {
+    max-width: 80%;
+    padding: 35px 20px;
+  }
+
+  /* увеличенные цветы */
+  .corner {
+    width: 100px;
+  }
+
+  .corner-tl { top: -30px; left: -30px; }
+  .corner-tr { top: -30px; right: -30px; }
+  .corner-bl { bottom: -30px; left: -30px; }
+  .corner-br { bottom: -30px; right: -30px; }
+
+  .names { font-size: 38px; }
+  h2 { font-size: 22px; }
+  #timer { font-size: 20px; }
+  .final h1 { font-size: 60px; }
+  .final p { font-size: 24px; }
+}
+
 /* Модалка */
 .modal {
   display: none;
@@ -146,12 +174,10 @@ button {
 }
 input { width: 90%; margin: 10px 0; padding: 10px; }
 
-/* Футер */
 footer {
   text-align: center;
   padding: 40px;
   font-family: 'Playfair Display', serif;
-  font-size: 18px;
 }
 </style>
 </head>
@@ -165,79 +191,80 @@ footer {
 </div>
 <div class="video-overlay"></div>
 
+<!-- БЛОКИ -->
 <section>
-  <div class="card">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+<div class="card">
+<img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+<img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+<img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+<img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
 
-    <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
-    <p>18.08.2026</p>
-    <p>Мы создаём нашу семью и будем счастливы разделить этот момент с вами ❤️</p>
-    <button id="confirmBtn">Подтвердить присутствие</button>
-  </div>
+<h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
+<p>18.08.2026</p>
+<p>Мы создаём нашу семью и будем счастливы разделить этот момент с вами ❤️</p>
+<button id="confirmBtn">Подтвердить присутствие</button>
+</div>
 </section>
 
 <section>
-  <div class="card">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+<div class="card">
+<img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+<img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+<img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+<img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
 
-    <h2>Локация</h2>
-    <p>Банкетный зал «На семи ветрах»</p>
-    <p>Саратов, Московское шоссе, 154 к1</p>
-    <button onclick="openRoute()">Проложить маршрут</button>
-  </div>
+<h2>Локация</h2>
+<p>Банкетный зал «На семи ветрах»</p>
+<p>Саратов, Московское шоссе, 154 к1</p>
+<button onclick="openRoute()">Проложить маршрут</button>
+</div>
 </section>
 
 <section>
-  <div class="card">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+<div class="card">
+<img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+<img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+<img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+<img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
 
-    <h2>До свадьбы осталось</h2>
-    <div id="timer"></div>
-  </div>
+<h2>До свадьбы осталось</h2>
+<div id="timer"></div>
+</div>
 </section>
 
 <section>
-  <div class="card">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+<div class="card">
+<img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+<img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+<img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+<img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
 
-    <h2>Дресс-код</h2>
-    <p>Будем признательны, если дамы воздержатся от платьев в оттенках белого 🤍</p>
-  </div>
+<h2>Дресс-код</h2>
+<p>Будем признательны, если дамы воздержатся от платьев в оттенках белого 🤍</p>
+</div>
 </section>
 
 <section>
-  <div class="card final">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+<div class="card final">
+<img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+<img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+<img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+<img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
 
-    <p>До встречи</p>
-    <h1>S & S</h1>
-  </div>
+<p>До встречи</p>
+<h1>S & S</h1>
+</div>
 </section>
 
 <footer>© 2026 Сос & Сусанна</footer>
 
 <div class="modal" id="modal">
-  <div class="modal-content">
-    <h3>Введите данные</h3>
-    <input id="firstName" placeholder="Имя">
-    <input id="lastName" placeholder="Фамилия">
-    <button id="sendBtn">Отправить</button>
-  </div>
+<div class="modal-content">
+<h3>Введите данные</h3>
+<input id="firstName" placeholder="Имя">
+<input id="lastName" placeholder="Фамилия">
+<button id="sendBtn">Отправить</button>
+</div>
 </div>
 
 <script>
@@ -259,7 +286,8 @@ function updateTimer(){
   const hours = Math.floor(diff/3600000 %24);
   const minutes = Math.floor(diff/60000 %60);
   const seconds = Math.floor(diff/1000 %60);
-  document.getElementById('timer').innerHTML = `${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
+  document.getElementById('timer').innerHTML =
+    `${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
 }
 setInterval(updateTimer, 1000);
 updateTimer();
