@@ -46,23 +46,32 @@ section {
   transition: 0.8s;
 }
 
-/* Карточки с рамкой PNG */
+/* ===== Карточки с рамкой PNG ===== */
 .card {
+  position: relative; /* для рамки */
   background: rgba(255,255,255,0.9);
   padding: 50px;
   border-radius: 30px;
   max-width: 700px;
   text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  z-index: 1;
+  transition: transform 0.4s ease;
+}
 
-  /* рамка как локальный PNG */
+/* Рамка поверх карточки */
+.card .frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
   background-image: url('Floral-Blue-Frame-Transparent.png');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
-
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-
-  /* Плавная анимация при скролле */
+  z-index: 2;
   transition: transform 0.4s ease;
 }
 
@@ -166,6 +175,7 @@ footer {
 
 <section>
   <div class="card">
+    <div class="frame"></div>
     <h1 class="names">
       <span>Сос</span>
       <span>&</span>
@@ -179,6 +189,7 @@ footer {
 
 <section>
   <div class="card">
+    <div class="frame"></div>
     <h2>Локация</h2>
     <p>Банкетный зал «На семи ветрах»</p>
     <p>Саратов, Московское шоссе, 154 к1</p>
@@ -188,6 +199,7 @@ footer {
 
 <section>
   <div class="card">
+    <div class="frame"></div>
     <h2>До свадьбы осталось</h2>
     <div id="timer"></div>
   </div>
@@ -195,6 +207,7 @@ footer {
 
 <section>
   <div class="card">
+    <div class="frame"></div>
     <h2>Дресс-код</h2>
     <p>Будем признательны, если дамы воздержатся от платьев в оттенках белого 🤍</p>
   </div>
@@ -202,6 +215,7 @@ footer {
 
 <section>
   <div class="card final">
+    <div class="frame"></div>
     <p>До встречи</p>
     <h1>S & S</h1>
   </div>
@@ -244,17 +258,18 @@ function updateTimer(){
 setInterval(updateTimer, 1000);
 updateTimer();
 
-// Динамическая анимация карточек
+// Динамическая анимация рамки
 const cards = document.querySelectorAll('.card');
 function updateCardsEffect() {
   const viewportCenter = window.innerHeight / 2;
   cards.forEach(card => {
     const rect = card.getBoundingClientRect();
     const elementCenter = rect.top + rect.height / 2;
+    const frame = card.querySelector('.frame');
     if(Math.abs(viewportCenter - elementCenter) < window.innerHeight * 0.15){
-      card.style.transform = 'scale(1.02)';
+      frame.style.transform = 'scale(1.05)'; // увеличиваем рамку
     } else {
-      card.style.transform = 'scale(1)';
+      frame.style.transform = 'scale(1)'; // нормальная рамка
     }
   });
 }
