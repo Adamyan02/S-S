@@ -61,11 +61,8 @@ section {
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: contain; /* сохраняем пропорции */
   pointer-events: none;
-  background-image: url('Floral-Blue-Frame-Transparent.png');
-  background-repeat: no-repeat;
-  background-size: 100% 100%; /* подстраиваем под размеры блока */
-  background-position: center;
   z-index: 2;
   transition: transform 0.4s ease;
 }
@@ -74,7 +71,7 @@ section {
 .card-wrapper .card {
   position: relative;
   background: #ffffff; /* белый фон */
-  padding: 60px 40px; /* отступы от рамки до текста */
+  padding: 60px 40px; /* текст не касается рамки */
   border-radius: 30px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
   z-index: 1;
@@ -174,7 +171,7 @@ footer {
 
 <section>
   <div class="card-wrapper">
-    <div class="frame"></div>
+    <img class="frame" src="Floral-Blue-Frame-Transparent.png" alt="рамка">
     <div class="card">
       <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
       <p>18.08.2026</p>
@@ -186,7 +183,7 @@ footer {
 
 <section>
   <div class="card-wrapper">
-    <div class="frame"></div>
+    <img class="frame" src="Floral-Blue-Frame-Transparent.png" alt="рамка">
     <div class="card">
       <h2>Локация</h2>
       <p>Банкетный зал «На семи ветрах»</p>
@@ -198,7 +195,7 @@ footer {
 
 <section>
   <div class="card-wrapper">
-    <div class="frame"></div>
+    <img class="frame" src="Floral-Blue-Frame-Transparent.png" alt="рамка">
     <div class="card">
       <h2>До свадьбы осталось</h2>
       <div id="timer"></div>
@@ -208,7 +205,7 @@ footer {
 
 <section>
   <div class="card-wrapper">
-    <div class="frame"></div>
+    <img class="frame" src="Floral-Blue-Frame-Transparent.png" alt="рамка">
     <div class="card">
       <h2>Дресс-код</h2>
       <p>Будем признательны, если дамы воздержатся от платьев в оттенках белого 🤍</p>
@@ -218,7 +215,7 @@ footer {
 
 <section>
   <div class="card-wrapper final">
-    <div class="frame"></div>
+    <img class="frame" src="Floral-Blue-Frame-Transparent.png" alt="рамка">
     <div class="card">
       <p>До встречи</p>
       <h1>S & S</h1>
