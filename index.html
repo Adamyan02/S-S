@@ -46,32 +46,39 @@ section {
   transition: 0.8s;
 }
 
-/* ===== Карточки с рамкой PNG ===== */
-.card {
+/* Обёртка карточки с рамкой */
+.card-wrapper {
   position: relative;
-  background: #ffffff; /* белый фон внутри рамки */
-  padding: 60px 40px; /* отступ от рамки до текста */
-  border-radius: 30px;
+  display: inline-block;
   max-width: 700px;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-  z-index: 1;
-  transition: transform 0.4s ease;
+  margin: 0 auto;
 }
 
-/* Рамка поверх карточки */
-.card .frame {
+/* Рамка PNG вокруг блока */
+.card-wrapper .frame {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* рамка не мешает кликам */
+  pointer-events: none;
   background-image: url('Floral-Blue-Frame-Transparent.png');
   background-repeat: no-repeat;
-  background-size: contain; /* сохраняет пропорции */
+  background-size: 100% 100%; /* подстраиваем под размеры блока */
   background-position: center;
   z-index: 2;
+  transition: transform 0.4s ease;
+}
+
+/* Карточка внутри рамки */
+.card-wrapper .card {
+  position: relative;
+  background: #ffffff; /* белый фон */
+  padding: 60px 40px; /* отступы от рамки до текста */
+  border-radius: 30px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  z-index: 1;
+  text-align: center;
   transition: transform 0.4s ease;
 }
 
@@ -82,9 +89,7 @@ section {
   line-height: 1.1;
   color: #4f6fae;
 }
-.names span {
-  display: block;
-}
+.names span { display: block; }
 
 /* Заголовки */
 h2 {
@@ -122,10 +127,7 @@ button {
   margin: 0;
   animation: glow 2s infinite alternate;
 }
-.final p {
-  font-size: 36px;
-  margin-bottom: 20px;
-}
+.final p { font-size: 36px; margin-bottom: 20px; }
 
 @keyframes glow { 
   from { text-shadow:0 0 10px #7faaff;} 
@@ -148,11 +150,7 @@ button {
   max-width: 300px;
   text-align: center;
 }
-input {
-  width: 90%;
-  margin: 10px 0;
-  padding: 10px;
-}
+input { width: 90%; margin: 10px 0; padding: 10px; }
 
 /* Футер */
 footer {
@@ -164,6 +162,7 @@ footer {
 }
 </style>
 </head>
+
 <body>
 
 <div class="video-bg">
@@ -174,50 +173,56 @@ footer {
 <div class="video-overlay"></div>
 
 <section>
-  <div class="card">
+  <div class="card-wrapper">
     <div class="frame"></div>
-    <h1 class="names">
-      <span>Сос</span>
-      <span>&</span>
-      <span>Сусанна</span>
-    </h1>
-    <p>18.08.2026</p>
-    <p>Мы создаём нашу семью и будем счастливы разделить этот момент с вами ❤️</p>
-    <button id="confirmBtn">Подтвердить присутствие</button>
+    <div class="card">
+      <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
+      <p>18.08.2026</p>
+      <p>Мы создаём нашу семью и будем счастливы разделить этот момент с вами ❤️</p>
+      <button id="confirmBtn">Подтвердить присутствие</button>
+    </div>
   </div>
 </section>
 
 <section>
-  <div class="card">
+  <div class="card-wrapper">
     <div class="frame"></div>
-    <h2>Локация</h2>
-    <p>Банкетный зал «На семи ветрах»</p>
-    <p>Саратов, Московское шоссе, 154 к1</p>
-    <button onclick="openRoute()">Проложить маршрут</button>
+    <div class="card">
+      <h2>Локация</h2>
+      <p>Банкетный зал «На семи ветрах»</p>
+      <p>Саратов, Московское шоссе, 154 к1</p>
+      <button onclick="openRoute()">Проложить маршрут</button>
+    </div>
   </div>
 </section>
 
 <section>
-  <div class="card">
+  <div class="card-wrapper">
     <div class="frame"></div>
-    <h2>До свадьбы осталось</h2>
-    <div id="timer"></div>
+    <div class="card">
+      <h2>До свадьбы осталось</h2>
+      <div id="timer"></div>
+    </div>
   </div>
 </section>
 
 <section>
-  <div class="card">
+  <div class="card-wrapper">
     <div class="frame"></div>
-    <h2>Дресс-код</h2>
-    <p>Будем признательны, если дамы воздержатся от платьев в оттенках белого 🤍</p>
+    <div class="card">
+      <h2>Дресс-код</h2>
+      <p>Будем признательны, если дамы воздержатся от платьев в оттенках белого 🤍</p>
+    </div>
   </div>
 </section>
 
 <section>
-  <div class="card final">
+  <div class="card-wrapper final">
     <div class="frame"></div>
-    <p>До встречи</p>
-    <h1>S & S</h1>
+    <div class="card">
+      <p>До встречи</p>
+      <h1>S & S</h1>
+    </div>
   </div>
 </section>
 
@@ -259,23 +264,23 @@ setInterval(updateTimer, 1000);
 updateTimer();
 
 // Анимация рамки при скролле
-const cards = document.querySelectorAll('.card');
-function updateCardsEffect() {
+const wrappers = document.querySelectorAll('.card-wrapper');
+function updateFrames() {
   const viewportCenter = window.innerHeight / 2;
-  cards.forEach(card => {
-    const rect = card.getBoundingClientRect();
-    const elementCenter = rect.top + rect.height / 2;
-    const frame = card.querySelector('.frame');
-    if(Math.abs(viewportCenter - elementCenter) < window.innerHeight * 0.15){
-      frame.style.transform = 'scale(1.05)'; // увеличиваем рамку
+  wrappers.forEach(wrapper => {
+    const rect = wrapper.getBoundingClientRect();
+    const center = rect.top + rect.height / 2;
+    const frame = wrapper.querySelector('.frame');
+    if(Math.abs(viewportCenter - center) < window.innerHeight * 0.15){
+      frame.style.transform = 'scale(1.05)'; // слегка увеличиваем рамку
     } else {
       frame.style.transform = 'scale(1)';
     }
   });
 }
-window.addEventListener('scroll', updateCardsEffect);
-window.addEventListener('resize', updateCardsEffect);
-document.addEventListener('DOMContentLoaded', updateCardsEffect);
+window.addEventListener('scroll', updateFrames);
+window.addEventListener('resize', updateFrames);
+document.addEventListener('DOMContentLoaded', updateFrames);
 
 // Маршрут
 function openRoute(){
