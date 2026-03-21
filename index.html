@@ -167,6 +167,12 @@ button {
 /* ===== МОБИЛКА ===== */
 @media (max-width: 600px) {
 
+  /* Запрет горизонтального скролла */
+  html, body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
   section {
     padding: 45px 10px;
   }
