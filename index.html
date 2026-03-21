@@ -46,7 +46,7 @@ section {
   transition: 0.8s;
 }
 
-/* ===== КАРТОЧКИ (НОВАЯ РАМКА) ===== */
+/* ===== КАРТОЧКИ ===== */
 .card {
   background: rgba(255,255,255,0.9);
   padding: 50px;
@@ -54,7 +54,7 @@ section {
   max-width: 700px;
   text-align: center;
 
-  /* внутренняя линия (коричневая) */
+  /* внутренняя линия (коричневая) тонкая по умолчанию */
   border: 2px solid #8b6b4a;
 
   /* внешняя линия (синяя) */
@@ -62,12 +62,20 @@ section {
   outline-offset: 6px;
 
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+
+  /* для плавного увеличения рамки */
+  transition: border-width 1s ease;
 }
 
 /* ПЕРВЫЙ БЛОК — чуть акцентнее */
 section:first-of-type .card {
   outline: 8px solid #9bbcff;
   border: 2px solid #8b6b4a;
+}
+
+/* Класс для анимации рамки при скролле */
+.card.animate-border {
+  border-width: 6px; /* конечная толщина, как синяя рамка */
 }
 
 /* Имена */
@@ -224,16 +232,24 @@ footer {
 </div>
 
 <script>
+// Появление блоков и анимация рамки
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if(e.isIntersecting){
       e.target.style.opacity = 1;
       e.target.style.transform = "translateY(0)";
+      
+      // Анимация коричневой рамки при скролле
+      const card = e.target.querySelector('.card');
+      if(card && !card.classList.contains('animate-border')){
+        card.classList.add('animate-border');
+      }
     }
   });
 });
 document.querySelectorAll("section").forEach(s => observer.observe(s));
 
+// Таймер
 const targetDate = new Date('2026-08-18T00:00:00');
 function updateTimer(){
   const now = new Date();
@@ -247,10 +263,12 @@ function updateTimer(){
 setInterval(updateTimer, 1000);
 updateTimer();
 
+// Маршрут
 function openRoute(){
   window.open("https://yandex.ru/maps/-/CPRav60J");
 }
 
+// Модалка
 const modal = document.getElementById("modal");
 document.getElementById("confirmBtn").onclick = ()=> modal.style.display="block";
 
