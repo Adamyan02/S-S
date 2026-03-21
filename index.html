@@ -48,9 +48,9 @@ section {
 
 /* ===== Карточки с рамкой PNG ===== */
 .card {
-  position: relative; /* для рамки */
-  background: rgba(255,255,255,0.9);
-  padding: 50px;
+  position: relative;
+  background: #ffffff; /* белый фон внутри рамки */
+  padding: 60px 40px; /* отступ от рамки до текста */
   border-radius: 30px;
   max-width: 700px;
   text-align: center;
@@ -66,10 +66,10 @@ section {
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
+  pointer-events: none; /* рамка не мешает кликам */
   background-image: url('Floral-Blue-Frame-Transparent.png');
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: contain; /* сохраняет пропорции */
   background-position: center;
   z-index: 2;
   transition: transform 0.4s ease;
@@ -258,7 +258,7 @@ function updateTimer(){
 setInterval(updateTimer, 1000);
 updateTimer();
 
-// Динамическая анимация рамки
+// Анимация рамки при скролле
 const cards = document.querySelectorAll('.card');
 function updateCardsEffect() {
   const viewportCenter = window.innerHeight / 2;
@@ -269,7 +269,7 @@ function updateCardsEffect() {
     if(Math.abs(viewportCenter - elementCenter) < window.innerHeight * 0.15){
       frame.style.transform = 'scale(1.05)'; // увеличиваем рамку
     } else {
-      frame.style.transform = 'scale(1)'; // нормальная рамка
+      frame.style.transform = 'scale(1)';
     }
   });
 }
