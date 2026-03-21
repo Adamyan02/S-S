@@ -40,48 +40,34 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
+  padding: 50px 20px;
   opacity: 0;
   transform: translateY(40px);
   transition: 0.8s;
 }
 
-/* ===== КАРТОЧКА ===== */
+/* ===== КАРТОЧКИ (НОВАЯ РАМКА) ===== */
 .card {
-  position: relative;
-  padding: 60px 60px;
+  background: rgba(255,255,255,0.9);
+  padding: 50px;
+  border-radius: 30px;
   max-width: 700px;
   text-align: center;
-  z-index: 2;
+
+  /* внутренняя линия (коричневая) */
+  border: 2px solid #8b6b4a;
+
+  /* внешняя линия (синяя) */
+  outline: 6px solid #9bbcff;
+  outline-offset: 6px;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
-/* РАМКА */
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url('frame.png') no-repeat center;
-  background-size: contain;
-  z-index: -2;
-}
-
-/* ВНУТРЕННЯЯ ПОДЛОЖКА */
-.card::after {
-  content: "";
-  position: absolute;
-  inset: 25px;
-  background: rgba(255,255,255,0.75);
-  border-radius: 20px;
-  z-index: -1;
-}
-
-/* ПЕРВЫЙ БЛОК — КРУПНЕЕ */
+/* ПЕРВЫЙ БЛОК — чуть акцентнее */
 section:first-of-type .card {
-  padding: 80px 70px;
-}
-
-section:first-of-type .card::before {
-  transform: scale(1.1);
+  outline: 8px solid #9bbcff;
+  border: 2px solid #8b6b4a;
 }
 
 /* Имена */
@@ -169,6 +155,7 @@ footer {
   padding: 40px;
   font-family: 'Playfair Display', serif;
   font-size: 18px;
+  color: #1a1a1a;
 }
 </style>
 </head>
