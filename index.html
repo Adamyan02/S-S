@@ -131,7 +131,12 @@ button {
 @media (max-width: 600px) {
 
   section {
-    padding: 25px 10px;
+    padding: 45px 10px; /* увеличили расстояние */
+  }
+
+  /* дополнительное расстояние между блоками */
+  section + section {
+    margin-top: 10px;
   }
 
   .card {
@@ -139,7 +144,6 @@ button {
     padding: 35px 20px;
   }
 
-  /* увеличенные цветы */
   .corner {
     width: 100px;
   }
@@ -191,7 +195,6 @@ footer {
 </div>
 <div class="video-overlay"></div>
 
-<!-- БЛОКИ -->
 <section>
 <div class="card">
 <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
