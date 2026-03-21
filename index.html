@@ -46,25 +46,42 @@ section {
   transition: 0.8s;
 }
 
-/* ===== КАРТОЧКИ С РАМКОЙ ===== */
+/* ===== КАРТОЧКА ===== */
 .card {
-  background: rgba(255,255,255,0.92);
-  padding: 50px 60px;
+  position: relative;
+  padding: 60px 60px;
   max-width: 700px;
   text-align: center;
-
-  border: 25px solid transparent;
-  border-image: url('frame.png') 80 stretch;
-
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-  backdrop-filter: blur(6px);
+  z-index: 2;
 }
 
-/* ПЕРВЫЙ БЛОК — ТОЛЩЕ */
+/* РАМКА */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('frame.png') no-repeat center;
+  background-size: contain;
+  z-index: -2;
+}
+
+/* ВНУТРЕННЯЯ ПОДЛОЖКА */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 25px;
+  background: rgba(255,255,255,0.75);
+  border-radius: 20px;
+  z-index: -1;
+}
+
+/* ПЕРВЫЙ БЛОК — КРУПНЕЕ */
 section:first-of-type .card {
-  border: 40px solid transparent;
-  border-image: url('frame.png') 80 stretch;
-  padding: 70px 60px;
+  padding: 80px 70px;
+}
+
+section:first-of-type .card::before {
+  transform: scale(1.1);
 }
 
 /* Имена */
@@ -72,7 +89,7 @@ section:first-of-type .card {
   font-family: 'Playfair Display', serif;
   font-size: 60px;
   line-height: 1.1;
-  color: #4f6fae; /* бледно-синий */
+  color: #4f6fae;
 }
 .names span {
   display: block;
@@ -152,7 +169,6 @@ footer {
   padding: 40px;
   font-family: 'Playfair Display', serif;
   font-size: 18px;
-  color: #1a1a1a;
 }
 </style>
 </head>
