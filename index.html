@@ -2,23 +2,25 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Сос и Сусанна ❤️</title>
 
 <!-- Шрифты -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* запрет горизонтального скролла */
+  overflow-y: hidden; /* убираем стандартный скролл, листаем через JS */
+  font-family: 'Montserrat', sans-serif;
+  background: #f5ebdc;
+  color: #1a1a1a;
 }
 
 body {
-  margin: 0;
-  font-family: 'Montserrat', sans-serif;
-  color: #1a1a1a;
-  background: #f5ebdc;
+  touch-action: pan-y; /* предотвращаем масштабирование и горизонтальные свайпы */
 }
 
 /* Видео фон */
@@ -72,7 +74,7 @@ section {
   opacity: 1;
 }
 
-/* Цветы */
+/* Цветы — распускаются сразу */
 .corner {
   position: absolute;
   width: 90px;
@@ -83,7 +85,7 @@ section {
 }
 .card.visible .corner {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1); /* распускание сразу */
 }
 
 .corner-tl { top: -30px; left: -30px; }
@@ -263,13 +265,13 @@ input {
 </div>
 
 <script>
-// Плавный скролл и snap
-let isScrolling = false;
-const sections = document.querySelectorAll("section");
-let current = 0;
+// Плавный snap скролл
+let isScrolling=false;
+const sections=document.querySelectorAll('section');
+let current=0;
 
 function scrollToSection(index){
-  if(index<0 || index>=sections.length) return;
+  if(index<0||index>=sections.length) return;
   isScrolling=true;
   current=index;
   sections[index].scrollIntoView({behavior:'smooth'});
@@ -291,27 +293,19 @@ window.addEventListener('touchend', e=>{
   else scrollToSection(current-1);
 });
 
-// Анимация карточек и цветов с последовательным bloom
-const observer = new IntersectionObserver(entries=>{
+// Анимация карточек и цветов
+const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card=entry.target.querySelector('.card');
     const corners=entry.target.querySelectorAll('.corner');
     if(entry.isIntersecting){
       card.classList.remove('visible');
-      corners.forEach(c=>{
-        c.style.transition='none';
-        c.style.opacity='0';
-        c.style.transform='scale(0.6)';
-      });
       void card.offsetWidth;
       setTimeout(()=>{
         card.classList.add('visible');
-        corners.forEach((c,i)=>{
-          c.style.transition='';
-          setTimeout(()=>{
-            c.style.opacity='';
-            c.style.transform='';
-          }, i*150);
+        corners.forEach(c=>{
+          c.style.opacity='';
+          c.style.transform='';
         });
       },50);
     }
@@ -331,15 +325,14 @@ setInterval(()=>{
   document.getElementById('timer').innerHTML=`${d} дней ${h} часов ${m} минут ${s} секунд`;
 },1000);
 
-function openRoute(){ window.open('https://yandex.ru/maps/-/CPRav60J'); }
-
 // Модалка
+function openRoute(){ window.open('https://yandex.ru/maps/-/CPRav60J'); }
 const modal=document.getElementById('modal');
 document.getElementById('confirmBtn').onclick=()=>modal.style.display='block';
 document.getElementById('sendBtn').onclick=function(){
   const firstName=document.getElementById('firstName').value.trim();
   const lastName=document.getElementById('lastName').value.trim();
-  if(!firstName || !lastName){ alert('Заполните поля'); return; }
+  if(!firstName||!lastName){ alert('Заполните поля'); return; }
   fetch('/api/send',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -349,7 +342,7 @@ document.getElementById('sendBtn').onclick=function(){
     modal.style.display='none';
   }).catch(()=>{ alert('Ошибка отправки.'); });
 };
-window.onclick=e=>{ if(e.target==modal) modal.style.display='none'; };
+window.onclick=e=>{if(e.target==modal) modal.style.display='none';};
 </script>
 
 </body>
