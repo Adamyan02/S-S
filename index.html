@@ -15,7 +15,6 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
   font-family: 'Dancing Script', cursive;
-  /* Фон убран, чтобы видео было видно */
   color: #1a1a1a;
   touch-action: pan-y;
 }
@@ -227,6 +226,19 @@ input { width:90%; margin:10px 0; padding:10px; }
     <p>Банкетный зал «На семи ветрах»</p>
     <p>Саратов, Московское шоссе, 154 к1</p>
     <button onclick="openRoute()">Проложить маршрут</button>
+  </div>
+</section>
+
+<!-- Новый блок: мини-карта -->
+<section>
+  <div class="card" style="transform-origin:center top; max-width:600px; padding:25px 25px;">
+    <h2>Мини-карта локации</h2>
+    <p>Для вашего удобства добавили карту с отметкой местоположения заведения</p>
+    <!-- Координаты: 51.616945, 45.880925 -->
+    <img 
+      src="https://static-maps.yandex.ru/1.x/?ll=45.880925,51.616945&size=600,300&z=16&l=map&pt=45.880925,51.616945,pm2rdm" 
+      alt="Мини-карта локации"
+      style="width:100%; border-radius:20px; max-width:600px; margin-top:15px;">
   </div>
 </section>
 
