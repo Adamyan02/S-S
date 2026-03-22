@@ -13,7 +13,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto; /* чтобы видео отображалось */
   font-family: 'Dancing Script', cursive;
   background: #f5ebdc;
   color: #1a1a1a;
@@ -27,8 +27,8 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   z-index: -10;
+  pointer-events: none;
 }
 .video-bg video {
   width: 100%;
@@ -38,9 +38,10 @@ html, body {
 }
 .video-overlay {
   position: fixed;
-  inset: 0;
+  top:0; left:0; right:0; bottom:0;
   background: rgba(245,235,220,0.45);
   z-index: -5;
+  pointer-events: none;
 }
 
 /* Секции */
@@ -79,13 +80,17 @@ section {
 
 /* Первый блок компактный */
 .card.first-block {
-  max-width: 450px;
-  padding: 25px 25px;
+  max-width: 480px;
+  padding: 30px 30px;
 }
-.card.first-block .names { font-size: 42px; font-family: 'Great Vibes', cursive; }
-.card.first-block .date { font-size: 20px; }
-.card.first-block p { font-size: 14px; line-height:1.5; }
-.card.first-block button { padding: 10px 24px; font-size: 13px; }
+.card.first-block .names {
+  font-size: 50px;
+  font-family: 'Great Vibes', cursive;
+  line-height: 1.2;
+}
+.card.first-block .date { font-size: 22px; margin-top:10px; }
+.card.first-block p { font-size: 16px; line-height: 1.5; margin-top:15px; }
+.card.first-block button { padding: 12px 28px; font-size: 14px; margin-top:20px; }
 
 /* Видимая карточка */
 .card.visible {
@@ -112,7 +117,7 @@ section {
 .corner-br { bottom:-30px; right:-30px; }
 
 /* Заголовки */
-.names { font-family: 'Great Vibes', cursive; color:#4f6fae; }
+.names span { display:block; }
 h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#7faaff; margin-bottom:20px; }
 p { font-family: 'Dancing Script', cursive; line-height:1.6; margin:8px 0; }
 
@@ -143,7 +148,7 @@ button {
 @media (max-width:600px){
   section { padding:0 20px; }
   .card { padding:25px 20px; }
-  .card.first-block { padding:20px 15px; }
+  .card.first-block { padding:25px 20px; }
   .names { font-size:36px; }
   h2 { font-size:28px; }
   #timer { font-size:20px; }
@@ -167,6 +172,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 </div>
 <div class="video-overlay"></div>
 
+<!-- Секции -->
 <section>
   <div class="card first-block">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
