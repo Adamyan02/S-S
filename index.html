@@ -22,9 +22,12 @@ html, body {
 /* Видео фон */
 .video-bg {
   position: fixed;
-  inset: 0;
-  z-index: -10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
+  z-index: -10;
 }
 .video-bg video {
   width: 100%;
@@ -45,7 +48,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 100px; /* больше пространства по бокам */
+  padding: 0 100px; /* боковое пространство */
   perspective: 1600px;
   box-sizing: border-box;
 }
@@ -73,15 +76,15 @@ section {
   margin: 20px 0;
 }
 
-/* Первый блок компактнее */
+/* Первый блок компактный */
 .card.first-block {
-  max-width: 480px;
-  padding: 30px 30px;
+  max-width: 450px;
+  padding: 25px 25px;
 }
-.card.first-block .names { font-size: 50px; }
-.card.first-block .date { font-size: 22px; }
-.card.first-block p { font-size: 15px; }
-.card.first-block button { padding: 12px 28px; font-size: 14px; }
+.card.first-block .names { font-size: 42px; }
+.card.first-block .date { font-size: 20px; }
+.card.first-block p { font-size: 14px; }
+.card.first-block button { padding: 10px 24px; font-size: 13px; }
 
 /* Видимая карточка */
 .card.visible {
@@ -272,7 +275,7 @@ input {
 </div>
 
 <script>
-// Snap scroll + центрирование по экрану
+// Snap scroll + центрирование
 let isScrolling = false;
 const sections = document.querySelectorAll('section');
 let current = 0;
@@ -301,7 +304,7 @@ window.addEventListener('touchend', e=>{
   else scrollToSection(current-1);
 });
 
-// Анимация при каждом перелистывании
+// Анимация цветов при каждом перелистывании
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card = entry.target.querySelector('.card');
