@@ -15,7 +15,7 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
   font-family: 'Dancing Script', cursive;
-  background: #f5ebdc;
+  /* Фон убран, чтобы видео было видно */
   color: #1a1a1a;
   touch-action: pan-y;
 }
@@ -36,10 +36,12 @@ html, body {
   object-fit: cover;
   display: block;
 }
+
+/* Overlay полностью прозрачный */
 .video-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(245,235,220,0.0); /* прозрачное, чтобы видео видно */
+  background: rgba(245,235,220,0);
   z-index: -5;
   pointer-events: none;
 }
