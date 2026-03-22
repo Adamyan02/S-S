@@ -45,7 +45,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 50px; /* боковые отступы */
+  padding: 0 80px; /* больше пространства по бокам */
   perspective: 1600px;
   box-sizing: border-box;
 }
@@ -54,9 +54,9 @@ section {
 .card {
   position: relative;
   background: rgba(255,255,255,0.92);
-  padding: 60px 50px;
+  padding: 50px 40px;
   border-radius: 30px;
-  max-width: 600px; /* чтобы не тянулись до краев */
+  max-width: 600px;
   width: 100%;
   text-align: center;
   outline: 6px solid #9bbcff;
@@ -73,6 +73,16 @@ section {
   margin: 20px 0;
 }
 
+/* Особый стиль первого блока */
+.card.first-block {
+  max-width: 500px; /* меньше ширина */
+  padding: 40px 30px;
+}
+.card.first-block .names { font-size: 60px; }
+.card.first-block .date { font-size: 24px; }
+.card.first-block p { font-size: 16px; }
+.card.first-block button { padding: 12px 30px; font-size: 14px; }
+
 /* Видимая карточка */
 .card.visible {
   transform: rotateX(0deg) translateY(0) scale(1);
@@ -82,7 +92,7 @@ section {
 /* Цветы */
 .corner {
   position: absolute;
-  width: 90px;
+  width: 80px;
   pointer-events: none;
   opacity: 0;
   transform: scale(0.6);
@@ -92,10 +102,11 @@ section {
   opacity: 1;
   transform: scale(1);
 }
-.corner-tl { top:-30px; left:-30px; }
-.corner-tr { top:-30px; right:-30px; }
-.corner-bl { bottom:-30px; left:-30px; }
-.corner-br { bottom:-30px; right:-30px; }
+/* Смещаем цветы внутрь рамки, чтобы не прилипали к краям */
+.corner-tl { top: -20px; left: -20px; }
+.corner-tr { top: -20px; right: -20px; }
+.corner-bl { bottom: -20px; left: -20px; }
+.corner-br { bottom: -20px; right: -20px; }
 
 /* Шрифты */
 .names {
@@ -148,6 +159,7 @@ button {
 @media (max-width: 600px) {
   section { padding: 0 20px; }
   .card { padding: 30px 20px; }
+  .card.first-block { padding: 25px 15px; }
   .names { font-size: 36px; }
   h2 { font-size: 28px; }
   #timer { font-size: 20px; }
@@ -190,7 +202,7 @@ input {
 
 <!-- Секции -->
 <section>
-  <div class="card">
+  <div class="card first-block">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
@@ -270,7 +282,6 @@ function scrollToSection(index){
   if(index<0 || index>=sections.length) return;
   isScrolling=true;
   current=index;
-  // Центрируем блок относительно экрана
   const top = sections[index].offsetTop + sections[index].offsetHeight/2 - window.innerHeight/2;
   window.scrollTo({top: top, behavior:'smooth'});
   setTimeout(()=>isScrolling=false, 700);
