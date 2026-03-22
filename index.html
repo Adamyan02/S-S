@@ -22,22 +22,9 @@ body {
 }
 
 /* VIDEO */
-.video-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -10;
-}
-.video-bg video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.video-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(245,235,220,0.45);
-  z-index: -5;
-}
+.video-bg { position: fixed; inset: 0; z-index: -10; }
+.video-bg video { width: 100%; height: 100%; object-fit: cover; }
+.video-overlay { position: fixed; inset: 0; background: rgba(245,235,220,0.45); z-index: -5; }
 
 /* SECTIONS */
 section {
@@ -45,11 +32,11 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
+  padding: 20px;
   perspective: 1600px;
 }
 
-/* CARD (FLIP EFFECT) */
+/* CARD */
 .card {
   position: relative;
   background: rgba(255,255,255,0.92);
@@ -64,9 +51,9 @@ section {
   box-shadow: 0 30px 70px rgba(0,0,0,0.2);
 
   transform-origin: center bottom;
-  transform: rotateX(25deg) translateY(200px) scale(0.95);
+  transform: rotateX(25deg) translateY(150px) scale(0.95);
   opacity: 0;
-  transition: all 1s cubic-bezier(.2,.8,.2,1);
+  transition: all 0.9s cubic-bezier(.2,.8,.2,1);
 }
 
 .card.visible {
@@ -82,14 +69,13 @@ section {
   z-index: 3;
 
   opacity: 0;
-  transform: scale(0.7);
-  transition: all 0.8s ease;
+  transform: scale(0.6);
+  transition: all 0.7s ease;
 }
 
 .card.visible .corner {
   opacity: 1;
   transform: scale(1);
-  transition-delay: 0.3s;
 }
 
 .corner-tl { top: -30px; left: -30px; }
@@ -98,18 +84,10 @@ section {
 .corner-br { bottom: -30px; right: -30px; }
 
 /* TEXT */
-.names {
-  font-family: 'Playfair Display', serif;
-  font-size: 60px;
-  color: #4f6fae;
-}
+.names { font-family: 'Playfair Display', serif; font-size: 60px; color: #4f6fae; }
 .names span { display: block; }
 
-h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 32px;
-  color: #7faaff;
-}
+h2 { font-family: 'Playfair Display', serif; font-size: 32px; color: #7faaff; }
 
 button {
   margin-top: 20px;
@@ -127,27 +105,10 @@ button {
   font-family: 'Playfair Display', serif;
 }
 
-#timer {
-  font-size: 26px;
-  font-family: 'Playfair Display', serif;
-}
-
-/* SWIPE SHADOW */
-section::after {
-  content: "";
-  position: absolute;
-  bottom: 40px;
-  width: 50%;
-  height: 30px;
-  background: radial-gradient(ellipse, rgba(0,0,0,0.2), transparent);
-  filter: blur(10px);
-}
+#timer { font-size: 26px; font-family: 'Playfair Display', serif; }
 
 /* FINAL */
-.final h1 {
-  font-size: 90px;
-  color: #7faaff;
-}
+.final h1 { font-size: 90px; color: #7faaff; }
 
 /* MOBILE */
 @media (max-width:600px){
@@ -156,10 +117,7 @@ section::after {
 }
 
 .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); }
-.modal-content {
-  background:white; margin:30% auto; padding:20px; border-radius:20px;
-  width:80%; max-width:300px; text-align:center;
-}
+.modal-content { background:white; margin:30% auto; padding:20px; border-radius:20px; width:80%; max-width:300px; text-align:center; }
 input { width:90%; margin:10px 0; padding:10px; }
 
 </style>
@@ -182,7 +140,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 
 <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
 <p class="date">18.08.2026</p>
-<p>Мы создаём нашу семью и будем счастливы разделить этот день с вами 💙</p>
+<p>Мы создаём нашу семью и будем искренне счастливы разделить этот особенный день вместе с вами. Для нас очень важно ваше присутствие и поддержка 💙</p>
 <button id="confirmBtn">Подтвердить присутствие</button>
 </div>
 </section>
@@ -196,8 +154,8 @@ input { width:90%; margin:10px 0; padding:10px; }
 
 <h2>Локация</h2>
 <p>Банкетный зал «На семи ветрах»</p>
-<p>Саратов</p>
-<button onclick="openRoute()">Маршрут</button>
+<p>Саратов, Московское шоссе, 154 к1</p>
+<button onclick="openRoute()">Проложить маршрут</button>
 </div>
 </section>
 
@@ -221,7 +179,9 @@ input { width:90%; margin:10px 0; padding:10px; }
 <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
 
 <h2>Дресс-код</h2>
-<p>Без белого 🤍</p>
+<p>Мы будем очень признательны, если вы поддержите атмосферу нашего праздника и выберете элегантные образы.</p>
+<p>Просим дам по возможности воздержаться от платьев в белых и близких к белому оттенках 🤍</p>
+<p>Джентльменам будем рады в классическом или smart-casual стиле.</p>
 </div>
 </section>
 
@@ -232,7 +192,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
 <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
 
-<p>До встречи</p>
+<p>С нетерпением ждём встречи с вами</p>
 <h1>S & S</h1>
 <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
 </div>
@@ -249,7 +209,6 @@ input { width:90%; margin:10px 0; padding:10px; }
 
 <script>
 
-/* INERTIA SCROLL */
 let isScrolling = false;
 const sections = document.querySelectorAll("section");
 let current = 0;
@@ -277,19 +236,19 @@ window.addEventListener('touchend', e=>{
   else scrollToSection(current-1);
 });
 
-/* OBSERVER */
+/* FIX: animation every time */
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card = entry.target.querySelector('.card');
     if(entry.isIntersecting){
-      card.classList.add('visible');
+      card.classList.remove('visible');
+      setTimeout(()=> card.classList.add('visible'), 50);
     }
   });
 },{threshold:0.6});
 
 sections.forEach(s=>observer.observe(s));
 
-/* TIMER */
 const targetDate = new Date('2026-08-18');
 setInterval(()=>{
   const now = new Date();
@@ -298,13 +257,62 @@ setInterval(()=>{
   const h = Math.floor(diff/3600000%24);
   const m = Math.floor(diff/60000%60);
   const s = Math.floor(diff/1000%60);
-  document.getElementById('timer').innerHTML = `${d}д ${h}ч ${m}м ${s}с`;
+  document.getElementById('timer').innerHTML = `${d} дней ${h} часов ${m} минут ${s} секунд`;
 },1000);
 
 function openRoute(){ window.open('https://yandex.ru/maps/-/CPRav60J'); }
 
 const modal = document.getElementById('modal');
 document.getElementById('confirmBtn').onclick=()=>modal.style.display='block';
+
+
+
+/* ===== iOS-LIKE INERTIA + SNAP CORRECTION ===== */
+let isSnapping = false;
+let scrollTimeout;
+
+function nearestSectionIndex(){
+  let idx = 0;
+  let minDist = Infinity;
+  sections.forEach((sec,i)=>{
+    const rect = sec.getBoundingClientRect();
+    const center = rect.top + rect.height/2;
+    const dist = Math.abs(center - window.innerHeight/2);
+    if(dist < minDist){ minDist = dist; idx = i; }
+  });
+  return idx;
+}
+
+function snapToNearest(){
+  if(isSnapping) return;
+  const idx = nearestSectionIndex();
+  isSnapping = true;
+  current = idx;
+  sections[idx].scrollIntoView({behavior:'smooth'});
+  setTimeout(()=> isSnapping = false, 500);
+}
+
+// smooth deceleration feel: wait for scroll end, then snap
+window.addEventListener('scroll', ()=>{
+  if(isScrolling) return; // avoid conflict with manual paging
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(snapToNearest, 120);
+});
+
+// soften wheel bursts (desktop)
+let wheelLock = false;
+window.addEventListener('wheel', e=>{
+  if(wheelLock) return;
+  wheelLock = true;
+  setTimeout(()=> wheelLock = false, 180);
+});
+
+// touch inertia tweak (mobile)
+let touchEndTimer;
+window.addEventListener('touchend', ()=>{
+  clearTimeout(touchEndTimer);
+  touchEndTimer = setTimeout(snapToNearest, 140);
+});
 
 </script>
 
