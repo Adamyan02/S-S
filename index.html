@@ -44,8 +44,8 @@ section {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center; /* центр по вертикали */
-  padding: 0 20px; /* отступы от краев */
+  align-items: center;
+  padding: 0 50px; /* боковые отступы */
   perspective: 1600px;
   box-sizing: border-box;
 }
@@ -56,7 +56,7 @@ section {
   background: rgba(255,255,255,0.92);
   padding: 60px 50px;
   border-radius: 30px;
-  max-width: 700px;
+  max-width: 600px; /* чтобы не тянулись до краев */
   width: 100%;
   text-align: center;
   outline: 6px solid #9bbcff;
@@ -68,9 +68,9 @@ section {
   transition: opacity 1.2s ease, transform 1.2s ease;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* внутреннее центрирование */
+  justify-content: center;
   box-sizing: border-box;
-  margin: 20px 0; /* пространство сверху/снизу между блоками */
+  margin: 20px 0;
 }
 
 /* Видимая карточка */
@@ -146,12 +146,9 @@ button {
 }
 
 @media (max-width: 600px) {
-  .card {
-    padding: 30px 20px;
-  }
-  .names {
-    font-size: 36px;
-  }
+  section { padding: 0 20px; }
+  .card { padding: 30px 20px; }
+  .names { font-size: 36px; }
   h2 { font-size: 28px; }
   #timer { font-size: 20px; }
   .final h1 { font-size: 60px; }
@@ -183,7 +180,6 @@ input {
 
 <body>
 
-<!-- Видео фон -->
 <div class="video-bg">
   <video autoplay muted loop playsinline>
     <source src="IMG_3309.mp4" type="video/mp4">
@@ -255,7 +251,6 @@ input {
   </div>
 </section>
 
-<!-- Модалка -->
 <div class="modal" id="modal">
   <div class="modal-content">
     <h3>Введите данные</h3>
@@ -266,17 +261,19 @@ input {
 </div>
 
 <script>
-// Плавный snap скролл
+// Snap scroll + центрирование по экрану
 let isScrolling = false;
 const sections = document.querySelectorAll('section');
 let current = 0;
 
 function scrollToSection(index){
-  if(index<0||index>=sections.length) return;
+  if(index<0 || index>=sections.length) return;
   isScrolling=true;
   current=index;
-  sections[index].scrollIntoView({behavior:'smooth'});
-  setTimeout(()=>isScrolling=false,700);
+  // Центрируем блок относительно экрана
+  const top = sections[index].offsetTop + sections[index].offsetHeight/2 - window.innerHeight/2;
+  window.scrollTo({top: top, behavior:'smooth'});
+  setTimeout(()=>isScrolling=false, 700);
 }
 
 window.addEventListener('wheel', e=>{
