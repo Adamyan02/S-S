@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Сос и Сусанна ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Рукописные шрифты -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 html, body {
@@ -13,7 +14,7 @@ html, body {
   padding: 0;
   overflow-x: hidden;
   overflow-y: hidden;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Dancing Script', cursive;
   background: #f5ebdc;
   color: #1a1a1a;
   touch-action: pan-y;
@@ -48,7 +49,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 100px; /* боковое пространство */
+  padding: 0 100px;
   perspective: 1600px;
   box-sizing: border-box;
 }
@@ -81,9 +82,9 @@ section {
   max-width: 450px;
   padding: 25px 25px;
 }
-.card.first-block .names { font-size: 42px; }
+.card.first-block .names { font-size: 42px; font-family: 'Great Vibes', cursive; }
 .card.first-block .date { font-size: 20px; }
-.card.first-block p { font-size: 14px; }
+.card.first-block p { font-size: 14px; line-height:1.5; }
 .card.first-block button { padding: 10px 24px; font-size: 13px; }
 
 /* Видимая карточка */
@@ -110,26 +111,12 @@ section {
 .corner-bl { bottom:-30px; left:-30px; }
 .corner-br { bottom:-30px; right:-30px; }
 
-/* Шрифты */
-.names {
-  font-family: 'Great Vibes', cursive;
-  font-size: 72px;
-  color: #4f6fae;
-}
-.names span { display: block; }
+/* Заголовки */
+.names { font-family: 'Great Vibes', cursive; color:#4f6fae; }
+h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#7faaff; margin-bottom:20px; }
+p { font-family: 'Dancing Script', cursive; line-height:1.6; margin:8px 0; }
 
-h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 34px;
-  color: #7faaff;
-  margin-bottom: 20px;
-}
-
-p {
-  line-height: 1.6;
-  margin: 10px 0;
-}
-
+/* Кнопки */
 button {
   margin-top: 20px;
   padding: 15px 40px;
@@ -141,54 +128,32 @@ button {
   cursor: pointer;
 }
 
-.date {
-  font-size: 28px;
-  color: #7faaff;
-  font-family: 'Playfair Display', serif;
-}
+.date { font-size: 28px; color: #7faaff; font-family:'Dancing Script', cursive; }
+#timer { font-size:26px; font-family:'Dancing Script', cursive; margin-top:10px; }
 
-#timer {
-  font-size: 26px;
-  font-family: 'Playfair Display', serif;
-  margin-top: 10px;
-}
-
+/* Финальный блок S&S */
 .final h1 {
-  font-size: 90px;
+  font-family: 'Great Vibes', cursive;
+  font-size: 100px;
   color: #7faaff;
+  text-shadow: 0 0 15px #7faaff, 0 0 30px #aaccff;
 }
 
-@media (max-width: 600px) {
-  section { padding: 0 20px; }
-  .card { padding: 25px 20px; }
-  .card.first-block { padding: 20px 15px; }
-  .names { font-size: 36px; }
-  h2 { font-size: 28px; }
-  #timer { font-size: 20px; }
-  .final h1 { font-size: 60px; }
+/* Мобильные */
+@media (max-width:600px){
+  section { padding:0 20px; }
+  .card { padding:25px 20px; }
+  .card.first-block { padding:20px 15px; }
+  .names { font-size:36px; }
+  h2 { font-size:28px; }
+  #timer { font-size:20px; }
+  .final h1 { font-size:70px; }
 }
 
 /* Модалка */
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-}
-.modal-content {
-  background: white;
-  margin: 30% auto;
-  padding: 20px;
-  border-radius: 20px;
-  width: 80%;
-  max-width: 300px;
-  text-align: center;
-}
-input {
-  width: 90%;
-  margin: 10px 0;
-  padding: 10px;
-}
+.modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); }
+.modal-content { background:white; margin:30% auto; padding:20px; border-radius:20px; width:80%; max-width:300px; text-align:center; }
+input { width:90%; margin:10px 0; padding:10px; }
 </style>
 </head>
 
@@ -202,7 +167,6 @@ input {
 </div>
 <div class="video-overlay"></div>
 
-<!-- Секции -->
 <section>
   <div class="card first-block">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
@@ -275,7 +239,7 @@ input {
 </div>
 
 <script>
-// Snap scroll + центрирование
+// Snap scroll
 let isScrolling = false;
 const sections = document.querySelectorAll('section');
 let current = 0;
@@ -304,7 +268,7 @@ window.addEventListener('touchend', e=>{
   else scrollToSection(current-1);
 });
 
-// Анимация цветов при каждом перелистывании
+// Анимация цветов
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card = entry.target.querySelector('.card');
