@@ -9,10 +9,9 @@
 
 <style>
 
-/* ===== SCROLL SNAP ===== */
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
+  overflow-x: hidden;
 }
 
 body {
@@ -22,7 +21,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== ВИДЕО ===== */
+/* VIDEO */
 .video-bg {
   position: fixed;
   inset: 0;
@@ -40,30 +39,20 @@ body {
   z-index: -5;
 }
 
-/* ===== СЕКЦИИ ===== */
+/* SECTIONS */
 section {
   min-height: 100vh;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   padding: 40px 20px;
-
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
-
-  perspective: 1200px;
-
-  opacity: 0;
-  transform: translateY(60px);
-  transition: 0.8s;
+  perspective: 1600px;
 }
 
-/* ===== КАРТОЧКА ===== */
+/* CARD (FLIP EFFECT) */
 .card {
   position: relative;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.92);
   padding: 70px 60px;
   border-radius: 30px;
   max-width: 700px;
@@ -72,21 +61,20 @@ section {
   outline: 6px solid #9bbcff;
   outline-offset: 10px;
 
-  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.2);
 
   transform-origin: center bottom;
-
+  transform: rotateX(25deg) translateY(200px) scale(0.95);
   opacity: 0;
-  transform: translateY(100px) rotateX(10deg) scale(0.97);
-  transition: all 0.9s cubic-bezier(.2,.8,.2,1);
+  transition: all 1s cubic-bezier(.2,.8,.2,1);
 }
 
 .card.visible {
+  transform: rotateX(0deg) translateY(0) scale(1);
   opacity: 1;
-  transform: translateY(0) rotateX(0deg) scale(1);
 }
 
-/* ===== ЦВЕТЫ ===== */
+/* FLOWERS */
 .corner {
   position: absolute;
   width: 90px;
@@ -109,11 +97,10 @@ section {
 .corner-bl { bottom: -30px; left: -30px; }
 .corner-br { bottom: -30px; right: -30px; }
 
-/* ===== ТЕКСТ ===== */
+/* TEXT */
 .names {
   font-family: 'Playfair Display', serif;
   font-size: 60px;
-  line-height: 1.1;
   color: #4f6fae;
 }
 .names span { display: block; }
@@ -122,7 +109,6 @@ h2 {
   font-family: 'Playfair Display', serif;
   font-size: 32px;
   color: #7faaff;
-  margin-bottom: 20px;
 }
 
 button {
@@ -132,87 +118,52 @@ button {
   border: none;
   background: #9bbcff;
   color: white;
-  font-size: 16px;
   cursor: pointer;
 }
 
-#timer {
-  font-size: 28px;
-  margin-top: 20px;
-  font-family: 'Playfair Display', serif;
-}
-
-/* ДАТА */
 .date {
   font-size: 28px;
-  font-weight: 600;
   color: #7faaff;
-  margin: 15px 0;
   font-family: 'Playfair Display', serif;
-  text-shadow: 0 0 10px rgba(127,170,255,0.4);
 }
 
-/* СЕРДЦЕ */
-.heart {
-  display: inline-block;
-  animation: pulse 1.5s infinite;
-}
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.25); }
-  100% { transform: scale(1); }
+#timer {
+  font-size: 26px;
+  font-family: 'Playfair Display', serif;
 }
 
-/* ФИНАЛ */
+/* SWIPE SHADOW */
+section::after {
+  content: "";
+  position: absolute;
+  bottom: 40px;
+  width: 50%;
+  height: 30px;
+  background: radial-gradient(ellipse, rgba(0,0,0,0.2), transparent);
+  filter: blur(10px);
+}
+
+/* FINAL */
 .final h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 96px;
+  font-size: 90px;
   color: #7faaff;
-  text-shadow: 0 0 15px #7faaff, 0 0 30px #aaccff;
-  margin: 0;
-  animation: glow 2s infinite alternate;
-}
-.final p { font-size: 36px; margin-bottom: 20px; }
-
-@keyframes glow { 
-  from { text-shadow:0 0 10px #7faaff;} 
-  to { text-shadow:0 0 30px #aaccff;} 
 }
 
-/* ===== МОБИЛКА ===== */
-@media (max-width: 600px) {
-  .card {
-    max-width: 90%;
-    padding: 35px 20px;
-  }
-  .names { font-size: 38px; }
-  h2 { font-size: 22px; }
-  #timer { font-size: 20px; }
-  .final h1 { font-size: 60px; }
-  .final p { font-size: 24px; }
+/* MOBILE */
+@media (max-width:600px){
+  .card { padding:30px 20px; }
+  .names { font-size:36px; }
 }
 
-/* ===== МОДАЛКА ===== */
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-}
+.modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); }
 .modal-content {
-  background: white;
-  margin: 20% auto;
-  padding: 20px;
-  border-radius: 20px;
-  width: 80%;
-  max-width: 300px;
-  text-align: center;
+  background:white; margin:30% auto; padding:20px; border-radius:20px;
+  width:80%; max-width:300px; text-align:center;
 }
-input { width: 90%; margin: 10px 0; padding: 10px; }
+input { width:90%; margin:10px 0; padding:10px; }
 
 </style>
 </head>
-
 <body>
 
 <div class="video-bg">
@@ -222,58 +173,71 @@ input { width: 90%; margin: 10px 0; padding: 10px; }
 </div>
 <div class="video-overlay"></div>
 
-<!-- 1 -->
 <section>
 <div class="card">
+<img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+<img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+<img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+<img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+
 <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
 <p class="date">18.08.2026</p>
-<p>Мы создаём нашу семью и будем счастливы разделить этот день с вами <span class="heart">💙</span></p>
+<p>Мы создаём нашу семью и будем счастливы разделить этот день с вами 💙</p>
 <button id="confirmBtn">Подтвердить присутствие</button>
 </div>
 </section>
 
-<!-- 2 -->
 <section>
 <div class="card">
+<img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+<img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+<img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+<img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+
 <h2>Локация</h2>
 <p>Банкетный зал «На семи ветрах»</p>
-<p>Саратов, Московское шоссе, 154 к1</p>
-<button onclick="openRoute()">Проложить маршрут</button>
+<p>Саратов</p>
+<button onclick="openRoute()">Маршрут</button>
 </div>
 </section>
 
-<!-- 3 -->
 <section>
 <div class="card">
+<img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+<img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+<img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+<img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+
 <h2>До свадьбы осталось</h2>
 <div id="timer"></div>
 </div>
 </section>
 
-<!-- 4 -->
 <section>
 <div class="card">
+<img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+<img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+<img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+<img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+
 <h2>Дресс-код</h2>
-<p>Будем признательны, если дамы воздержатся от платьев в оттенках белого 🤍</p>
+<p>Без белого 🤍</p>
 </div>
 </section>
 
-<!-- 5 -->
 <section>
 <div class="card final">
+<img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+<img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+<img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+<img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+
 <p>До встречи</p>
 <h1>S & S</h1>
+<p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
 </div>
 </section>
 
-<!-- 6 -->
-<section>
-<div class="card">
-<p>© 2026 Сос & Сусанна</p>
-</div>
-</section>
-
-<!-- МОДАЛКА -->
 <div class="modal" id="modal">
 <div class="modal-content">
 <h3>Введите данные</h3>
@@ -285,84 +249,62 @@ input { width: 90%; margin: 10px 0; padding: 10px; }
 
 <script>
 
-/* ===== АНИМАЦИЯ ПОЯВЛЕНИЯ ===== */
+/* INERTIA SCROLL */
+let isScrolling = false;
 const sections = document.querySelectorAll("section");
+let current = 0;
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    const card = entry.target.querySelector(".card");
+function scrollToSection(index){
+  if(index < 0 || index >= sections.length) return;
+  isScrolling = true;
+  current = index;
+  sections[index].scrollIntoView({behavior:'smooth'});
+  setTimeout(()=> isScrolling=false,700);
+}
 
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = 1;
-      entry.target.style.transform = "translateY(0)";
-      if (card) card.classList.add("visible");
-    } else {
-      entry.target.style.opacity = 0;
-      entry.target.style.transform = "translateY(60px)";
-      if (card) card.classList.remove("visible");
+window.addEventListener('wheel', e=>{
+  if(isScrolling) return;
+  if(e.deltaY > 0) scrollToSection(current+1);
+  else scrollToSection(current-1);
+});
+
+let touchStartY = 0;
+window.addEventListener('touchstart', e=> touchStartY = e.touches[0].clientY);
+window.addEventListener('touchend', e=>{
+  let diff = touchStartY - e.changedTouches[0].clientY;
+  if(Math.abs(diff) < 50) return;
+  if(diff > 0) scrollToSection(current+1);
+  else scrollToSection(current-1);
+});
+
+/* OBSERVER */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    const card = entry.target.querySelector('.card');
+    if(entry.isIntersecting){
+      card.classList.add('visible');
     }
   });
-}, { threshold: 0.6 });
+},{threshold:0.6});
 
-sections.forEach(section => observer.observe(section));
+sections.forEach(s=>observer.observe(s));
 
-/* ===== ТАЙМЕР ===== */
-const targetDate = new Date('2026-08-18T00:00:00');
-
-function updateTimer(){
+/* TIMER */
+const targetDate = new Date('2026-08-18');
+setInterval(()=>{
   const now = new Date();
-  let diff = targetDate - now;
+  let diff = targetDate-now;
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor(diff/3600000%24);
+  const m = Math.floor(diff/60000%60);
+  const s = Math.floor(diff/1000%60);
+  document.getElementById('timer').innerHTML = `${d}д ${h}ч ${m}м ${s}с`;
+},1000);
 
-  const days = Math.floor(diff/86400000);
-  const hours = Math.floor(diff/3600000 %24);
-  const minutes = Math.floor(diff/60000 %60);
-  const seconds = Math.floor(diff/1000 %60);
+function openRoute(){ window.open('https://yandex.ru/maps/-/CPRav60J'); }
 
-  document.getElementById('timer').innerHTML =
-    `${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
-}
-
-setInterval(updateTimer, 1000);
-updateTimer();
-
-/* ===== МАРШРУТ ===== */
-function openRoute(){
-  window.open("https://yandex.ru/maps/-/CPRav60J");
-}
-
-/* ===== МОДАЛКА ===== */
-const modal = document.getElementById("modal");
-
-document.getElementById("confirmBtn").onclick = () => {
-  modal.style.display = "block";
-};
-
-document.getElementById("sendBtn").onclick = function(){
-  const firstName = document.getElementById("firstName").value.trim();
-  const lastName = document.getElementById("lastName").value.trim();
-
-  if(!firstName || !lastName){
-    alert("Заполните поля");
-    return;
-  }
-
-  fetch("/api/send", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ firstName, lastName })
-  })
-  .then(()=>{
-    alert("Отправлено ❤️");
-    modal.style.display="none";
-  })
-  .catch(()=>{
-    alert("Ошибка отправки.");
-  });
-};
-
-window.onclick = e => {
-  if(e.target==modal) modal.style.display="none";
-};
+const modal = document.getElementById('modal');
+document.getElementById('confirmBtn').onclick=()=>modal.style.display='block';
 
 </script>
 
