@@ -45,7 +45,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 80px; /* больше пространства по бокам */
+  padding: 0 100px; /* больше пространства по бокам */
   perspective: 1600px;
   box-sizing: border-box;
 }
@@ -54,7 +54,7 @@ section {
 .card {
   position: relative;
   background: rgba(255,255,255,0.92);
-  padding: 50px 40px;
+  padding: 40px 40px;
   border-radius: 30px;
   max-width: 600px;
   width: 100%;
@@ -73,15 +73,15 @@ section {
   margin: 20px 0;
 }
 
-/* Особый стиль первого блока */
+/* Первый блок компактнее */
 .card.first-block {
-  max-width: 500px; /* меньше ширина */
-  padding: 40px 30px;
+  max-width: 480px;
+  padding: 30px 30px;
 }
-.card.first-block .names { font-size: 60px; }
-.card.first-block .date { font-size: 24px; }
-.card.first-block p { font-size: 16px; }
-.card.first-block button { padding: 12px 30px; font-size: 14px; }
+.card.first-block .names { font-size: 50px; }
+.card.first-block .date { font-size: 22px; }
+.card.first-block p { font-size: 15px; }
+.card.first-block button { padding: 12px 28px; font-size: 14px; }
 
 /* Видимая карточка */
 .card.visible {
@@ -92,21 +92,20 @@ section {
 /* Цветы */
 .corner {
   position: absolute;
-  width: 80px;
+  width: 90px;
   pointer-events: none;
   opacity: 0;
-  transform: scale(0.6);
+  transform: scale(0.7);
   transition: all 1.2s ease;
 }
 .card.visible .corner {
   opacity: 1;
   transform: scale(1);
 }
-/* Смещаем цветы внутрь рамки, чтобы не прилипали к краям */
-.corner-tl { top: -20px; left: -20px; }
-.corner-tr { top: -20px; right: -20px; }
-.corner-bl { bottom: -20px; left: -20px; }
-.corner-br { bottom: -20px; right: -20px; }
+.corner-tl { top:-30px; left:-30px; }
+.corner-tr { top:-30px; right:-30px; }
+.corner-bl { bottom:-30px; left:-30px; }
+.corner-br { bottom:-30px; right:-30px; }
 
 /* Шрифты */
 .names {
@@ -158,8 +157,8 @@ button {
 
 @media (max-width: 600px) {
   section { padding: 0 20px; }
-  .card { padding: 30px 20px; }
-  .card.first-block { padding: 25px 15px; }
+  .card { padding: 25px 20px; }
+  .card.first-block { padding: 20px 15px; }
   .names { font-size: 36px; }
   h2 { font-size: 28px; }
   #timer { font-size: 20px; }
@@ -312,7 +311,7 @@ const observer = new IntersectionObserver(entries=>{
       corners.forEach(c=>{
         c.style.transition='none';
         c.style.opacity='0';
-        c.style.transform='scale(0.6)';
+        c.style.transform='scale(0.7)';
       });
       void card.offsetWidth;
       setTimeout(()=>{
