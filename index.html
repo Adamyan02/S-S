@@ -12,15 +12,12 @@
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* запрет горизонтального скролла */
-  overflow-y: hidden; /* убираем стандартный скролл, листаем через JS */
+  overflow-x: hidden;
+  overflow-y: hidden;
   font-family: 'Montserrat', sans-serif;
   background: #f5ebdc;
   color: #1a1a1a;
-}
-
-body {
-  touch-action: pan-y; /* предотвращаем масштабирование и горизонтальные свайпы */
+  touch-action: pan-y;
 }
 
 /* Видео фон */
@@ -46,8 +43,10 @@ section {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 0 20px;
+  align-items: flex-start; /* смещаем чуть выше */
+  padding-top: 10vh;       /* чуть выше центра */
+  padding-left: 20px;
+  padding-right: 20px;
   perspective: 1600px;
 }
 
@@ -65,7 +64,7 @@ section {
   transform-origin: center bottom;
   transform: rotateX(25deg) translateY(150px) scale(0.95);
   opacity: 0;
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 1.2s ease, transform 1.2s ease; /* более медленная анимация */
 }
 
 /* Карточка при видимости */
@@ -74,18 +73,18 @@ section {
   opacity: 1;
 }
 
-/* Цветы — распускаются сразу */
+/* Цветы */
 .corner {
   position: absolute;
   width: 90px;
   pointer-events: none;
   opacity: 0;
   transform: scale(0.6);
-  transition: all 0.8s ease;
+  transition: all 1.2s ease; /* медленная анимация */
 }
 .card.visible .corner {
   opacity: 1;
-  transform: scale(1); /* распускание сразу */
+  transform: scale(1);
 }
 
 .corner-tl { top: -30px; left: -30px; }
@@ -275,7 +274,7 @@ function scrollToSection(index){
   isScrolling=true;
   current=index;
   sections[index].scrollIntoView({behavior:'smooth'});
-  setTimeout(()=>isScrolling=false,500);
+  setTimeout(()=>isScrolling=false,700);
 }
 
 window.addEventListener('wheel', e=>{
@@ -293,19 +292,26 @@ window.addEventListener('touchend', e=>{
   else scrollToSection(current-1);
 });
 
-// Анимация карточек и цветов
+// Анимация карточек и цветов при каждом перелистывании
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card=entry.target.querySelector('.card');
     const corners=entry.target.querySelectorAll('.corner');
     if(entry.isIntersecting){
+      // сбросим анимацию для повторного срабатывания
       card.classList.remove('visible');
+      corners.forEach(c=>{
+        c.style.transition='none';
+        c.style.opacity='0';
+        c.style.transform='scale(0.6)';
+      });
       void card.offsetWidth;
       setTimeout(()=>{
         card.classList.add('visible');
         corners.forEach(c=>{
-          c.style.opacity='';
-          c.style.transform='';
+          c.style.transition='all 1.2s ease';
+          c.style.opacity='1';
+          c.style.transform='scale(1)';
         });
       },50);
     }
