@@ -13,7 +13,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  overflow-y: auto; /* чтобы видео отображалось */
+  overflow-y: auto;
   font-family: 'Dancing Script', cursive;
   background: #f5ebdc;
   color: #1a1a1a;
@@ -50,7 +50,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 100px;
+  padding: 0 120px;
   perspective: 1600px;
   box-sizing: border-box;
 }
@@ -156,9 +156,37 @@ button {
 }
 
 /* Модалка */
-.modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); }
-.modal-content { background:white; margin:30% auto; padding:20px; border-radius:20px; width:80%; max-width:300px; text-align:center; }
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+.modal-content {
+  background: white;
+  margin: 30% auto;
+  padding: 20px 20px 30px 20px;
+  border-radius: 20px;
+  width: 80%;
+  max-width: 300px;
+  text-align: center;
+  position: relative;
+}
+/* Крестик закрытия */
+.modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.modal-content .close:hover { color: #333; }
 input { width:90%; margin:10px 0; padding:10px; }
+
 </style>
 </head>
 
@@ -235,8 +263,10 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
+<!-- Модалка -->
 <div class="modal" id="modal">
   <div class="modal-content">
+    <span class="close">&times;</span>
     <h3>Введите данные</h3>
     <input id="firstName" placeholder="Имя">
     <input id="lastName" placeholder="Фамилия">
@@ -274,7 +304,7 @@ window.addEventListener('touchend', e=>{
   else scrollToSection(current-1);
 });
 
-// Анимация цветов
+// Анимация цветов при каждом листании
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card = entry.target.querySelector('.card');
@@ -315,19 +345,24 @@ setInterval(()=>{
 // Модалка
 function openRoute(){ window.open('https://yandex.ru/maps/-/CPRav60J'); }
 const modal = document.getElementById('modal');
-document.getElementById('confirmBtn').onclick = ()=> modal.style.display='block';
-document.getElementById('sendBtn').onclick = function(){
-  const firstName=document.getElementById('firstName').value.trim();
-  const lastName=document.getElementById('lastName').value.trim();
+const closeBtn = modal.querySelector('.close');
+
+document.getElementById('confirmBtn').onclick = () => modal.style.display='block';
+closeBtn.onclick = () => modal.style.display='none';
+
+document.getElementById('sendBtn').onclick = function() {
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName = document.getElementById('lastName').value.trim();
   if(!firstName || !lastName){ alert('Заполните поля'); return; }
-  fetch('/api/send',{
+  fetch('/api/send', {
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({firstName,lastName})
   }).then(()=>{ alert('Отправлено ❤️'); modal.style.display='none'; })
     .catch(()=>{ alert('Ошибка отправки.'); });
-};
-window.onclick=e=>{ if(e.target==modal) modal.style.display='none'; };
+}
+
+window.onclick = e => { if(e.target==modal) modal.style.display='none'; };
 </script>
 
 </body>
