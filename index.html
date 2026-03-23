@@ -56,7 +56,7 @@ section {
 /* Карточки */
 .card {
   position: relative;
-  background: rgba(255,255,255,0.3); /* прозрачный фон */
+  background: rgba(255,255,255,0.3); /* прозрачный стеклянный фон */
   backdrop-filter: blur(10px) saturate(180%);
   -webkit-backdrop-filter: blur(10px) saturate(180%);
   padding: 40px 40px;
@@ -64,7 +64,7 @@ section {
   max-width: 600px;
   width: 100%;
   text-align: center;
-  outline: 6px solid rgba(155,188,255,0.3);
+  outline: 6px solid #a3c0ff; /* туманно-синяя рамка */
   outline-offset: 10px;
   box-shadow: 0 30px 70px rgba(0,0,0,0.2);
   transform-origin: center bottom;
@@ -88,9 +88,9 @@ section {
   font-family: 'Great Vibes', cursive;
   line-height: 1.2;
 }
-.card.first-block .date { font-size: 22px; margin-top:10px; }
-.card.first-block p { font-size: 16px; line-height: 1.5; margin-top:15px; }
-.card.first-block button { padding: 12px 28px; font-size: 14px; margin-top:20px; }
+.card.first-block .date { font-size: 22px; margin-top:10px; color: #a3c0ff; }
+.card.first-block p { font-size: 16px; line-height: 1.5; margin-top:15px; color: #a3c0ff; }
+.card.first-block button { padding: 12px 28px; font-size: 14px; margin-top:20px; background:#a3c0ff; color:white; }
 
 /* Видимая карточка */
 .card.visible {
@@ -105,7 +105,7 @@ section {
   pointer-events: none;
   opacity: 0;
   transform: scale(0.7);
-  transform-origin: center center; /* масштабируем относительно центра */
+  transform-origin: center center; /* масштабирование по центру */
   transition: all 1.2s ease;
 }
 .card.visible .corner {
@@ -117,7 +117,7 @@ section {
 .corner-bl { bottom:-30px; left:-30px; }
 .corner-br { bottom:-30px; right:-30px; }
 
-/* Новые классы для скрытия углов */
+/* Классы для скрытия углов */
 .corner.hide-tl { display: none !important; }
 .corner.hide-tr { display: none !important; }
 .corner.hide-bl { display: none !important; }
@@ -125,8 +125,8 @@ section {
 
 /* Заголовки */
 .names span { display:block; }
-h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#7faaff; margin-bottom:20px; }
-p { font-family: 'Dancing Script', cursive; line-height:1.6; margin:8px 0; }
+h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#a3c0ff; margin-bottom:20px; }
+p { font-family: 'Dancing Script', cursive; line-height:1.6; margin:8px 0; color:#a3c0ff; }
 
 /* Кнопки */
 button {
@@ -134,21 +134,27 @@ button {
   padding: 15px 40px;
   border-radius: 50px;
   border: none;
-  background: #9bbcff;
+  background: #a3c0ff;
   color: white;
   font-size: 16px;
   cursor: pointer;
 }
 
-.date { font-size: 28px; color: #7faaff; font-family:'Dancing Script', cursive; }
-#timer { font-size:26px; font-family:'Dancing Script', cursive; margin-top:10px; }
+.date { font-size: 28px; color: #a3c0ff; font-family:'Dancing Script', cursive; }
+#timer { font-size:26px; font-family:'Dancing Script', cursive; margin-top:10px; color:#a3c0ff; }
 
 /* Финальный блок S&S */
 .final h1 {
   font-family: 'Great Vibes', cursive;
   font-size: 100px;
+  color: #d7c7ad; /* золотистый для контраста */
+  text-shadow:
+    0 0 20px rgba(215,199,173,0.6),
+    0 0 40px rgba(215,199,173,0.4);
+}
+.final p {
+  opacity: 0.8;
   color: #d7c7ad;
-  text-shadow: 0 0 15px rgba(215,199,173,0.4), 0 0 30px rgba(215,199,173,0.2);
 }
 
 /* Мобильные */
@@ -290,7 +296,7 @@ input { width:90%; margin:10px 0; padding:10px; }
     <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <p>С нетерпением ждём встречи с вами</p>
     <h1>S & S</h1>
-    <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
+    <p style="margin-top:30px;opacity:0.8;font-size:14px;">© 2026 Сос & Сусанна</p>
   </div>
 </section>
 
