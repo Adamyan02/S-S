@@ -11,7 +11,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  overflow: hidden; /* отключаем обычный скролл */
+  overflow: hidden;
   font-family: 'Dancing Script', cursive;
   color: #1a1a1a;
   touch-action: pan-y;
@@ -342,17 +342,18 @@ function scrollToSection(index) {
   currentIndex=index;
 
   let target = sections[index];
-
-  // Для блока с картой учитываем карту вместе с карточкой
-  let offset=0;
-  if(target.querySelector('#map')){
+  let top=0;
+  const mapEl = target.querySelector('#map');
+  if(mapEl){
     const card = target.querySelector('.card');
-    offset = card.getBoundingClientRect().height/2 - window.innerHeight/2;
+    const cardTop = card.offsetTop;
+    const combinedHeight = (mapEl.offsetTop + mapEl.offsetHeight) - cardTop;
+    top = cardTop + combinedHeight/2 - window.innerHeight/2;
+  } else {
+    top = target.offsetTop + target.offsetHeight/2 - window.innerHeight/2;
   }
 
-  const top = target.offsetTop - window.innerHeight/2 + target.offsetHeight/2 - offset;
   window.scrollTo({top:top, behavior:'smooth'});
-
   setTimeout(()=>{isScrolling=false;},700);
 }
 
@@ -436,5 +437,6 @@ document.addEventListener('touchstart',forcePlay,{once:true});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden) forcePlay();});
 video.addEventListener('pause',forcePlay);
 </script>
+
 </body>
 </html>
