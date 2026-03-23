@@ -330,52 +330,52 @@ function init() {
   map.geoObjects.add(placemark);
 }
 
-// --- Snap scroll с точной центровкой ---
+// --- Snap scroll ---
 const sections = document.querySelectorAll('section');
 let current = 0;
 let isScrolling = false;
 
-function getCenterOffset(section) {
+function getSectionCenter(section) {
   const card = section.querySelector('.card');
   const map = section.querySelector('#map');
-  let top = card.offsetTop + card.offsetHeight / 2;
-  if(map) top += map.offsetHeight / 2;
-  return top - window.innerHeight / 2;
+  let center = card.offsetTop + card.offsetHeight / 2;
+  if(map) center += map.offsetHeight / 2;
+  return center - window.innerHeight / 2;
 }
 
 function scrollToSection(index) {
   if(index < 0) index = 0;
   if(index >= sections.length) index = sections.length - 1;
-  if(isScrolling) return;
+  if(isScrolling || index === current) return;
   isScrolling = true;
   current = index;
-  const top = getCenterOffset(sections[index]);
+  const top = getSectionCenter(sections[index]);
   window.scrollTo({ top, behavior: 'smooth' });
-  setTimeout(()=>{isScrolling=false;},700);
+  setTimeout(()=>{ isScrolling = false; }, 700);
 }
 
 // Wheel
 window.addEventListener('wheel', e => {
   if(e.target.closest('#map')) return;
-  if(e.deltaY>20) scrollToSection(current+1);
-  else if(e.deltaY<-20) scrollToSection(current-1);
+  if(isScrolling) return;
+  if(e.deltaY > 20) scrollToSection(current + 1);
+  else if(e.deltaY < -20) scrollToSection(current - 1);
 },{passive:false});
 
 // Touch
-let touchStartY=null;
-window.addEventListener('touchstart',e=>{
-  if(e.target.closest('#map')) { touchStartY=null; return; }
+let touchStartY = null;
+window.addEventListener('touchstart', e => {
+  if(e.target.closest('#map')) { touchStartY = null; return; }
   touchStartY = e.touches[0].clientY;
 },{passive:false});
-window.addEventListener('touchend',e=>{
-  if(touchStartY===null) return;
+window.addEventListener('touchend', e => {
+  if(touchStartY === null) return;
   let diff = touchStartY - e.changedTouches[0].clientY;
-  if(Math.abs(diff)<30) return;
-  if(diff>0) scrollToSection(current+1);
-  else scrollToSection(current-1);
-  touchStartY=null;
+  if(Math.abs(diff) < 30) return;
+  if(diff > 0) scrollToSection(current + 1);
+  else scrollToSection(current - 1);
+  touchStartY = null;
 },{passive:false});
-window.addEventListener('load',()=>scrollToSection(0));
 
 // --- IntersectionObserver для углов ---
 const observer = new IntersectionObserver(entries=>{
@@ -424,15 +424,22 @@ closeBtn.onclick = () => modal.style.display='none';
 document.getElementById('sendBtn').onclick = function() {
   const firstName=document.getElementById('firstName').value.trim();
   const lastName=document.getElementById('lastName').value.trim();
-  if(!firstName || !lastName){ alert('Заполните поля'); return; }
+  if(!firstName || !lastName){ alert('Заполните поля'); modal.style.display='block'; return; }
   fetch('/api/send',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({firstName,lastName})})
     .then(()=>{ alert('Отправлено ❤️'); modal.style.display='none'; })
     .catch(()=>{ alert('Ошибка отправки.'); });
 }
 window.onclick = e => { if(e.target==modal) modal.style.display='none'; };
 
-// 🔥 Фикс видеофон для iOS Safari
-document.getElementById('bgVideo').play().catch(()=>{});
+// --- Фикс видеофон для мобильных ---
+const video = document.getElementById('bgVideo');
+function forcePlay(){ if(video.paused) video.play().catch(()=>{}); }
+document.addEventListener('touchstart', forcePlay, { once:true });
+document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) forcePlay(); });
+video.addEventListener('pause', forcePlay);
+
+// --- Старт на первом блоке ---
+window.addEventListener('load', ()=>scrollToSection(0));
 </script>
 
 </body>
