@@ -64,7 +64,7 @@ section {
   max-width: 600px;
   width: 100%;
   text-align: center;
-  outline: 6px solid #5f8cd8; /* тёмно-туманно-синий */
+  outline: 6px solid #5f8cd8; /* туманно-синий */
   outline-offset: 10px;
   box-shadow: 0 30px 70px rgba(0,0,0,0.2);
   transform-origin: center bottom;
@@ -87,6 +87,7 @@ section {
   font-size: 50px;
   font-family: 'Great Vibes', cursive;
   line-height: 1.2;
+  color: #5f8cd8;
 }
 .card.first-block .date { font-size: 22px; margin-top:10px; color: #5f8cd8; }
 .card.first-block p { font-size: 16px; line-height: 1.5; margin-top:15px; color: #1a1a1a; }
@@ -105,7 +106,7 @@ section {
   pointer-events: none;
   opacity: 0;
   transform: scale(0.7);
-  transform-origin: center center; /* масштабирование по центру */
+  transform-origin: center center;
   transition: all 1.2s ease;
 }
 .card.visible .corner {
@@ -147,14 +148,14 @@ button {
 .final h1 {
   font-family: 'Great Vibes', cursive;
   font-size: 100px;
-  color: #5f8cd8; /* тёмно-туманно-синий */
+  color: #5f8cd8; /* туманно-синий */
   text-shadow:
     0 0 15px rgba(95,140,216,0.5),
     0 0 30px rgba(95,140,216,0.3);
 }
 .final p {
   opacity: 0.8;
-  color: #1a1a1a; /* мелкий текст чёрный */
+  color: #1a1a1a;
 }
 
 /* Мобильные */
@@ -220,7 +221,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 </div>
 <div class="video-overlay"></div>
 
-<!-- Первый блок -->
+<!-- Блоки карточек -->
 <section>
   <div class="card first-block">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
@@ -234,7 +235,6 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Второй блок -->
 <section>
   <div class="card">
     <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
@@ -248,7 +248,6 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Третий блок -->
 <section style="flex-direction: column; align-items: flex-start;">
   <div class="card" style="margin-bottom:10px; max-width:600px;">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
@@ -261,25 +260,23 @@ input { width:90%; margin:10px 0; padding:10px; }
   <div id="map" class="full-map"></div>
 </section>
 
-<!-- Четвёртый блок -->
-<section>
-  <div class="card">
-    <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
-    <h2>До свадьбы осталось</h2>
-    <div id="timer"></div>
-  </div>
-</section>
-
-<!-- Пятый блок -->
 <section>
   <div class="card">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
+    <h2>До свадьбы осталось</h2>
+    <div id="timer"></div>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>Дресс-код</h2>
     <p>Мы будем очень признательны, если вы поддержите атмосферу нашего праздника и выберете элегантные образы.</p>
     <p>Просим дам по возможности воздержаться от платьев в белых и близких оттенках 🤍</p>
@@ -287,16 +284,15 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Шестой блок (финальный) -->
 <section>
   <div class="card final">
-    <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
     <p>С нетерпением ждём встречи с вами</p>
     <h1>S & S</h1>
-    <p style="margin-top:30px;opacity:0.8;font-size:14px;">© 2026 Сос & Сусанна</p>
+    <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
   </div>
 </section>
 
@@ -324,50 +320,63 @@ function init() {
   var placemark = new ymaps.Placemark([51.616945, 45.880925], {
     hintContent: 'Место проведения',
     balloonContent: 'Банкетный зал «На семи ветрах»'
-  }, {
-    preset: 'islands#redDotIcon'
-  });
+  }, { preset: 'islands#redDotIcon' });
   map.geoObjects.add(placemark);
 }
 
-// --- Snap scroll с исключением карты ---
+// --- Snap scroll ---
 let isScrolling = false;
 const sections = document.querySelectorAll('section');
 let current = 0;
 
-function scrollToSection(index){
-  if(index<0 || index>=sections.length) return;
-  isScrolling=true;
-  current=index;
-  const top = sections[index].offsetTop + sections[index].offsetHeight/2 - window.innerHeight/2;
-  window.scrollTo({top: top, behavior:'smooth'});
-  setTimeout(()=>isScrolling=false, 700);
+function scrollToSection(index) {
+  if(index < 0) index = 0;
+  if(index >= sections.length) index = sections.length - 1;
+  isScrolling = true;
+  current = index;
+
+  let top;
+  const section = sections[index];
+
+  if(section.querySelector('#map')) {
+    const card = section.querySelector('.card');
+    const map = section.querySelector('#map');
+    const sectionHeight = card.offsetHeight + map.offsetHeight + parseInt(getComputedStyle(section).paddingTop) + parseInt(getComputedStyle(section).paddingBottom);
+    top = section.offsetTop + sectionHeight/2 - window.innerHeight/2;
+  } else {
+    const card = section.querySelector('.card');
+    top = section.offsetTop + card.offsetHeight/2 - window.innerHeight/2;
+  }
+
+  window.scrollTo({ top: top, behavior: 'smooth' });
+  setTimeout(() => { isScrolling = false; }, 700);
 }
 
-// Wheel для десктопа
-window.addEventListener('wheel', e=>{
+window.addEventListener('wheel', e => {
   if(isScrolling) return;
-  if(e.target.closest('#map')) return; // исключаем карту
-  if(e.deltaY>20) scrollToSection(current+1);
-  else if(e.deltaY<-20) scrollToSection(current-1);
-});
+  if(e.target.closest('#map')) return;
+  if(e.deltaY > 20) scrollToSection(current + 1);
+  else if(e.deltaY < -20) scrollToSection(current - 1);
+}, { passive: false });
 
-// Touch для мобильных
 let touchStartY = null;
-window.addEventListener('touchstart', e=>{
+window.addEventListener('touchstart', e => {
   if(e.target.closest('#map')) { touchStartY = null; return; }
   touchStartY = e.touches[0].clientY;
-});
-window.addEventListener('touchend', e=>{
+}, { passive: false });
+
+window.addEventListener('touchend', e => {
   if(touchStartY === null) return;
   let diff = touchStartY - e.changedTouches[0].clientY;
-  if(Math.abs(diff)<30) return;
-  if(diff>0) scrollToSection(current+1);
-  else scrollToSection(current-1);
+  if(Math.abs(diff) < 30) return;
+  if(diff > 0) scrollToSection(current + 1);
+  else scrollToSection(current - 1);
   touchStartY = null;
-});
+}, { passive: false });
 
-// IntersectionObserver для углов
+window.addEventListener('load', () => scrollToSection(0));
+
+// --- IntersectionObserver для углов ---
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card = entry.target.querySelector('.card');
@@ -393,7 +402,7 @@ const observer = new IntersectionObserver(entries=>{
 },{threshold:0.6});
 sections.forEach(s=>observer.observe(s));
 
-// Таймер
+// --- Таймер ---
 const targetDate = new Date('2026-08-18T00:00:00');
 setInterval(()=>{
   const now = new Date();
@@ -405,7 +414,7 @@ setInterval(()=>{
   document.getElementById('timer').innerHTML=`${d} дней ${h} часов ${m} минут ${s} секунд`;
 },1000);
 
-// Модалка и маршрут
+// --- Модалка и маршрут ---
 function openRoute(){ window.open('https://yandex.ru/maps/-/CPRav60J'); }
 const modal = document.getElementById('modal');
 const closeBtn = modal.querySelector('.close');
@@ -422,17 +431,16 @@ document.getElementById('sendBtn').onclick = function() {
   }).then(()=>{ alert('Отправлено ❤️'); modal.style.display='none'; })
     .catch(()=>{ alert('Ошибка отправки.'); });
 }
+
 window.onclick = e => { if(e.target==modal) modal.style.display='none'; };
 
 // 🔥 Фикс видеофон для мобильных
 const video = document.getElementById('bgVideo');
-
 function forcePlay() {
   if (video.paused) {
     video.play().catch(() => {});
   }
 }
-
 document.addEventListener('touchstart', forcePlay, { once: true });
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden) forcePlay();
