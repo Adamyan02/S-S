@@ -11,11 +11,11 @@
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden; /* отключаем обычный скролл */
   font-family: 'Dancing Script', cursive;
   color: #1a1a1a;
   touch-action: pan-y;
+  scroll-behavior: auto;
 }
 
 /* Видео фон */
@@ -208,16 +208,6 @@ input { width:90%; margin:10px 0; padding:10px; }
   margin-top: 20px;
   border-radius: 20px;
 }
-
-/* Якоря для фиксации скролла */
-.scroll-anchor {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px;
-  height: 1px;
-  pointer-events: none;
-}
 </style>
 </head>
 <body>
@@ -234,7 +224,6 @@ input { width:90%; margin:10px 0; padding:10px; }
 <!-- Первый блок -->
 <section>
   <div class="card first-block">
-    <div class="scroll-anchor"></div>
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
@@ -249,7 +238,6 @@ input { width:90%; margin:10px 0; padding:10px; }
 <!-- Второй блок -->
 <section>
   <div class="card">
-    <div class="scroll-anchor"></div>
     <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
@@ -264,7 +252,6 @@ input { width:90%; margin:10px 0; padding:10px; }
 <!-- Третий блок с картой -->
 <section style="flex-direction: column; align-items: flex-start;">
   <div class="card" style="margin-bottom:10px; max-width:600px;">
-    <div class="scroll-anchor"></div>
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
@@ -278,7 +265,6 @@ input { width:90%; margin:10px 0; padding:10px; }
 <!-- Четвёртый блок -->
 <section>
   <div class="card">
-    <div class="scroll-anchor"></div>
     <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
@@ -291,7 +277,6 @@ input { width:90%; margin:10px 0; padding:10px; }
 <!-- Пятый блок -->
 <section>
   <div class="card">
-    <div class="scroll-anchor"></div>
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
@@ -306,7 +291,6 @@ input { width:90%; margin:10px 0; padding:10px; }
 <!-- Шестой блок -->
 <section>
   <div class="card final">
-    <div class="scroll-anchor"></div>
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
@@ -345,26 +329,38 @@ function init() {
   map.geoObjects.add(placemark);
 }
 
-// --- Snap scroll с якорями ---
-const anchors = document.querySelectorAll('.scroll-anchor');
-let current = 0;
+// --- Snap scroll с жесткой фиксацией ---
+const sections = document.querySelectorAll('section');
+let currentIndex = 0;
 let isScrolling = false;
 
-function scrollToAnchor(index){
+function scrollToSection(index) {
   if(index<0) index=0;
-  if(index>=anchors.length) index=anchors.length-1;
-  if(isScrolling || index===current) return;
-  isScrolling = true;
-  current = index;
-  anchors[index].scrollIntoView({behavior:'smooth', block:'center'});
+  if(index>=sections.length) index=sections.length-1;
+  if(isScrolling || index===currentIndex) return;
+  isScrolling=true;
+  currentIndex=index;
+
+  let target = sections[index];
+
+  // Для блока с картой учитываем карту вместе с карточкой
+  let offset=0;
+  if(target.querySelector('#map')){
+    const card = target.querySelector('.card');
+    offset = card.getBoundingClientRect().height/2 - window.innerHeight/2;
+  }
+
+  const top = target.offsetTop - window.innerHeight/2 + target.offsetHeight/2 - offset;
+  window.scrollTo({top:top, behavior:'smooth'});
+
   setTimeout(()=>{isScrolling=false;},700);
 }
 
 // Wheel
 window.addEventListener('wheel', e=>{
   if(isScrolling) return;
-  if(e.deltaY>20) scrollToAnchor(current+1);
-  else if(e.deltaY<-20) scrollToAnchor(current-1);
+  if(e.deltaY>20) scrollToSection(currentIndex+1);
+  else if(e.deltaY<-20) scrollToSection(currentIndex-1);
 },{passive:false});
 
 // Touch
@@ -374,13 +370,12 @@ window.addEventListener('touchend', e=>{
   if(touchStartY===null) return;
   let diff = touchStartY - e.changedTouches[0].clientY;
   if(Math.abs(diff)<30) return;
-  if(diff>0) scrollToAnchor(current+1);
-  else scrollToAnchor(current-1);
+  if(diff>0) scrollToSection(currentIndex+1);
+  else scrollToSection(currentIndex-1);
   touchStartY=null;
 },{passive:false});
 
 // IntersectionObserver для углов
-const sections = document.querySelectorAll('section');
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card = entry.target.querySelector('.card');
@@ -441,6 +436,5 @@ document.addEventListener('touchstart',forcePlay,{once:true});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden) forcePlay();});
 video.addEventListener('pause',forcePlay);
 </script>
-
 </body>
 </html>
