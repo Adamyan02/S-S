@@ -114,6 +114,12 @@ section {
 .corner-bl { bottom:-30px; left:-30px; }
 .corner-br { bottom:-30px; right:-30px; }
 
+/* Новые классы для скрытия углов */
+.corner.hide-tl { display: none !important; }
+.corner.hide-tr { display: none !important; }
+.corner.hide-bl { display: none !important; }
+.corner.hide-br { display: none !important; }
+
 /* Заголовки */
 .names span { display:block; }
 h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#7faaff; margin-bottom:20px; }
@@ -209,9 +215,9 @@ input { width:90%; margin:10px 0; padding:10px; }
 <section>
   <div class="card first-block">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+    <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
     <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
     <p class="date">18.08.2026</p>
     <p>Мы создаём нашу семью и будем искренне счастливы разделить этот особенный день вместе с вами. Для нас очень важно ваше присутствие и поддержка 💙</p>
@@ -219,12 +225,12 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Блок локации -->
+<!-- Второй блок -->
 <section>
   <div class="card">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>Локация</h2>
     <p>Банкетный зал «На семи ветрах»</p>
@@ -233,38 +239,38 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Блок рамки + карта -->
+<!-- Третий блок -->
 <section style="flex-direction: column; align-items: flex-start;">
   <div class="card" style="margin-bottom:10px; max-width:600px;">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+    <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
     <h2>Локация на карте</h2>
     <p>Для вашего удобства мы добавили интерактивную карту с отметкой места проведения</p>
   </div>
   <div id="map" class="full-map"></div>
 </section>
 
-<!-- Таймер -->
+<!-- Четвёртый блок -->
 <section>
   <div class="card">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>До свадьбы осталось</h2>
     <div id="timer"></div>
   </div>
 </section>
 
-<!-- Дресс-код -->
+<!-- Пятый блок -->
 <section>
   <div class="card">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+    <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
     <h2>Дресс-код</h2>
     <p>Мы будем очень признательны, если вы поддержите атмосферу нашего праздника и выберете элегантные образы.</p>
     <p>Просим дам по возможности воздержаться от платьев в белых и близких оттенках 🤍</p>
@@ -272,12 +278,12 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Финальный блок -->
+<!-- Шестой блок (финальный) -->
 <section>
   <div class="card final">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <p>С нетерпением ждём встречи с вами</p>
     <h1>S & S</h1>
