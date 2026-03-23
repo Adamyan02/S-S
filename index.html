@@ -329,39 +329,51 @@ function init() {
   map.geoObjects.add(placemark);
 }
 
-// --- Snap scroll с жесткой фиксацией ---
-const sections = document.querySelectorAll('section');
-let currentIndex = 0;
-let isScrolling = false;
+// --- Метки для snap scroll ---
+const sectionElems = document.querySelectorAll('section');
+const markers = [];
+sectionElems.forEach(sec=>{
+  const marker = document.createElement('div');
+  marker.style.position = 'absolute';
+  marker.style.top = '0px';
+  marker.style.left = '0';
+  marker.style.width = '1px';
+  marker.style.height = '1px';
+  marker.style.pointerEvents = 'none';
+  sec.appendChild(marker);
 
-function scrollToSection(index) {
-  if(index<0) index=0;
-  if(index>=sections.length) index=sections.length-1;
-  if(isScrolling || index===currentIndex) return;
-  isScrolling=true;
-  currentIndex=index;
-
-  let target = sections[index];
-  let top=0;
-  const mapEl = target.querySelector('#map');
+  const mapEl = sec.querySelector('#map');
   if(mapEl){
-    const card = target.querySelector('.card');
+    const card = sec.querySelector('.card');
     const cardTop = card.offsetTop;
     const combinedHeight = (mapEl.offsetTop + mapEl.offsetHeight) - cardTop;
-    top = cardTop + combinedHeight/2 - window.innerHeight/2;
+    marker.style.top = `${combinedHeight/2}px`;
   } else {
-    top = target.offsetTop + target.offsetHeight/2 - window.innerHeight/2;
+    marker.style.top = `${sec.offsetHeight/2}px`;
   }
 
-  window.scrollTo({top:top, behavior:'smooth'});
+  markers.push(marker);
+});
+
+let currentIndex = 0;
+let isScrolling = false;
+function scrollToMarker(index){
+  if(index<0) index=0;
+  if(index>=markers.length) index=markers.length-1;
+  if(isScrolling || index===currentIndex) return;
+  isScrolling = true;
+  currentIndex = index;
+  const rect = markers[index].getBoundingClientRect();
+  const scrollTop = window.scrollY + rect.top - window.innerHeight/2;
+  window.scrollTo({top: scrollTop, behavior:'smooth'});
   setTimeout(()=>{isScrolling=false;},700);
 }
 
 // Wheel
 window.addEventListener('wheel', e=>{
   if(isScrolling) return;
-  if(e.deltaY>20) scrollToSection(currentIndex+1);
-  else if(e.deltaY<-20) scrollToSection(currentIndex-1);
+  if(e.deltaY>20) scrollToMarker(currentIndex+1);
+  else if(e.deltaY<-20) scrollToMarker(currentIndex-1);
 },{passive:false});
 
 // Touch
@@ -371,8 +383,8 @@ window.addEventListener('touchend', e=>{
   if(touchStartY===null) return;
   let diff = touchStartY - e.changedTouches[0].clientY;
   if(Math.abs(diff)<30) return;
-  if(diff>0) scrollToSection(currentIndex+1);
-  else scrollToSection(currentIndex-1);
+  if(diff>0) scrollToMarker(currentIndex+1);
+  else scrollToMarker(currentIndex-1);
   touchStartY=null;
 },{passive:false});
 
@@ -400,7 +412,7 @@ const observer = new IntersectionObserver(entries=>{
     }
   });
 },{threshold:0.6});
-sections.forEach(s=>observer.observe(s));
+sectionElems.forEach(s=>observer.observe(s));
 
 // Таймер
 const targetDate = new Date('2026-08-18T00:00:00');
@@ -423,18 +435,21 @@ closeBtn.onclick=()=>modal.style.display='none';
 document.getElementById('sendBtn').onclick=function(){
   const firstName=document.getElementById('firstName').value.trim();
   const lastName=document.getElementById('lastName').value.trim();
-  if(!firstName||!lastName){alert('Заполните поля');return;}
-  fetch('/api/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({firstName,lastName})})
-  .then(()=>{alert('Отправлено ❤️');modal.style.display='none';})
-  .catch(()=>{alert('Ошибка отправки.');});
+  if(!firstName || !lastName){ alert('Заполните поля'); return; }
+  fetch('/api/send',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({firstName,lastName})
+  }).then(()=>{ alert('Отправлено ❤️'); modal.style.display='none'; })
+    .catch(()=>{ alert('Ошибка отправки.'); });
 }
-window.onclick=e=>{if(e.target==modal)modal.style.display='none';};
+window.onclick=e=>{ if(e.target==modal) modal.style.display='none'; };
 
-// 🔥 Фикс видеофон для мобильных
+// Видеофон
 const video=document.getElementById('bgVideo');
-function forcePlay(){ if(video.paused){video.play().catch(()=>{});} }
+function forcePlay(){ if(video.paused){ video.play().catch(()=>{}); } }
 document.addEventListener('touchstart',forcePlay,{once:true});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden) forcePlay();});
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) forcePlay(); });
 video.addEventListener('pause',forcePlay);
 </script>
 
