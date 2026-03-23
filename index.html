@@ -333,17 +333,20 @@ ymaps.ready(function() {
   map.behaviors.disable('scrollZoom');
 });
 
-// --- Snap scroll ---
+// --- Snap scroll с отдельными метками ---
 const sections=document.querySelectorAll('section');
 let markers=[];
 sections.forEach(sec=>{
   const mapEl=sec.querySelector('#map');
+  const card=sec.querySelector('.card');
   if(mapEl){
-    const card=sec.querySelector('.card');
+    // Верх карточки + низ карты
     const top=card.offsetTop;
     const bottom=mapEl.offsetTop+mapEl.offsetHeight;
     markers.push(top + (bottom-top)/2);
-  } else markers.push(sec.offsetTop + sec.offsetHeight/2);
+  } else {
+    markers.push(sec.offsetTop + sec.offsetHeight/2);
+  }
 });
 let currentIndex=0;
 let isScrolling=false;
@@ -435,15 +438,15 @@ document.getElementById('sendBtn').onclick=function(){
 // Кнопка возврата
 document.getElementById('toTopBtn').onclick=()=>scrollToMarker(0);
 
-// Проложить маршрут
-function openRoute(){ window.open('https://yandex.ru/maps/-/CPRav60J'); }
-
-// Видеофон
+// Фикс видеофон для мобильных
 const video=document.getElementById('bgVideo');
 function forcePlay(){ if(video.paused) video.play().catch(()=>{}); }
 document.addEventListener('touchstart', forcePlay, {once:true});
 document.addEventListener('visibilitychange', ()=>{if(!document.hidden) forcePlay();});
 video.addEventListener('pause', forcePlay);
+
+// Функция открыть маршрут
+function openRoute(){ window.open('https://yandex.ru/maps/-/CPRav60J'); }
 </script>
 </body>
 </html>
