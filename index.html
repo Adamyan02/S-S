@@ -179,7 +179,9 @@ button {
   z-index: 1000;
 }
 .modal-content {
-  background: white;
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
   margin: 30% auto;
   padding: 20px 20px 30px 20px;
   border-radius: 20px;
@@ -208,6 +210,18 @@ input { width:90%; margin:10px 0; padding:10px; }
   margin-top: 20px;
   border-radius: 20px;
 }
+
+/* Кнопка возврата к первому блоку */
+#toTopBtn {
+  margin-top: 20px;
+  padding: 12px 30px;
+  border-radius: 50px;
+  border: none;
+  background: #5f8cd8;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -221,13 +235,13 @@ input { width:90%; margin:10px 0; padding:10px; }
 </div>
 <div class="video-overlay"></div>
 
-<!-- Первый блок -->
+<!-- Здесь идут все блоки сайта, без изменений -->
 <section>
   <div class="card first-block">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
+    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
     <p class="date">18.08.2026</p>
     <p>Мы создаём нашу семью и будем искренне счастливы разделить этот особенный день вместе с вами. Для нас очень важно ваше присутствие и поддержка 💙</p>
@@ -235,12 +249,11 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Второй блок -->
 <section>
   <div class="card">
-    <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>Локация</h2>
     <p>Банкетный зал «На семи ветрах»</p>
@@ -249,38 +262,35 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Третий блок с картой -->
 <section style="flex-direction: column; align-items: flex-start;">
   <div class="card" style="margin-bottom:10px; max-width:600px;">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
+    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>Локация на карте</h2>
     <p>Для вашего удобства мы добавили интерактивную карту с отметкой места проведения</p>
   </div>
   <div id="map" class="full-map"></div>
 </section>
 
-<!-- Четвёртый блок -->
 <section>
   <div class="card">
-    <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>До свадьбы осталось</h2>
     <div id="timer"></div>
   </div>
 </section>
 
-<!-- Пятый блок -->
 <section>
   <div class="card">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
+    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>Дресс-код</h2>
     <p>Мы будем очень признательны, если вы поддержите атмосферу нашего праздника и выберете элегантные образы.</p>
     <p>Просим дам по возможности воздержаться от платьев в белых и близких оттенках 🤍</p>
@@ -288,16 +298,16 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Шестой блок -->
 <section>
   <div class="card final">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
+    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <p>С нетерпением ждём встречи с вами</p>
     <h1>S & S</h1>
     <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
+    <button id="toTopBtn">Вернуться к началу</button>
   </div>
 </section>
 
@@ -314,74 +324,66 @@ input { width:90%; margin:10px 0; padding:10px; }
 
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 <script>
-// --- Карта ---
 ymaps.ready(init);
 function init() {
   var map = new ymaps.Map("map", {
     center: [51.616945, 45.880925],
     zoom: 16,
-    controls: ['zoomControl','fullscreenControl']
+    controls: ['zoomControl','fullscreenControl'],
+    suppressMapOpenBlock: true
   });
   var placemark = new ymaps.Placemark([51.616945, 45.880925], {
     hintContent: 'Место проведения',
     balloonContent: 'Банкетный зал «На семи ветрах»'
   }, { preset: 'islands#redDotIcon' });
   map.geoObjects.add(placemark);
+
+  map.events.add('wheel', function (e) { e.preventDefault(); });
 }
 
-// --- Метки для snap scroll ---
-const sectionElems = document.querySelectorAll('section');
-const markers = [];
-sectionElems.forEach(sec=>{
-  const marker = document.createElement('div');
-  marker.style.position = 'absolute';
-  marker.style.top = '0px';
-  marker.style.left = '0';
-  marker.style.width = '1px';
-  marker.style.height = '1px';
-  marker.style.pointerEvents = 'none';
-  sec.appendChild(marker);
-
+// Snap scroll
+const sections=document.querySelectorAll('section');
+const markers=[];
+sections.forEach(sec=>{
   const mapEl = sec.querySelector('#map');
+  let markerPos;
   if(mapEl){
     const card = sec.querySelector('.card');
     const cardTop = card.offsetTop;
     const combinedHeight = (mapEl.offsetTop + mapEl.offsetHeight) - cardTop;
-    marker.style.top = `${combinedHeight/2}px`;
+    markerPos = cardTop + combinedHeight/2 + 10;
   } else {
-    marker.style.top = `${sec.offsetHeight/2}px`;
+    markerPos = sec.offsetTop + sec.offsetHeight/2;
   }
-
-  markers.push(marker);
+  markers.push(markerPos);
 });
 
-let currentIndex = 0;
-let isScrolling = false;
+let currentIndex=0;
+let isScrolling=false;
 function scrollToMarker(index){
   if(index<0) index=0;
   if(index>=markers.length) index=markers.length-1;
   if(isScrolling || index===currentIndex) return;
-  isScrolling = true;
-  currentIndex = index;
-  const rect = markers[index].getBoundingClientRect();
-  const scrollTop = window.scrollY + rect.top - window.innerHeight/2;
-  window.scrollTo({top: scrollTop, behavior:'smooth'});
+  isScrolling=true;
+  currentIndex=index;
+  window.scrollTo({top: markers[index]-window.innerHeight/2, behavior:'smooth'});
   setTimeout(()=>{isScrolling=false;},700);
 }
 
-// Wheel
-window.addEventListener('wheel', e=>{
+window.addEventListener('wheel',e=>{
   if(isScrolling) return;
   if(e.deltaY>20) scrollToMarker(currentIndex+1);
   else if(e.deltaY<-20) scrollToMarker(currentIndex-1);
 },{passive:false});
 
-// Touch
-let touchStartY = null;
-window.addEventListener('touchstart', e=>{ touchStartY = e.touches[0].clientY; },{passive:false});
-window.addEventListener('touchend', e=>{
+let touchStartY=null;
+window.addEventListener('touchstart',e=>{ 
+  if(e.target.closest('#map')) touchStartY=null;
+  else touchStartY=e.touches[0].clientY;
+},{passive:false});
+window.addEventListener('touchend',e=>{
   if(touchStartY===null) return;
-  let diff = touchStartY - e.changedTouches[0].clientY;
+  let diff=touchStartY-e.changedTouches[0].clientY;
   if(Math.abs(diff)<30) return;
   if(diff>0) scrollToMarker(currentIndex+1);
   else scrollToMarker(currentIndex-1);
@@ -389,10 +391,10 @@ window.addEventListener('touchend', e=>{
 },{passive:false});
 
 // IntersectionObserver для углов
-const observer = new IntersectionObserver(entries=>{
+const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
-    const card = entry.target.querySelector('.card');
-    const corners = entry.target.querySelectorAll('.corner');
+    const card=entry.target.querySelector('.card');
+    const corners=entry.target.querySelectorAll('.corner');
     if(entry.isIntersecting){
       card.classList.remove('visible');
       corners.forEach(c=>{
@@ -412,17 +414,17 @@ const observer = new IntersectionObserver(entries=>{
     }
   });
 },{threshold:0.6});
-sectionElems.forEach(s=>observer.observe(s));
+sections.forEach(s=>observer.observe(s));
 
 // Таймер
-const targetDate = new Date('2026-08-18T00:00:00');
+const targetDate=new Date('2026-08-18T00:00:00');
 setInterval(()=>{
-  const now = new Date();
-  let diff = targetDate-now;
-  const d = Math.floor(diff/86400000);
-  const h = Math.floor(diff/3600000%24);
-  const m = Math.floor(diff/60000%60);
-  const s = Math.floor(diff/1000%60);
+  const now=new Date();
+  let diff=targetDate-now;
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor(diff/3600000%24);
+  const m=Math.floor(diff/60000%60);
+  const s=Math.floor(diff/1000%60);
   document.getElementById('timer').innerHTML=`${d} дней ${h} часов ${m} минут ${s} секунд`;
 },1000);
 
@@ -451,7 +453,9 @@ function forcePlay(){ if(video.paused){ video.play().catch(()=>{}); } }
 document.addEventListener('touchstart',forcePlay,{once:true});
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden) forcePlay(); });
 video.addEventListener('pause',forcePlay);
-</script>
 
+// Кнопка возврата к первому блоку
+document.getElementById('toTopBtn').onclick=()=>scrollToMarker(0);
+</script>
 </body>
 </html>
