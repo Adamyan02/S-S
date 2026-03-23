@@ -239,9 +239,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 <section>
   <div class="card first-block">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
     <p class="date">18.08.2026</p>
     <p>Мы создаём нашу семью и будем искренне счастливы разделить этот особенный день вместе с вами. Для нас очень важно ваше присутствие и поддержка 💙</p>
@@ -249,12 +247,10 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Локация -->
+<!-- Второй блок -->
 <section>
   <div class="card">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>Локация</h2>
     <p>Банкетный зал «На семи ветрах»</p>
@@ -267,9 +263,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 <section style="flex-direction: column; align-items: flex-start;">
   <div class="card" style="margin-bottom:10px; max-width:600px;">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>Локация на карте</h2>
     <p>Для вашего удобства мы добавили интерактивную карту с отметкой места проведения</p>
   </div>
@@ -280,9 +274,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 <section>
   <div class="card">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>До свадьбы осталось</h2>
     <div id="timer"></div>
   </div>
@@ -291,9 +283,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 <!-- Дресс-код -->
 <section>
   <div class="card">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>Дресс-код</h2>
     <p>Мы будем очень признательны, если вы поддержите атмосферу нашего праздника и выберете элегантные образы.</p>
@@ -305,9 +295,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 <!-- Финальный блок -->
 <section>
   <div class="card final">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <p>С нетерпением ждём встречи с вами</p>
     <h1>S & S</h1>
@@ -353,8 +341,8 @@ sections.forEach(sec=>{
   if(mapEl){
     const card=sec.querySelector('.card');
     const top=card.offsetTop;
-    const height=(mapEl.offsetTop + mapEl.offsetHeight) - top;
-    markers.push(top+height/2);
+    const bottom=mapEl.offsetTop+mapEl.offsetHeight;
+    markers.push(top + (bottom-top)/2);
   } else markers.push(sec.offsetTop + sec.offsetHeight/2);
 });
 let currentIndex=0;
@@ -372,6 +360,7 @@ function scrollToMarker(index){
 // Wheel и touch
 window.addEventListener('wheel', e=>{
   if(isScrolling) return;
+  if(e.target.closest('#map')) return;
   if(e.deltaY>20) scrollToMarker(currentIndex+1);
   else if(e.deltaY<-20) scrollToMarker(currentIndex-1);
 },{passive:false});
@@ -448,7 +437,13 @@ document.getElementById('toTopBtn').onclick=()=>scrollToMarker(0);
 
 // Проложить маршрут
 function openRoute(){ window.open('https://yandex.ru/maps/-/CPRav60J'); }
-</script>
 
+// Видеофон
+const video=document.getElementById('bgVideo');
+function forcePlay(){ if(video.paused) video.play().catch(()=>{}); }
+document.addEventListener('touchstart', forcePlay, {once:true});
+document.addEventListener('visibilitychange', ()=>{if(!document.hidden) forcePlay();});
+video.addEventListener('pause', forcePlay);
+</script>
 </body>
 </html>
