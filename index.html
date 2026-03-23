@@ -231,7 +231,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 </div>
 <div class="video-overlay"></div>
 
-<!-- Секции с якорями -->
+<!-- Первый блок -->
 <section>
   <div class="card first-block">
     <div class="scroll-anchor"></div>
@@ -246,10 +246,88 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Остальные блоки с аналогичной разметкой и anchor внутри -->
-<!-- … -->
+<!-- Второй блок -->
+<section>
+  <div class="card">
+    <div class="scroll-anchor"></div>
+    <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+    <h2>Локация</h2>
+    <p>Банкетный зал «На семи ветрах»</p>
+    <p>Саратов, Московское шоссе, 154 к1</p>
+    <button onclick="openRoute()">Проложить маршрут</button>
+  </div>
+</section>
 
-<!-- Скрипты -->
+<!-- Третий блок с картой -->
+<section style="flex-direction: column; align-items: flex-start;">
+  <div class="card" style="margin-bottom:10px; max-width:600px;">
+    <div class="scroll-anchor"></div>
+    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
+    <h2>Локация на карте</h2>
+    <p>Для вашего удобства мы добавили интерактивную карту с отметкой места проведения</p>
+  </div>
+  <div id="map" class="full-map"></div>
+</section>
+
+<!-- Четвёртый блок -->
+<section>
+  <div class="card">
+    <div class="scroll-anchor"></div>
+    <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+    <h2>До свадьбы осталось</h2>
+    <div id="timer"></div>
+  </div>
+</section>
+
+<!-- Пятый блок -->
+<section>
+  <div class="card">
+    <div class="scroll-anchor"></div>
+    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
+    <h2>Дресс-код</h2>
+    <p>Мы будем очень признательны, если вы поддержите атмосферу нашего праздника и выберете элегантные образы.</p>
+    <p>Просим дам по возможности воздержаться от платьев в белых и близких оттенках 🤍</p>
+    <p>Джентльменам будем рады в классическом или smart-casual стиле.</p>
+  </div>
+</section>
+
+<!-- Шестой блок -->
+<section>
+  <div class="card final">
+    <div class="scroll-anchor"></div>
+    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
+    <p>С нетерпением ждём встречи с вами</p>
+    <h1>S & S</h1>
+    <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
+  </div>
+</section>
+
+<!-- Модалка -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Введите данные</h3>
+    <input id="firstName" placeholder="Имя">
+    <input id="lastName" placeholder="Фамилия">
+    <button id="sendBtn">Отправить</button>
+  </div>
+</div>
+
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 <script>
 // --- Карта ---
@@ -291,9 +369,7 @@ window.addEventListener('wheel', e=>{
 
 // Touch
 let touchStartY = null;
-window.addEventListener('touchstart', e=>{
-  touchStartY = e.touches[0].clientY;
-},{passive:false});
+window.addEventListener('touchstart', e=>{ touchStartY = e.touches[0].clientY; },{passive:false});
 window.addEventListener('touchend', e=>{
   if(touchStartY===null) return;
   let diff = touchStartY - e.changedTouches[0].clientY;
@@ -355,18 +431,16 @@ document.getElementById('sendBtn').onclick=function(){
   fetch('/api/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({firstName,lastName})})
   .then(()=>{alert('Отправлено ❤️');modal.style.display='none';})
   .catch(()=>{alert('Ошибка отправки.');});
-};
-window.onclick=e=>{if(e.target==modal) modal.style.display='none';};
+}
+window.onclick=e=>{if(e.target==modal)modal.style.display='none';};
 
-// Видеофон мобильный
+// 🔥 Фикс видеофон для мобильных
 const video=document.getElementById('bgVideo');
-function forcePlay(){if(video.paused) video.play().catch(()=>{});}
+function forcePlay(){ if(video.paused){video.play().catch(()=>{});} }
 document.addEventListener('touchstart',forcePlay,{once:true});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden) forcePlay();});
 video.addEventListener('pause',forcePlay);
-
-// Старт на первом блоке
-window.addEventListener('load',()=>scrollToAnchor(0));
 </script>
+
 </body>
 </html>
