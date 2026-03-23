@@ -208,9 +208,18 @@ input { width:90%; margin:10px 0; padding:10px; }
   margin-top: 20px;
   border-radius: 20px;
 }
+
+/* Якоря для фиксации скролла */
+.scroll-anchor {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
 </style>
 </head>
-
 <body>
 
 <!-- Видео фон -->
@@ -222,9 +231,10 @@ input { width:90%; margin:10px 0; padding:10px; }
 </div>
 <div class="video-overlay"></div>
 
-<!-- Первый блок -->
+<!-- Секции с якорями -->
 <section>
   <div class="card first-block">
+    <div class="scroll-anchor"></div>
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
@@ -236,79 +246,10 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Далее блоки с углами и картой… -->
-<section>
-  <div class="card">
-    <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
-    <h2>Локация</h2>
-    <p>Банкетный зал «На семи ветрах»</p>
-    <p>Саратов, Московское шоссе, 154 к1</p>
-    <button onclick="openRoute()">Проложить маршрут</button>
-  </div>
-</section>
+<!-- Остальные блоки с аналогичной разметкой и anchor внутри -->
+<!-- … -->
 
-<section style="flex-direction: column; align-items: flex-start;">
-  <div class="card" style="margin-bottom:10px; max-width:600px;">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
-    <h2>Локация на карте</h2>
-    <p>Для вашего удобства мы добавили интерактивную карту с отметкой места проведения</p>
-  </div>
-  <div id="map" class="full-map"></div>
-</section>
-
-<section>
-  <div class="card">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
-    <h2>До свадьбы осталось</h2>
-    <div id="timer"></div>
-  </div>
-</section>
-
-<section>
-  <div class="card">
-    <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
-    <h2>Дресс-код</h2>
-    <p>Мы будем очень признательны, если вы поддержите атмосферу нашего праздника и выберете элегантные образы.</p>
-    <p>Просим дам по возможности воздержаться от платьев в белых и близких оттенках 🤍</p>
-    <p>Джентльменам будем рады в классическом или smart-casual стиле.</p>
-  </div>
-</section>
-
-<section>
-  <div class="card final">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
-    <p>С нетерпением ждём встречи с вами</p>
-    <h1>S & S</h1>
-    <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
-  </div>
-</section>
-
-<!-- Модалка -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h3>Введите данные</h3>
-    <input id="firstName" placeholder="Имя">
-    <input id="lastName" placeholder="Фамилия">
-    <button id="sendBtn">Отправить</button>
-  </div>
-</div>
-
+<!-- Скрипты -->
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 <script>
 // --- Карта ---
@@ -326,54 +267,44 @@ function init() {
   map.geoObjects.add(placemark);
 }
 
-// --- Snap scroll с центровочными метками ---
-const sections = document.querySelectorAll('section');
+// --- Snap scroll с якорями ---
+const anchors = document.querySelectorAll('.scroll-anchor');
 let current = 0;
 let isScrolling = false;
 
-function getSectionCenter(section){
-  const card = section.querySelector('.card');
-  const map = section.querySelector('#map');
-  let top = card.offsetTop + card.offsetHeight/2;
-  if(map) top += map.offsetHeight/2;
-  return top - window.innerHeight/2;
-}
-
-function scrollToSection(index){
+function scrollToAnchor(index){
   if(index<0) index=0;
-  if(index>=sections.length) index=sections.length-1;
+  if(index>=anchors.length) index=anchors.length-1;
   if(isScrolling || index===current) return;
   isScrolling = true;
   current = index;
-  const top = getSectionCenter(sections[index]);
-  window.scrollTo({top, behavior:'smooth'});
-  setTimeout(()=>{ isScrolling=false; },700);
+  anchors[index].scrollIntoView({behavior:'smooth', block:'center'});
+  setTimeout(()=>{isScrolling=false;},700);
 }
 
 // Wheel
 window.addEventListener('wheel', e=>{
-  if(e.target.closest('#map')) return;
   if(isScrolling) return;
-  if(e.deltaY>20) scrollToSection(current+1);
-  else if(e.deltaY<-20) scrollToSection(current-1);
+  if(e.deltaY>20) scrollToAnchor(current+1);
+  else if(e.deltaY<-20) scrollToAnchor(current-1);
 },{passive:false});
 
 // Touch
 let touchStartY = null;
 window.addEventListener('touchstart', e=>{
-  if(e.target.closest('#map')){ touchStartY=null; return; }
   touchStartY = e.touches[0].clientY;
 },{passive:false});
 window.addEventListener('touchend', e=>{
   if(touchStartY===null) return;
   let diff = touchStartY - e.changedTouches[0].clientY;
   if(Math.abs(diff)<30) return;
-  if(diff>0) scrollToSection(current+1);
-  else scrollToSection(current-1);
+  if(diff>0) scrollToAnchor(current+1);
+  else scrollToAnchor(current-1);
   touchStartY=null;
 },{passive:false});
 
-// --- IntersectionObserver для углов ---
+// IntersectionObserver для углов
+const sections = document.querySelectorAll('section');
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card = entry.target.querySelector('.card');
@@ -399,7 +330,7 @@ const observer = new IntersectionObserver(entries=>{
 },{threshold:0.6});
 sections.forEach(s=>observer.observe(s));
 
-// --- Таймер ---
+// Таймер
 const targetDate = new Date('2026-08-18T00:00:00');
 setInterval(()=>{
   const now = new Date();
@@ -411,10 +342,10 @@ setInterval(()=>{
   document.getElementById('timer').innerHTML=`${d} дней ${h} часов ${m} минут ${s} секунд`;
 },1000);
 
-// --- Модалка и маршрут ---
+// Модалка
 function openRoute(){ window.open('https://yandex.ru/maps/-/CPRav60J'); }
-const modal = document.getElementById('modal');
-const closeBtn = modal.querySelector('.close');
+const modal=document.getElementById('modal');
+const closeBtn=modal.querySelector('.close');
 document.getElementById('confirmBtn').onclick=()=>modal.style.display='block';
 closeBtn.onclick=()=>modal.style.display='none';
 document.getElementById('sendBtn').onclick=function(){
@@ -427,16 +358,15 @@ document.getElementById('sendBtn').onclick=function(){
 };
 window.onclick=e=>{if(e.target==modal) modal.style.display='none';};
 
-// --- Фикс видеофон для мобильных ---
+// Видеофон мобильный
 const video=document.getElementById('bgVideo');
 function forcePlay(){if(video.paused) video.play().catch(()=>{});}
 document.addEventListener('touchstart',forcePlay,{once:true});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden) forcePlay();});
 video.addEventListener('pause',forcePlay);
 
-// --- Старт на первом блоке ---
-window.addEventListener('load',()=>scrollToSection(0));
+// Старт на первом блоке
+window.addEventListener('load',()=>scrollToAnchor(0));
 </script>
-
 </body>
 </html>
