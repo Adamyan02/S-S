@@ -51,6 +51,7 @@ section {
   padding: 0 120px;
   perspective: 1600px;
   box-sizing: border-box;
+  position: relative;
 }
 
 /* Карточки */
@@ -207,6 +208,15 @@ input { width:90%; margin:10px 0; padding:10px; }
   margin-top: 20px;
   border-radius: 20px;
 }
+
+/* Метки для snap scroll */
+.snap-marker {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  visibility: hidden;
+}
 </style>
 </head>
 
@@ -221,7 +231,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 </div>
 <div class="video-overlay"></div>
 
-<!-- Блоки карточек -->
+<!-- Первый блок -->
 <section>
   <div class="card first-block">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
@@ -235,6 +245,7 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
+<!-- Блок локации -->
 <section>
   <div class="card">
     <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
@@ -248,6 +259,7 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
+<!-- Блок рамки + карта -->
 <section style="flex-direction: column; align-items: flex-start;">
   <div class="card" style="margin-bottom:10px; max-width:600px;">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
@@ -260,6 +272,7 @@ input { width:90%; margin:10px 0; padding:10px; }
   <div id="map" class="full-map"></div>
 </section>
 
+<!-- Таймер -->
 <section>
   <div class="card">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
@@ -271,6 +284,7 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
+<!-- Дресс-код -->
 <section>
   <div class="card">
     <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
@@ -284,6 +298,7 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
+<!-- Финальный блок -->
 <section>
   <div class="card final">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
@@ -324,32 +339,38 @@ function init() {
   map.geoObjects.add(placemark);
 }
 
-// --- Snap scroll с корректной центровкой ---
+// --- Snap scroll с невидимыми метками ---
 let isScrolling = false;
 const sections = document.querySelectorAll('section');
 let current = 0;
+const markers = [];
+
+sections.forEach(section => {
+  const card = section.querySelector('.card');
+  const map = section.querySelector('#map');
+  const marker = document.createElement('div');
+  marker.className = 'snap-marker';
+  section.appendChild(marker);
+
+  if(map) {
+    marker.style.top = (card.offsetHeight/2 + map.offsetHeight/2) + 'px';
+  } else {
+    marker.style.top = (card.offsetHeight/2) + 'px';
+  }
+  markers.push(marker);
+});
 
 function scrollToSection(index) {
   if(index < 0) index = 0;
-  if(index >= sections.length) index = sections.length - 1;
+  if(index >= markers.length) index = markers.length-1;
   isScrolling = true;
   current = index;
 
-  const section = sections[index];
-  let top;
-
-  const map = section.querySelector('#map');
-  const card = section.querySelector('.card');
-  if(map) {
-    const sectionTop = section.offsetTop;
-    const totalHeight = card.offsetHeight + map.offsetHeight;
-    top = sectionTop + totalHeight/2 - window.innerHeight/2;
-  } else {
-    top = section.offsetTop + card.offsetHeight/2 - window.innerHeight/2;
-  }
+  const marker = markers[index];
+  const top = marker.getBoundingClientRect().top + window.scrollY - window.innerHeight/2;
 
   window.scrollTo({ top: top, behavior: 'smooth' });
-  setTimeout(() => { isScrolling = false; }, 700);
+  setTimeout(() => isScrolling=false, 700);
 }
 
 // Wheel
@@ -432,15 +453,12 @@ document.getElementById('sendBtn').onclick = function() {
   }).then(()=>{ alert('Отправлено ❤️'); modal.style.display='none'; })
     .catch(()=>{ alert('Ошибка отправки.'); });
 }
-
 window.onclick = e => { if(e.target==modal) modal.style.display='none'; };
 
 // 🔥 Фикс видеофон для мобильных
 const video = document.getElementById('bgVideo');
 function forcePlay() {
-  if (video.paused) {
-    video.play().catch(() => {});
-  }
+  if (video.paused) { video.play().catch(() => {}); }
 }
 document.addEventListener('touchstart', forcePlay, { once: true });
 document.addEventListener('visibilitychange', () => {
