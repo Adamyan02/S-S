@@ -168,7 +168,7 @@ button {
   h2 { font-size:28px; }
   #timer { font-size:20px; }
   .final h1 { font-size:70px; }
-  .full-map { margin-top:0; height:350px; }
+  .full-map { margin-top:10px; height:350px; }
 }
 
 /* Модалка */
@@ -251,17 +251,17 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Третий блок с картой (объединен с карточкой) -->
-<section style="flex-direction: column; align-items: flex-start;">
-  <div class="card" style="margin-bottom:10px; max-width:600px;">
+<!-- Третий блок с картой (объединён с карточкой) -->
+<section style="flex-direction: column; align-items: center;">
+  <div class="card" style="margin-bottom:10px; max-width:600px; margin-top:-30px;">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
     <h2>Локация на карте</h2>
     <p>Для вашего удобства мы добавили интерактивную карту с отметкой места проведения</p>
+    <div id="map" class="full-map"></div>
   </div>
-  <div id="map" class="full-map"></div>
 </section>
 
 <!-- Четвёртый блок -->
@@ -290,9 +290,9 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Шестой блок -->
+<!-- Шестой блок с кнопкой "Вернуться наверх" -->
 <section>
-  <div class="card final">
+  <div class="card final" style="position: relative;">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
@@ -300,13 +300,7 @@ input { width:90%; margin:10px 0; padding:10px; }
     <p>С нетерпением ждём встречи с вами</p>
     <h1>S & S</h1>
     <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
-  </div>
-</section>
-
-<!-- Кнопка возврата наверх -->
-<section>
-  <div class="card" style="max-width:300px; text-align:center;">
-    <button id="toTopBtn" style="background:#7aa0e3;">Вернуться наверх</button>
+    <button id="toTopBtn" style="background:#7aa0e3; margin-top:20px;">Вернуться наверх</button>
   </div>
 </section>
 
@@ -437,12 +431,29 @@ setInterval(()=>{
 },1000);
 
 // Модалка
-const modal = document.getElementById('modal');
-const confirmBtn = document.getElementById('confirmBtn');
-const closeModal = modal.querySelector('.close');
-confirmBtn.addEventListener('click', ()=>{ modal.style.display='block'; });
-closeModal.addEventListener('click', ()=>{ modal.style.display='none'; });
-window.addEventListener('click', e=>{ if(e.target===modal) modal.style.display='none'; });
+const modal=document.getElementById('modal');
+const closeBtn=modal.querySelector('.close');
+document.getElementById('confirmBtn').onclick=()=>modal.style.display='block';
+closeBtn.onclick=()=>modal.style.display='none';
+document.getElementById('sendBtn').onclick=function(){
+  const firstName=document.getElementById('firstName').value.trim();
+  const lastName=document.getElementById('lastName').value.trim();
+  if(!firstName || !lastName){ alert('Заполните поля'); return; }
+  fetch('/api/send',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({firstName,lastName})
+  }).then(()=>{ alert('Отправлено ❤️'); modal.style.display='none'; })
+    .catch(()=>{ alert('Ошибка отправки.'); });
+}
+window.onclick=e=>{ if(e.target==modal) modal.style.display='none'; };
+
+// Видеофон
+const video=document.getElementById('bgVideo');
+function forcePlay(){ if(video.paused){ video.play().catch(()=>{}); } }
+document.addEventListener('touchstart',forcePlay,{once:true});
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) forcePlay(); });
+video.addEventListener('pause',forcePlay);
 
 // Кнопка наверх
 document.getElementById('toTopBtn').addEventListener('click', ()=>{ window.scrollTo({top:0, behavior:'smooth'}); });
