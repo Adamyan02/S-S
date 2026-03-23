@@ -253,7 +253,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 
 <!-- Третий блок с картой (объединён с карточкой) -->
 <section style="flex-direction: column; align-items: center;">
-  <div class="card" style="margin-bottom:10px; max-width:600px; margin-top:-30px;">
+  <div class="card" style="margin-bottom:10px; max-width:600px; margin-top:0px;">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
@@ -330,46 +330,37 @@ function init() {
     balloonContent: 'Банкетный зал «На семи ветрах»'
   }, { preset: 'islands#redDotIcon' });
   map.geoObjects.add(placemark);
-  placemark.options.set('iconLayout', 'default#image');
-  placemark.options.set('iconImageOffset', [-10, -30]);
 }
 
-// --- Метки для snap scroll ---
-const sectionElems = document.querySelectorAll('section');
-const markers = [];
+// --- Snap scroll ---
+const sectionElems=document.querySelectorAll('section');
+const markers=[];
 sectionElems.forEach(sec=>{
-  const marker = document.createElement('div');
-  marker.style.position = 'absolute';
-  marker.style.top = '0px';
-  marker.style.left = '0';
-  marker.style.width = '1px';
-  marker.style.height = '1px';
-  marker.style.pointerEvents = 'none';
+  const marker=document.createElement('div');
+  marker.style.position='absolute';
+  marker.style.top='0px';
+  marker.style.left='0';
+  marker.style.width='1px';
+  marker.style.height='1px';
+  marker.style.pointerEvents='none';
   sec.appendChild(marker);
 
-  const mapEl = sec.querySelector('#map');
-  if(mapEl){
-    const card = sec.querySelector('.card');
-    const combinedHeight = card.offsetHeight + mapEl.offsetHeight + 20;
-    marker.style.top = `${combinedHeight/2}px`;
-  } else {
-    marker.style.top = `${sec.offsetHeight/2}px`;
-  }
-
+  const card=sec.querySelector('.card');
+  marker.style.top=`${card.offsetTop+card.offsetHeight/2}px`;
   markers.push(marker);
 });
 
-let currentIndex = 0;
-let isScrolling = false;
+let currentIndex=0;
+let isScrolling=false;
 function scrollToMarker(index){
   if(index<0) index=0;
   if(index>=markers.length) index=markers.length-1;
-  if(isScrolling || index===currentIndex) return;
-  isScrolling = true;
-  currentIndex = index;
-  const rect = markers[index].getBoundingClientRect();
-  const scrollTop = window.scrollY + rect.top - window.innerHeight/2;
-  window.scrollTo({top: scrollTop, behavior:'smooth'});
+  if(isScrolling||index===currentIndex) return;
+  isScrolling=true;
+  currentIndex=index;
+  const rect=markers[index].getBoundingClientRect();
+  const scrollTop=window.scrollY+rect.top-window.innerHeight/2;
+  window.scrollTo({top:scrollTop, behavior:'smooth'});
   setTimeout(()=>{isScrolling=false;},700);
 }
 
@@ -381,11 +372,11 @@ window.addEventListener('wheel', e=>{
 },{passive:false});
 
 // Touch
-let touchStartY = null;
-window.addEventListener('touchstart', e=>{ touchStartY = e.touches[0].clientY; },{passive:false});
+let touchStartY=null;
+window.addEventListener('touchstart', e=>{ touchStartY=e.touches[0].clientY;},{passive:false});
 window.addEventListener('touchend', e=>{
   if(touchStartY===null) return;
-  let diff = touchStartY - e.changedTouches[0].clientY;
+  let diff=touchStartY-e.changedTouches[0].clientY;
   if(Math.abs(diff)<30) return;
   if(diff>0) scrollToMarker(currentIndex+1);
   else scrollToMarker(currentIndex-1);
@@ -393,10 +384,10 @@ window.addEventListener('touchend', e=>{
 },{passive:false});
 
 // IntersectionObserver для углов
-const observer = new IntersectionObserver(entries=>{
+const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
-    const card = entry.target.querySelector('.card');
-    const corners = entry.target.querySelectorAll('.corner');
+    const card=entry.target.querySelector('.card');
+    const corners=entry.target.querySelectorAll('.corner');
     if(entry.isIntersecting){
       card.classList.remove('visible');
       corners.forEach(c=>{
@@ -419,14 +410,14 @@ const observer = new IntersectionObserver(entries=>{
 sectionElems.forEach(s=>observer.observe(s));
 
 // Таймер
-const targetDate = new Date('2026-08-18T00:00:00');
+const targetDate=new Date('2026-08-18T00:00:00');
 setInterval(()=>{
-  const now = new Date();
-  let diff = targetDate-now;
-  const d = Math.floor(diff/86400000);
-  const h = Math.floor(diff/3600000%24);
-  const m = Math.floor(diff/60000%60);
-  const s = Math.floor(diff/1000%60);
+  const now=new Date();
+  let diff=targetDate-now;
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor(diff/3600000%24);
+  const m=Math.floor(diff/60000%60);
+  const s=Math.floor(diff/1000%60);
   document.getElementById('timer').innerHTML=`${d} дней ${h} часов ${m} минут ${s} секунд`;
 },1000);
 
@@ -438,7 +429,7 @@ closeBtn.onclick=()=>modal.style.display='none';
 document.getElementById('sendBtn').onclick=function(){
   const firstName=document.getElementById('firstName').value.trim();
   const lastName=document.getElementById('lastName').value.trim();
-  if(!firstName || !lastName){ alert('Заполните поля'); return; }
+  if(!firstName||!lastName){ alert('Заполните поля'); return; }
   fetch('/api/send',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -455,8 +446,8 @@ document.addEventListener('touchstart',forcePlay,{once:true});
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden) forcePlay(); });
 video.addEventListener('pause',forcePlay);
 
-// Кнопка наверх
-document.getElementById('toTopBtn').addEventListener('click', ()=>{ window.scrollTo({top:0, behavior:'smooth'}); });
+// Кнопка наверх через snap scroll
+document.getElementById('toTopBtn').addEventListener('click', ()=>{ scrollToMarker(0); });
 
 // Проложить маршрут
 function openRoute(){ window.open('https://yandex.ru/maps/?rtext=~51.616945,45.880925','_blank'); }
