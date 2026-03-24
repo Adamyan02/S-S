@@ -168,6 +168,26 @@ button {
   transform-origin: center center;
   animation: heartBeat 1.5s ease-in-out infinite;
 }
+  .final-names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;  /* равные промежутки между строками */
+  height: 200px;                   /* высота блока — подбирается визуально */
+  font-family: 'Great Vibes', cursive;
+  font-size: 70px;
+  color: #5f8cd8;
+}
+
+.final-names .line {
+  display: block;
+}
+
+.final-names .heart {
+  font-size: 65px;
+  color: #1E90FF;
+  animation: heartBeat 1.5s ease-in-out infinite;
+}
 
 @keyframes heartBeat {
   0%, 100% { transform: scale(1); }
@@ -312,9 +332,17 @@ input { width:90%; margin:10px 0; padding:10px; }
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
+
     <p>С нетерпением ждём встречи с вами</p>
-    <h1>S <span class="heart">♥</span> S</h1>
+
+    <div class="final-names">
+      <span class="line">Sos</span>
+      <span class="line heart">♥</span>
+      <span class="line">Susanna</span>
+    </div>
+
     <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
+
     <button id="toTopBtn" style="background:#7aa0e3; margin-top:20px;">Вернуться наверх</button>
   </div>
 </section>
