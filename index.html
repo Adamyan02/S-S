@@ -413,41 +413,26 @@ cursor:pointer;
 let isMapActive = false;
 
 
-  function initAudioOverlay(){
+  const overlay = document.getElementById('soundOverlay');
+const music = document.getElementById('bgMusic');
+const video = document.getElementById('bgVideo');
 
-  overlay.addEventListener('click', async () => {
+let soundEnabled = false;
 
-    if(soundEnabled) return;
+function enableSound(){
+  if (soundEnabled) return;
+  soundEnabled = true;
 
-    try{
+  music.volume = 0.5;
+  music.play().catch(()=>{});
+  video.play().catch(()=>{});
 
-      music.volume = 0.5;
-
-      await music.play();
-
-      if(video.paused){
-        await video.play().catch(() => {});
-      }
-
-      soundEnabled = true;
-
-      overlay.style.transition = 'opacity .4s ease';
-      overlay.style.opacity = '0';
-
-      setTimeout(() => {
-        overlay.style.display = 'none';
-      }, 400);
-
-    }
-    catch(e){
-      console.log(e);
-    }
-
-  }, { passive:true });
-
+  overlay.style.opacity = '0';
+  setTimeout(() => overlay.style.display = 'none', 400);
 }
 
-document.addEventListener('DOMContentLoaded', initAudioOverlay);
+overlay.addEventListener('click', enableSound);
+overlay.addEventListener('touchstart', enableSound);
   
   // --- Карта ---
 ymaps.ready(init);
