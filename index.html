@@ -412,7 +412,11 @@ cursor:pointer;
 <script>
 let isMapActive = false;
 
-function initAudioOverlay(){
+const overlay = document.getElementById('soundOverlay');
+const music = document.getElementById('bgMusic');
+const video = document.getElementById('bgVideo');
+let soundEnabled = false;
+  function initAudioOverlay(){
 
   overlay.addEventListener('click', async () => {
 
