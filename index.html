@@ -411,6 +411,42 @@ cursor:pointer;
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 <script>
 let isMapActive = false;
+
+function initAudioOverlay(){
+
+  overlay.addEventListener('click', async () => {
+
+    if(soundEnabled) return;
+
+    try{
+
+      music.volume = 0.5;
+
+      await music.play();
+
+      if(video.paused){
+        await video.play().catch(() => {});
+      }
+
+      soundEnabled = true;
+
+      overlay.style.transition = 'opacity .4s ease';
+      overlay.style.opacity = '0';
+
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 400);
+
+    }
+    catch(e){
+      console.log(e);
+    }
+
+  }, { passive:true });
+
+}
+
+document.addEventListener('DOMContentLoaded', initAudioOverlay);
   
   // --- Карта ---
 ymaps.ready(init);
