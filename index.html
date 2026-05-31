@@ -413,21 +413,28 @@ cursor:pointer;
 let isMapActive = false;
 
 
-  /* Аудио */
+/* Аудио */
 
-function initAudioOverlay(){
+const overlay = document.getElementById('soundOverlay');
+const music = document.getElementById('bgMusic');
 
-  overlay.addEventListener('click', async () => {
+let soundEnabled = false;
 
-    if(soundEnabled) return;
+function initAudioOverlay() {
 
-    try{
+  async function startAudio(e) {
+
+    if (e) e.preventDefault();
+
+    if (soundEnabled) return;
+
+    try {
 
       music.volume = 0.5;
 
       await music.play();
 
-      if(video.paused){
+      if (video.paused) {
         await video.play().catch(() => {});
       }
 
@@ -440,13 +447,13 @@ function initAudioOverlay(){
         overlay.style.display = 'none';
       }, 400);
 
+    } catch (err) {
+      console.error('Ошибка запуска аудио:', err);
     }
-    catch(e){
-      console.log(e);
-    }
+  }
 
-  }, { passive:true });
-
+  overlay.addEventListener('click', startAudio);
+  overlay.addEventListener('touchend', startAudio);
 }
 
 document.addEventListener('DOMContentLoaded', initAudioOverlay);
