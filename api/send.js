@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const { firstName, lastName } = req.body;
+  const { firstName, lastName, peopleCount } = req.body;
 
   const TOKEN = "8709950732:AAEN7Tu0J4SM0S9QqRj7_QpPV_oivytg1lI";
   const CHAT_ID = "323969398";
