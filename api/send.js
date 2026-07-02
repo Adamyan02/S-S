@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   const TOKEN = "8709950732:AAEN7Tu0J4SM0S9QqRj7_QpPV_oivytg1lI";
   const CHAT_ID = "323969398";
 
-  const text = `💍 Новый гость!\n${firstName} ${lastName}`;
+  const text = `💍 Новый гость!\n${firstName} ${lastName} ${peopleCount}`;
 
   await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
     method: "POST",
