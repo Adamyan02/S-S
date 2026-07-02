@@ -585,11 +585,11 @@ document.getElementById('sendBtn').onclick=function(){
   const firstName=document.getElementById('firstName').value.trim();
   const lastName=document.getElementById('lastName').value.trim();
   const peopleCount = document.getElementById('peopleCount').value;
-  if(!firstName||!lastName){ alert('Заполните поля'); return; }
+  if(!firstName||!lastName||!peopleCount){ alert('Заполните поля'); return; }
   fetch('/api/send',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({firstName,lastName})
+    body:JSON.stringify({firstName,lastName,peopleCount})
   }).then(()=>{ alert('Отправлено ❤️'); modal.style.display='none'; })
     .catch(()=>{ alert('Ошибка отправки.'); });
 }
