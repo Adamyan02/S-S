@@ -404,6 +404,7 @@ cursor:pointer;
     <h3>Введите данные</h3>
     <input id="firstName" placeholder="Имя">
     <input id="lastName" placeholder="Фамилия">
+    <input id="peopleCount" type="number" min="1" placeholder="Количество людей">
     <button id="sendBtn">Отправить</button>
   </div>
 </div>
@@ -583,6 +584,7 @@ closeBtn.onclick=()=>modal.style.display='none';
 document.getElementById('sendBtn').onclick=function(){
   const firstName=document.getElementById('firstName').value.trim();
   const lastName=document.getElementById('lastName').value.trim();
+  const peopleCount = document.getElementById('peopleCount').value;
   if(!firstName||!lastName){ alert('Заполните поля'); return; }
   fetch('/api/send',{
     method:'POST',
